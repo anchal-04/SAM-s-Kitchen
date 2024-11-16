@@ -31,6 +31,26 @@ def menu_page():
         print(" inside get 1", items)
         return render_template('menu.html', items = items, add_form = add_form)
 
+#MENU PAGE
+@app.route('/order', methods = ['GET', 'POST'])
+@login_required
+def order_page():
+    add_form = AddForm()
+    if request.method == 'POST':
+        selected_item = request.form.get('selected_item') #get the selected item from the menu page
+        s_item_object = Item.query.filter_by(name = selected_item).first()
+        if s_item_object:
+            s_item_object.assign_ownership(current_user) #assign ownership of the ordered item to the user
+        
+        return redirect(url_for('order_page'))
+    
+    if request.method == 'GET':
+        print(" inside get")
+        items = Item.query.all()
+        print(f"Items fetched: {items}")
+        print(" inside get 1", items)
+        return render_template('order.html', items = items, add_form = add_form)
+
 #CART PAGE
 @app.route('/cart', methods = ['GET', 'POST'])
 def cart_page():

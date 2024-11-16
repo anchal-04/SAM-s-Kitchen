@@ -7,13 +7,14 @@
   --header-height: 3rem;
 
   /*========== Colors ==========*/
-  --first-color: #069C54;
-  --first-color-alt: #048654;
-  --title-color: #393939;
-  --text-color: #707070;
-  --text-color-light: #A6A6A6;
-  --body-color: #FBFEFD;
-  --container-color: #FFFFFF;
+  /*========== Colors ==========*/
+  --first-color: #dd4c49;
+  --first-color-alt: #63b663;
+  --title-color: #FBFEFD;
+  --text-color:  #FFFFFF;
+  --text-color-light: #555555;
+  --body-color: #161616;
+  --container-color: #707070;
 
   /*========== Font and typography ==========*/
   --body-font: 'Poppins', sans-serif;
@@ -193,8 +194,8 @@ img{
 }
 
 .nav__logo{
-  color: #696969;
-  font-family: 'Dancing Script';
+  color: #ffffff;
+  font-family: 'Pacifico';
   font-size: var(--h1-font-size);
   /*line-height: 160px;*/
   font-weight: normal;
@@ -266,6 +267,13 @@ img{
 }
 
 /*========== HOME ==========*/
+.img__container{
+  width:fit-content;
+  height: auto;
+  padding-top: 10%;
+  padding-right: 10%;
+  padding-left: 12%;
+}
 .home__container{
   height: calc(100vh - var(--header-height));
   align-content: center;
@@ -285,7 +293,8 @@ img{
 
 .home__img{
   width: 300px;
-  justify-self: center;
+  padding-top: 10%;
+  justify-self: right;
 }
 
 /*========== BUTTONS ==========*/
@@ -314,6 +323,7 @@ img{
 
 .about__img{
   width: 280px;
+  height:80%;
   border-radius: .5rem;
   justify-self: center;
 }
@@ -681,7 +691,7 @@ tr:hover {
   color: var(--first-color);
 }
 .input-search::placeholder{
-  color:rgba(0, 0, 0, 0.5);
+  color:rgba(255, 255, 255, 0.904);
   font-size: 18px;
   letter-spacing: 2px;
   font-weight: 100;
