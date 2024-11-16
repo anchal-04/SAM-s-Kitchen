@@ -19,7 +19,7 @@
 
         <div class="nav__menu" id="nav-menu">
             <ul class="nav__list">
-                <li class="nav__item"><a href="{{ url_for('home_page') }}" class="nav__link active-link">Home</a></li>
+                <li class="nav__item"><a href="{{ url_for('home_page') }}" class="nav__link">Home</a></li>
                 <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
                 <li class="nav__item"><a href="{{ url_for('menu_page') }}" class="nav__link">Menu</a></li>
                 <li class="nav__item"><a href="{{ url_for('order_page') }}" class="nav__link">Order</a></li>
@@ -55,7 +55,7 @@
             <form id="payment-form" method="POST" action="{{ url_for('payment_page') }}">
               <div class="form-group">
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <input type="text" id="name" name="name" placeholder="Your Name As On the Card" required>
               </div>
               <div class="form-group">
                 <label for="number">Phone Number:</label>
@@ -66,8 +66,15 @@
                 <input type="email" id="email" name="email" placeholder="Your Email" required>
               </div>
               <div class="form-group">
+                <label for="card-type">CardType:</label>
+                <select id="card-type" name="card-type" required>
+                  <option value="query">Debit Card</option>
+                  <option value="complain">Credit Card</option>
+                </select>
+              </div>
+              <div class="form-group">
                 <label for="card-number">Card Number:</label>
-                <input type="text" id="card-number" name="card-number" placeholder="Your Card Number" required>
+                <input type="number" id="card-number" name="card-number" placeholder="Your Card Number" required>
               </div>
               <div class="form-group">
                 <label for="expiry-date">Expiry Date:</label>
