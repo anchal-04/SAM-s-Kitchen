@@ -1,5 +1,5 @@
 from restaurant import app, api
-from flask import render_template, redirect, url_for, flash, request, session, Response
+from flask import jsonify, render_template, redirect, url_for, flash, request, session, Response
 from restaurant.models import Table, User, Item, Order
 from restaurant.forms import RegisterForm, LoginForm, OrderIDForm, ReserveForm, AddForm, OrderForm
 from restaurant import db
@@ -94,6 +94,33 @@ def cart_page():
     if request.method == 'GET':
         selected_items = Item.query.filter_by(orderer = current_user.id)#get items which user has added to the cart
         return render_template('cart.html', order_form = order_form, selected_items = selected_items)
+@app.route('/payment', methods=['GET', 'POST'])
+def payment_page():
+    if request.method == 'POST':
+        # Process payment details
+        data = request.form
+        first_name = data.get('first-name')
+        last_name = data.get('last-name')
+        phone_number = data.get('phone-number')
+        email = data.get('email')
+        visa_type = data.get('visa-type')
+        card_type = data.get('card-type')
+        card_number = data.get('card-number')
+        name_on_card = data.get('name-on-card')
+        cvv = data.get('cvv')
+        
+        # Add payment processing logic here (e.g., integrate with a payment gateway)
+        return jsonify({
+            'message': 'Payment processed successfully',
+            'data': {
+                'name': f'{first_name} {last_name}',
+                'email': email,
+                'visa_type': visa_type,
+                'card_type': card_type
+            }
+        })
+    
+    return render_template('payment.html')
 
 #CONGRATULATIONS PAGE
 @app.route('/congrats')
