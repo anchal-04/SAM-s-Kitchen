@@ -39,7 +39,7 @@
                         <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Log in</a></li>
                         <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Register</a></li>
                         {% endif %}
-                        <li class="nav__item"><a href="#contact" class="nav__link">Contact us</a></li>
+                        <li class="nav__item"><a href="{{ url_for('contact_page') }}" class="nav__link">Contact us</a></li>
 
                         <!-- <li><i class='bx bx-moon change-theme' id="theme-button"></i></li> -->
                     </ul>
@@ -109,7 +109,7 @@
                     </div>
 
                     <div class="contact__button">
-                        <a href="#" class="button">Contact us now</a>
+                        <a href="{{ url_for('contact_page') }}" class="button">Contact us now</a>
                     </div>
                 </div>
             </section>
@@ -132,7 +132,7 @@
                     <h3 class="footer__title">Information</h3>
                     <ul>
                         <li><a href="#" class="footer__link">Event</a></li>
-                        <li><a href="#" class="footer__link">Contact us</a></li>
+                        <li><a href="{{ url_for('contact_page') }}" class="footer__link">Contact us</a></li>
                         <li><a href="#" class="footer__link">Privacy policy</a></li>
                         <li><a href="#" class="footer__link">Terms of services</a></li>
                     </ul>

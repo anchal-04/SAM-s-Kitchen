@@ -1,24 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!--========== BOX ICONS ==========-->
-        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="static/styles/css/styles.css">
 
-        <!--========== CSS ==========-->
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/css/styles.css') }}">
-
-        <title>Menu</title>
-    </head>
-    <body>
-        <!-- {% for mesg in get_flashed_messages() %}
-        <h1>{{ mesg }}</h1>
-        {% endfor %} -->
-
-    <!--========== SCROLL TOP ==========-->
-    <a href="#" class="scrolltop" id="scroll-top">
+  <title>Contact Us</title>
+</head>
+<body>
+  <!-- Header -->
+     <!--========== SCROLL TOP ==========-->
+     <a href="#" class="scrolltop" id="scroll-top">
         <i class='bx bx-chevron-up scrolltop__icon'></i>
     </a>
 
@@ -29,11 +23,11 @@
 
             <div class="nav__menu" id="nav-menu">
                 <ul class="nav__list">
-                    <li class="nav__item"><a href="#home" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="{{ url_for('home_page') }}" class="nav__link">Home</a></li>
                     <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
                     <li class="nav__item"><a href="{{ url_for('menu_page') }}" class="nav__link">Menu</a></li>
-                    <li class="nav__item"><a href="{{ url_for('order_page') }}" class="nav__link active-link">Order</a></li>
-                    <li class="nav__item"><a href="#contact" class="nav__link">Contact us</a></li>
+                    <li class="nav__item"><a href="{{ url_for('order_page') }}" class="nav__link">Order</a></li>
+                    <li class="nav__item"><a href="#contact" class="nav__link active-link">Contact us</a></li>
                     {% if current_user.is_authenticated %}
                     <li class="nav__item"><a href="{{ url_for('logout') }}" class="nav__link">Log Out</a></li>
                     {% else %}
@@ -65,45 +59,56 @@
         {% endwith %} -->
     </header>
     <!--========== HEADER ENDS ==========-->
-<!-- ========== MENU ==========-->
-<section class="menu section bd-container" id="menu">
-    <h2 class="section-title">Order</h2>
-
-    <!-- SEARCH BOX -->
-    <div class="search-box">
-        <button class="btn-search"><i class='bx bxs-search'></i></button>
-        <input type="text" class="input-search" placeholder="Search..">
+  <!-- Contact Section -->
+  <main class="contact-section">
+    <div class="contact-container">
+      <!-- Contact Info -->
+      <div class="contact-info">
+        <h2>Location</h2>
+        <p>1111 Shirlington, Arlington, USA</p>
+        <h2>Hours</h2>
+        <p>Monday-Thursday: 12pm-10pm<br>Friday-Sunday: 11am-11pm</p>
+        <h2>Contact</h2>
+        <p>Email: samskitchen@gmail.com<br>Phone: +1 123-456-7890</p>
       </div>
-    <!-- SEARCH BOX ENDS -->
 
-    <!-- ========== ITEMS ==========-->
-    <div class="menu__container bd-grid">
-
-        {% for item in items %}
-        <div class="menu__content">
-            <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
-            <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
-            <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
-            <!-- <h3 class="menu__name">Barbecue salad</h3> -->
-            <h3 class="menu__name">{{ item.name }}</h3>
-            <!-- <span class="menu__detail">Delicious dish</span> -->
-            <span class = "menu_detail"> {{ item.description }} </span>
-            <span class="menu__price">₹{{ item.price }}</span>
-            <!-- <a href="#" class="button menu__button"><i class='bx bx-cart-alt'></i></a> -->
-            <form method = 'POST'>
-                {{ add_form.hidden_tag() }}
-                <input id="selected_item" name="selected_item" type="hidden" value="{{ item.name }}">
-                {{ add_form.submit(class = 'button menu__button') }}
-            </form>
-
-        </div>
-        {% endfor %}
-
+      <!-- Contact Form -->
+      <div class="contact-form">
+        <h2>Get in Touch</h2>
+        <form id="contact-form" method="POST" action="{{ url_for('contact_page') }}">
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+          </div>
+          <div class="form-group">
+            <label for="number">Phone Number:</label>
+            <input type="tel" id="number" name="number" placeholder="Your Phone Number" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Your Email" required>
+          </div>
+          <div class="form-group">
+            <label for="reason">Reason:</label>
+            <select id="reason" name="reason" required>
+              <option value="query">Query</option>
+              <option value="complain">Complain</option>
+              <option value="career">Career</option>
+              <option value="event">Event</option>
+              <option value="order">Order</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4" placeholder="Your Message" required></textarea>
+          </div>
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+      </div>
     </div>
-</section>
-<!-- ========== MENU ENDS ==========-->
+  </main>
 
-<!--========== FOOTER ==========-->
+ <!--========== FOOTER ==========-->
 <footer class="footer section bd-container">
     <div class="footer__container bd-grid">
         <div class="footer__content">
@@ -119,6 +124,7 @@
         <div class="footer__content">
             <h3 class="footer__title">Information</h3>
             <ul>
+                <li><a href="#" class="footer__link">Event</a></li>
                 <li><a href="#" class="footer__link">Contact us</a></li>
                 <li><a href="#" class="footer__link">Privacy policy</a></li>
                 <li><a href="#" class="footer__link">Terms of services</a></li>
@@ -140,14 +146,12 @@
     </footer>
     <!--========== FOOTER ENDS HERE ==========-->
     
-<!--========== FOOTER ENDS HERE ==========-->
-
-<!--========== SCROLL REVEAL ==========-->
-<script src="https://unpkg.com/scrollreveal"></script>
-
-<!--========== MAIN JS ==========-->
-<script src="static/styles/js/main.js"></script>
-
-
-</body>
-</html>
+    <!--========== SCROLL REVEAL ==========-->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    
+    <!--========== MAIN JS ==========-->
+    <script src="static/styles/js/main.js"></script>
+    
+    
+    </body>
+    </html>

@@ -11,6 +11,28 @@ from flask_login import login_user, logout_user, login_required, current_user
 def home_page(): 
     return render_template('index.html')
 
+@app.route('/contact', methods=['GET', 'POST'])
+def contact_page():
+    if request.method == 'POST':
+        # Get the form data
+        name = request.form.get('name')
+        number = request.form.get('number')
+        email = request.form.get('email')
+        reason = request.form.get('reason')
+        message = request.form.get('message')
+
+        # Optional: You can save the data to the database or handle it as needed
+        print(f"Contact Form Submitted: Name: {name}, Number: {number}, Email: {email}, Reason: {reason}, Message: {message}")
+        
+        # Provide feedback to the user (e.g., flash a message)
+        flash('Thank you for reaching out! We will get back to you soon.', category='success')
+        
+        # Redirect to the contact page or any other page
+        return redirect(url_for('contact_page'))
+
+    # Render the contact page for GET requests
+    return render_template('contact.html')
+
 #MENU PAGE
 @app.route('/menu', methods = ['GET', 'POST'])
 @login_required
