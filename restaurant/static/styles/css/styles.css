@@ -195,7 +195,7 @@ img{
 
 .nav__logo{
   color: #ffffff;
-  font-family: 'Pacifico';
+  font-family:'Dancing Script';
   font-size: var(--h1-font-size);
   /*line-height: 160px;*/
   font-weight: normal;
@@ -431,6 +431,7 @@ img{
   font-size: var(--h3-font-size);
   color: var(--first-color);
   font-weight: var(--font-semi-bold);
+  font-family:'Dancing Script'
 }
 
 .footer__description{
