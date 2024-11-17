@@ -73,7 +73,7 @@ class Item(db.Model):
     source = db.Column(db.String(length = 30), nullable = False)
     #suggestion: you might want to change 'owner' to 'orderer'/ 'customer'
     orderer = db.Column(db.Integer(), db.ForeignKey('user.id'))  #used to store info regarding user's ordered item
-
+    category = db.Column(db.String(length= 30), nullable = False)
     #function for assigning ownership to the user's selected item
     def assign_ownership(self, user):
         self.orderer = user.id 

@@ -77,26 +77,133 @@
     <!-- SEARCH BOX ENDS -->
 
     <!-- ========== ITEMS ==========-->
-    <div class="menu__container bd-grid">
+         <h3>Appetizers</h3>
 
+        <div class="menu__container bd-grid">
         {% for item in items %}
-        <div class="menu__content">
-            <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
-            <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
-            <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
-            <!-- <h3 class="menu__name">Barbecue salad</h3> -->
-            <h3 class="menu__name">{{ item.name }}</h3>
-            <!-- <span class="menu__detail">Delicious dish</span> -->
-            <span class = "menu_detail"> {{ item.description }} </span>
-            <span class="menu__price">₹{{ item.price }}</span>
-            <!-- <a href="#" class="button menu__button"><i class='bx bx-cart-alt'></i></a> -->
-            <!-- <form method = 'POST'>
-                {{ add_form.hidden_tag() }}
-                <input id="selected_item" name="selected_item" type="hidden" value="{{ item.name }}">
-                {{ add_form.submit(class = 'button menu__button') }}
-            </form>-->
+            {% if item.category == 'Appetizers' %}
+                <div class="menu__content">
+                    <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
+                    <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                    <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
+                    <!-- <h3 class="menu__name">Barbecue salad</h3> -->
+                    <h3 class="menu__name">{{ item.name }}</h3>
+                    <!-- <span class="menu__detail">Delicious dish</span> -->
+                    <span class = "menu_detail"> {{ item.description }} </span>
+                    <span class="menu__price">$ {{ item.price }}</span>
+                    <!-- <a href="#" class="button menu__button"><i class='bx bx-cart-alt'></i></a> -->
+                    <!-- <form method = 'POST'>
+                        {{ add_form.hidden_tag() }}
+                        <input id="selected_item" name="selected_item" type="hidden" value="{{ item.name }}">
+                        {{ add_form.submit(class = 'button menu__button') }}
+                    </form>-->
 
-        </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+
+         <h3>Biryani</h3>
+
+          <div class="menu__container bd-grid">
+        {% for item in items %}
+            {% if item.category == 'Biryani' %}
+                <div class="menu__content">
+                    <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
+                    <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                    <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
+                    <!-- <h3 class="menu__name">Barbecue salad</h3> -->
+                    <h3 class="menu__name">{{ item.name }}</h3>
+                    <!-- <span class="menu__detail">Delicious dish</span> -->
+                    <span class = "menu_detail"> {{ item.description }} </span>
+                    <span class="menu__price">$ {{ item.price }}</span>
+                    <!-- <a href="#" class="button menu__button"><i class='bx bx-cart-alt'></i></a> -->
+                    <!-- <form method = 'POST'>
+                        {{ add_form.hidden_tag() }}
+                        <input id="selected_item" name="selected_item" type="hidden" value="{{ item.name }}">
+                        {{ add_form.submit(class = 'button menu__button') }}
+                    </form>-->
+
+                </div>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+
+        <h3>Curry</h3>
+         <div class="menu__container bd-grid">
+        {% for item in items %}
+            {% if item.category == 'Curry' %}
+                <div class="menu__content">
+                    <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
+                    <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                    <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
+                    <!-- <h3 class="menu__name">Barbecue salad</h3> -->
+                    <h3 class="menu__name">{{ item.name }}</h3>
+                    <!-- <span class="menu__detail">Delicious dish</span> -->
+                    <span class = "menu_detail"> {{ item.description }} </span>
+                    <span class="menu__price">$ {{ item.price }}</span>
+                    <!-- <a href="#" class="button menu__button"><i class='bx bx-cart-alt'></i></a> -->
+                    <!-- <form method = 'POST'>
+                        {{ add_form.hidden_tag() }}
+                        <input id="selected_item" name="selected_item" type="hidden" value="{{ item.name }}">
+                        {{ add_form.submit(class = 'button menu__button') }}
+                    </form>-->
+
+                </div>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+
+       <h3>Breads</h3>
+ <div class="menu__container bd-grid">
+        {% for item in items %}
+            {% if item.category == 'Breads' %}
+                <div class="menu__content">
+                    <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
+                    <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                    <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
+                    <!-- <h3 class="menu__name">Barbecue salad</h3> -->
+                    <h3 class="menu__name">{{ item.name }}</h3>
+                    <!-- <span class="menu__detail">Delicious dish</span> -->
+                    <span class = "menu_detail"> {{ item.description }} </span>
+                    <span class="menu__price">$ {{ item.price }}</span>
+                    <!-- <a href="#" class="button menu__button"><i class='bx bx-cart-alt'></i></a> -->
+                    <!-- <form method = 'POST'>
+                        {{ add_form.hidden_tag() }}
+                        <input id="selected_item" name="selected_item" type="hidden" value="{{ item.name }}">
+                        {{ add_form.submit(class = 'button menu__button') }}
+                    </form>-->
+
+                </div>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+       <h3 class="menu__heading">Desserts</h3>
+ <div class="menu__container bd-grid">
+        {% for item in items %}
+            {% if item.category == 'Desserts' %}
+                <div class="menu__content">
+                    <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
+                    <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                    <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
+                    <!-- <h3 class="menu__name">Barbecue salad</h3> -->
+                    <h3 class="menu__name">{{ item.name }}</h3>
+                    <!-- <span class="menu__detail">Delicious dish</span> -->
+                    <span class = "menu_detail"> {{ item.description }} </span>
+                    <span class="menu__price">$ {{ item.price }}</span>
+                    <!-- <a href="#" class="button menu__button"><i class='bx bx-cart-alt'></i></a> -->
+                    <!-- <form method = 'POST'>
+                        {{ add_form.hidden_tag() }}
+                        <input id="selected_item" name="selected_item" type="hidden" value="{{ item.name }}">
+                        {{ add_form.submit(class = 'button menu__button') }}
+                    </form>-->
+
+                </div>
+            {% endif %}
         {% endfor %}
 
     </div>

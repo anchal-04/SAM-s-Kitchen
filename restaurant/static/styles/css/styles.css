@@ -360,6 +360,10 @@ img{
   grid-template-columns: repeat(2, 1fr);
   justify-content: center;
 }
+.menu__heading{
+  justify-content: center;
+  position: relative;
+}
 
 .menu__content{
   position: relative;

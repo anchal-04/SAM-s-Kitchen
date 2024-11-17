@@ -4,7 +4,9 @@ from restaurant.models import Table, User, Item, Order
 from restaurant.forms import RegisterForm, LoginForm, OrderIDForm, ReserveForm, AddForm, OrderForm
 from restaurant import db
 from flask_login import login_user, logout_user, login_required, current_user
-
+from flask import Flask, render_template, request, flash, redirect, url_for
+from flask_mail import Mail, Message
+mail = Mail(app)
 @app.route('/')
 #HOME PAGE
 @app.route('/home')
@@ -20,6 +22,16 @@ def contact_page():
         email = request.form.get('email')
         reason = request.form.get('reason')
         message = request.form.get('message')
+
+
+        try:
+            # Send the email
+            msg = Message(reason,sender='noreply@gmai.com', recipients=[email])
+            msg.body=message
+            mail.send(msg)
+            flash('Your message has been sent successfully!', 'success')
+        except Exception as e:
+            flash(f'An error occurred while sending your message: {str(e)}', 'danger')
 
         # Optional: You can save the data to the database or handle it as needed
         print(f"Contact Form Submitted: Name: {name}, Number: {number}, Email: {email}, Reason: {reason}, Message: {message}")
