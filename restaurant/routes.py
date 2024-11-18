@@ -97,29 +97,25 @@ def cart_page():
 @app.route('/payment', methods=['GET', 'POST'])
 def payment_page():
     if request.method == 'POST':
-        # Process payment details
-        data = request.form
-        first_name = data.get('first-name')
-        last_name = data.get('last-name')
-        phone_number = data.get('phone-number')
-        email = data.get('email')
-        visa_type = data.get('visa-type')
-        card_type = data.get('card-type')
-        card_number = data.get('card-number')
-        name_on_card = data.get('name-on-card')
-        cvv = data.get('cvv')
-        
-        # Add payment processing logic here (e.g., integrate with a payment gateway)
-        return jsonify({
-            'message': 'Payment processed successfully',
-            'data': {
-                'name': f'{first_name} {last_name}',
-                'email': email,
-                'visa_type': visa_type,
-                'card_type': card_type
-            }
-        })
-    
+        # Get form data
+        name = request.form.get('name')
+        email = request.form.get('email')
+        phone = request.form.get('number')
+        card_number = request.form.get('card_number')
+        expiry = request.form.get('expiry')
+        cvv = request.form.get('cvv')
+        street = request.form.get('street')
+        city = request.form.get('city')
+        state = request.form.get('state')
+        zip_code = request.form.get('zip')
+
+        # Add your payment processing logic here
+
+        # For now, just flash a message
+        flash('Payment processed successfully!', 'success')
+        return redirect(url_for('congrats_page'))
+
+
     return render_template('payment.html')
 
 #CONGRATULATIONS PAGE

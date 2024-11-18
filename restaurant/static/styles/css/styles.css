@@ -803,3 +803,59 @@ button.btn {
 button.btn:hover {
   background-color: var(--first-color-alt);
 }
+
+/* payment_ml-page */
+
+.payment .section-heading {
+    margin-bottom: 20px; /* Adjust this value for more/less space */
+}
+
+.payment .form-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.payment .form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.payment .form-group {
+    flex: 1;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.payment label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.payment input, select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.payment .button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px; /* Add space above the button */
+}
+
+.payment .form-group.small {
+    flex: 0 0 48%; /* Makes each field take about half the width */
+}
+
+.payment .form-group span {
+    margin-top: 5px;
+    font-size: 12px;
+    color: red;
+}
