@@ -6,7 +6,7 @@ input {
 body{
   margin: 0;
   padding: 0;
-  background: linear-gradient(to bottom right, #E3F0FF, #FAFCFF);
+  background: linear-gradient(to bottom right, #f54343, #58595b);
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -17,7 +17,7 @@ body{
 .container{
   width: 50%;
   height: 50%;
-  background-color: #ffffff;
+  color: #000000;
   border-radius: 20px;
   box-shadow: 0px 10px 20px #1687d933;
 }
@@ -48,7 +48,7 @@ form.otp-form {
 
 .title {
   font-size: 2.2rem;
-  color: #444;
+  color: #ffffff;
   margin-bottom: 10px;
 }
 
@@ -90,7 +90,7 @@ form.otp-form {
 
 .btn {
   width: 150px;
-  background-color: #fd59d4;
+  background-color: #dd4c49;
   border: none;
   outline: none;
   height: 49px;
@@ -104,7 +104,7 @@ form.otp-form {
 }
 
 .btn:hover {
-  background-color: #f700ff;
+  background-color:  #63b663;
 }
 
 div.resend{
@@ -132,9 +132,9 @@ a.ro-link:hover{
 .container-fp{
   width: 50%;
   height: 60%;
-  background-color: #ffffff;
+  background-color: #000000;
   border-radius: 20px;
-  box-shadow: 0px 10px 20px #1687d933;
+  box-shadow: 0px 10px 20px #ffffff33;
 }
 
 .form-container-fp {
