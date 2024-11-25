@@ -10,7 +10,7 @@
         <!--========== CSS ==========-->
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/css/styles.css') }}">
 
-        <title>Menu</title>
+        <title>Order</title>
     </head>
     <body>
         <!-- {% for mesg in get_flashed_messages() %}
@@ -70,14 +70,14 @@
     <h2 class="section-title">Order</h2>
 
     <!-- SEARCH BOX -->
-    <div class="search-box">
-        <button class="btn-search"><i class='bx bxs-search'></i></button>
-        <input type="text" class="input-search" placeholder="Search..">
-      </div>
+{#    <div class="search-box">#}
+{#        <button class="btn-search"><i class='bx bxs-search'></i></button>#}
+{#        <input type="text" class="input-search" placeholder="Search..">#}
+{#      </div>#}
     <!-- SEARCH BOX ENDS -->
 
     <!-- ========== ITEMS ==========-->
-           <h3>Appetizers</h3>
+           <h3 style="padding-left: 45%; padding-right: 45%">Appetizers</h3>
 
         <div class="menu__container bd-grid">
         {% for item in items %}
@@ -104,7 +104,7 @@
 
     </div>
 
-         <h3>Biryani</h3>
+         <h3 style="padding-left: 45%; padding-right: 45%; padding-top: 5%">Biryani</h3>
 
           <div class="menu__container bd-grid">
         {% for item in items %}
@@ -131,7 +131,7 @@
 
     </div>
 
-        <h3>Curry</h3>
+        <h3 style="padding-left: 45%; padding-right: 45%; padding-top: 5%">Curry</h3>
          <div class="menu__container bd-grid">
         {% for item in items %}
             {% if item.category == 'Curry' %}
@@ -157,7 +157,7 @@
 
     </div>
 
-       <h3>Breads</h3>
+       <h3 style="padding-left: 45%; padding-right: 45%; padding-top: 5%">Breads</h3>
  <div class="menu__container bd-grid">
         {% for item in items %}
             {% if item.category == 'Breads' %}
@@ -182,7 +182,7 @@
         {% endfor %}
 
     </div>
-       <h3 class="menu__heading">Desserts</h3>
+       <h3 style="padding-left: 45%; padding-right: 45%; padding-top: 5%">Desserts</h3>
  <div class="menu__container bd-grid">
         {% for item in items %}
             {% if item.category == 'Desserts' %}

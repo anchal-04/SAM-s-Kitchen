@@ -136,7 +136,6 @@ img{
   font-weight: var(--font-medium);
   margin-bottom: var(--mb-1);
 }
-
 /*========== LAYOUT ==========*/
 .bd-container{
   max-width: 960px;
@@ -277,6 +276,7 @@ img{
 .home__container{
   height: calc(100vh - var(--header-height));
   align-content: center;
+  padding-top: 7%;
 }
 
 .home__title{
