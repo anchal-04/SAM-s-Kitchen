@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/css/styles.css') }}">
+  <title>Payments Page</title>
+</head>
+<body>
+  <!--========== SCROLL TOP ==========-->
+  <a href="#" class="scrolltop" id="scroll-top">
+    <i class='bx bx-chevron-up scrolltop__icon'></i>
+</a>
+
+<!--========== HEADER ==========-->
+<header class="l-header" id="header">
+    <nav class="nav bd-container">
+        <a href="#" class="nav__logo"><h1>Sam's Kitchen</h1></a>
+
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+                <li class="nav__item"><a href="{{ url_for('home_page') }}" class="nav__link">Home</a></li>
+                <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+                <li class="nav__item"><a href="{{ url_for('menu_page') }}" class="nav__link">Menu</a></li>
+                <li class="nav__item"><a href="{{ url_for('order_page') }}" class="nav__link">Order</a></li>
+                <!-- <li class="nav__item"><a href="#services" class="nav__link">Services</a></li> -->
+                <!-- <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Log in</a></li>
+                <li class="nav__item"><a href="{{ url_for('register_page') }}" class="nav__link">Register</a></li> -->
+                {% if current_user.is_authenticated %}
+                <li class="nav__item"><a href="{{ url_for('logout') }}" class="nav__link">Log Out</a></li>
+                {% else %}
+                <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Log in</a></li>
+                <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Register</a></li>
+                {% endif %}
+                <li class="nav__item"><a href="{{ url_for('contact_page') }}" class="nav__link">Contact us</a></li>
+
+                <!-- <li><i class='bx bx-moon change-theme' id="theme-button"></i></li> -->
+            </ul>
+        </div>
+
+        <div class="nav__toggle" id="nav-toggle">
+            <i class='bx bx-menu'></i>
+        </div>
+    </nav>
+</header>
+<!--========== HEADER ENDS ==========-->
+
+  <main>
+    <section class="section bd-container">
+      <h1 class="section-title">One Step Away</h1>
+      <p class="section-subtitle">Complete Your Order</p>
+        <!-- Payment Form Section -->
+        <div class="payment-form">
+            <h2>Complete Your Payment</h2>
+            <form id="payment-form" method="POST" action="{{ url_for('payment_page') }}">
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Your Name As On the Card" required>
+              </div>
+              <div class="form-group">
+                <label for="number">Phone Number:</label>
+                <input type="tel" id="number" name="number" placeholder="Your Phone Number" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+              </div>
+              <div class="form-group">
+                <label for="card-type">CardType:</label>
+                <select id="card-type" name="card-type" required>
+                  <option value="query">Debit Card</option>
+                  <option value="complain">Credit Card</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="card-number">Card Number:</label>
+                <input type="number" id="card-number" name="card-number" placeholder="Your Card Number" required>
+              </div>
+              <div class="form-group">
+                <label for="expiry-date">Expiry Date:</label>
+                <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required>
+              </div>
+              <div class="form-group">
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" name="cvv" placeholder="CVV" required>
+              </div>
+              <!-- Billing Address Section -->
+            <h3>Billing Address</h3>
+            <div class="form-group">
+                <label for="street">Street:</label>
+                <input type="text" id="street" name="street" placeholder="Street Address" required>
+            </div>
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" placeholder="City" required>
+            </div>
+            <div class="form-group">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" placeholder="State" required>
+            </div>
+            <div class="form-group">
+                <label for="zip-code">Zip Code:</label>
+                <input type="text" id="zip-code" name="zip-code" placeholder="Zip Code" required>
+            </div>
+              <button type="submit" class="btn">Make Payment</button>
+            </form>
+          </div>
+    </section>
+  </main>
+
+  <!--========== FOOTER ==========-->
+  <footer class="footer section bd-container">
+    <div class="footer__container bd-grid">
+        <div class="footer__content">
+            <a href="#" class="footer__logo">Sam's Kitchen</a>
+            <span class="footer__description">Restaurant</span>
+            <div>
+                <a href="#" class="footer__social"><i class='bx bxl-facebook'></i></a>
+                <a href="#" class="footer__social"><i class='bx bxl-instagram'></i></a>
+                <a href="#" class="footer__social"><i class='bx bxl-twitter'></i></a>
+            </div>
+        </div>
+    
+        <div class="footer__content">
+            <h3 class="footer__title">Information</h3>
+            <ul>
+                <li><a href="#" class="footer__link">Event</a></li>
+                <li><a href="{{ url_for('contact_page') }}" class="footer__link">Contact us</a></li>
+                <li><a href="#" class="footer__link">Privacy policy</a></li>
+                <li><a href="#" class="footer__link">Terms of services</a></li>
+            </ul>
+        </div>
+    
+        <div class="footer__content">
+            <h3 class="footer__title">Address</h3>
+            <ul>
+                <li>1111, Somewhere Rd</li>
+                <li>United States, 23456</li>
+                <li>999 - 888 - 777</li>
+                <li>samskitchen@gmail.com</li>
+            </ul>
+        </div>
+    </div>
+    
+    <p class="footer__copy">&#169; 2024 Team Sams. All rights reserved</p>
+</footer>
+<!--========== FOOTER ENDS ==========-->
+
+
+<!--========== LOADER ==========-->
+<!-- <div class="loader-container">
+    <img src="assets/img/loader.gif" alt="">
+</div> -->
+
+<!--========== SCROLL REVEAL ==========-->
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<!--========== MAIN JS ==========-->
+<script src="static/styles/js/main.js"></script>
+</body>
+</html>

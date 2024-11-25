@@ -1,7 +1,7 @@
 body{
 	margin: 0;
 	padding: 0;
-	background: linear-gradient(to bottom right, #E3F0FF, #FAFCFF);
+	background:#161616;
 	height: 100vh;
 	display: flex;
 	justify-content: center;
@@ -11,7 +11,7 @@ body{
 .CartContainer{
 	width: 80%;
 	height: 90%;
-	background-color: #ffffff;
+	background-color: #fffffff1;
     border-radius: 20px;
     box-shadow: 0px 10px 20px #1687d933;
 }

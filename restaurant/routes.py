@@ -1,15 +1,49 @@
 from restaurant import app, api
-from flask import render_template, redirect, url_for, flash, request, session, Response
+from flask import jsonify, render_template, redirect, url_for, flash, request, session, Response
 from restaurant.models import Table, User, Item, Order
 from restaurant.forms import RegisterForm, LoginForm, OrderIDForm, ReserveForm, AddForm, OrderForm
 from restaurant import db
 from flask_login import login_user, logout_user, login_required, current_user
-
+from flask import Flask, render_template, request, flash, redirect, url_for
+from flask_mail import Mail, Message
+mail = Mail(app)
 @app.route('/')
 #HOME PAGE
 @app.route('/home')
 def home_page(): 
     return render_template('index.html')
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact_page():
+    if request.method == 'POST':
+        # Get the form data
+        name = request.form.get('name')
+        number = request.form.get('number')
+        email = request.form.get('email')
+        reason = request.form.get('reason')
+        message = request.form.get('message')
+
+
+        try:
+            # Send the email
+            msg = Message(reason,sender='noreply@gmai.com', recipients=[email])
+            msg.body=message
+            mail.send(msg)
+            flash('Your message has been sent successfully!', 'success')
+        except Exception as e:
+            flash(f'An error occurred while sending your message: {str(e)}', 'danger')
+
+        # Optional: You can save the data to the database or handle it as needed
+        print(f"Contact Form Submitted: Name: {name}, Number: {number}, Email: {email}, Reason: {reason}, Message: {message}")
+        
+        # Provide feedback to the user (e.g., flash a message)
+        flash('Thank you for reaching out! We will get back to you soon.', category='success')
+        
+        # Redirect to the contact page or any other page
+        return redirect(url_for('contact_page'))
+
+    # Render the contact page for GET requests
+    return render_template('contact.html')
 
 #MENU PAGE
 @app.route('/menu', methods = ['GET', 'POST'])
@@ -30,6 +64,26 @@ def menu_page():
         print(f"Items fetched: {items}")
         print(" inside get 1", items)
         return render_template('menu.html', items = items, add_form = add_form)
+
+#MENU PAGE
+@app.route('/order', methods = ['GET', 'POST'])
+@login_required
+def order_page():
+    add_form = AddForm()
+    if request.method == 'POST':
+        selected_item = request.form.get('selected_item') #get the selected item from the menu page
+        s_item_object = Item.query.filter_by(name = selected_item).first()
+        if s_item_object:
+            s_item_object.assign_ownership(current_user) #assign ownership of the ordered item to the user
+        
+        return redirect(url_for('order_page'))
+    
+    if request.method == 'GET':
+        print(" inside get")
+        items = Item.query.all()
+        print(f"Items fetched: {items}")
+        print(" inside get 1", items)
+        return render_template('order.html', items = items, add_form = add_form)
 
 #CART PAGE
 @app.route('/cart', methods = ['GET', 'POST'])
@@ -52,6 +106,33 @@ def cart_page():
     if request.method == 'GET':
         selected_items = Item.query.filter_by(orderer = current_user.id)#get items which user has added to the cart
         return render_template('cart.html', order_form = order_form, selected_items = selected_items)
+@app.route('/payment', methods=['GET', 'POST'])
+def payment_page():
+    if request.method == 'POST':
+        # Process payment details
+        data = request.form
+        first_name = data.get('first-name')
+        last_name = data.get('last-name')
+        phone_number = data.get('phone-number')
+        email = data.get('email')
+        visa_type = data.get('visa-type')
+        card_type = data.get('card-type')
+        card_number = data.get('card-number')
+        name_on_card = data.get('name-on-card')
+        cvv = data.get('cvv')
+        
+        # Add payment processing logic here (e.g., integrate with a payment gateway)
+        return jsonify({
+            'message': 'Payment processed successfully',
+            'data': {
+                'name': f'{first_name} {last_name}',
+                'email': email,
+                'visa_type': visa_type,
+                'card_type': card_type
+            }
+        })
+    
+    return render_template('payment.html')
 
 #CONGRATULATIONS PAGE
 @app.route('/congrats')
