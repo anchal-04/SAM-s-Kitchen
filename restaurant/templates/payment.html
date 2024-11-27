@@ -27,10 +27,12 @@
                 <!-- <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Log in</a></li>
                 <li class="nav__item"><a href="{{ url_for('register_page') }}" class="nav__link">Register</a></li> -->
                 {% if current_user.is_authenticated %}
+
                 <li class="nav__item"><a href="{{ url_for('logout') }}" class="nav__link">Log Out</a></li>
                 {% else %}
                 <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Log in</a></li>
                 <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Register</a></li>
+
                 {% endif %}
                 <li class="nav__item"><a href="{{ url_for('contact_page') }}" class="nav__link">Contact us</a></li>
 
@@ -45,71 +47,83 @@
 </header>
 <!--========== HEADER ENDS ==========-->
 
-  <main>
+<main>
     <section class="section bd-container">
-      <h1 class="section-title">One Step Away</h1>
-      <p class="section-subtitle">Complete Your Order</p>
+        <h1 class="section-title">Complete Your Order</h1>
         <!-- Payment Form Section -->
-        <div class="payment-form">
-            <h2>Complete Your Payment</h2>
-            <form id="payment-form" method="POST" action="{{ url_for('payment_page') }}">
-              <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" placeholder="Your Name As On the Card" required>
-              </div>
-              <div class="form-group">
-                <label for="number">Phone Number:</label>
-                <input type="tel" id="number" name="number" placeholder="Your Phone Number" required>
-              </div>
-              <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Your Email" required>
-              </div>
-              <div class="form-group">
-                <label for="card-type">CardType:</label>
-                <select id="card-type" name="card-type" required>
-                  <option value="query">Debit Card</option>
-                  <option value="complain">Credit Card</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="card-number">Card Number:</label>
-                <input type="number" id="card-number" name="card-number" placeholder="Your Card Number" required>
-              </div>
-              <div class="form-group">
-                <label for="expiry-date">Expiry Date:</label>
-                <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required>
-              </div>
-              <div class="form-group">
-                <label for="cvv">CVV:</label>
-                <input type="text" id="cvv" name="cvv" placeholder="CVV" required>
-              </div>
-              <!-- Billing Address Section -->
-            <h3>Billing Address</h3>
-            <div class="form-group">
-                <label for="street">Street:</label>
-                <input type="text" id="street" name="street" placeholder="Street Address" required>
-            </div>
-            <div class="form-group">
-                <label for="city">City:</label>
-                <input type="text" id="city" name="city" placeholder="City" required>
-            </div>
-            <div class="form-group">
-                <label for="state">State:</label>
-                <input type="text" id="state" name="state" placeholder="State" required>
-            </div>
-            <div class="form-group">
-                <label for="zip-code">Zip Code:</label>
-                <input type="text" id="zip-code" name="zip-code" placeholder="Zip Code" required>
-            </div>
-              <button type="submit" class="btn">Make Payment</button>
-            </form>
-          </div>
-    </section>
-  </main>
+        <div class="payment">
+            <h2>Payment Information</h2>
+            <form id="payment" method="POST" action="{{ url_for('payment_page') }}">
+                <!-- Name and Phone Number Side by Side -->
+                <div class="form-row">
+                    <div class="form-group small">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Your Name As On the Card" required>
+                    </div>
+                </div>
 
-  <!--========== FOOTER ==========-->
-  <footer class="footer section bd-container">
+                <!-- Email and Card Type Side by Side -->
+                <div class="form-row">
+                    <div class="form-group small">
+                        <label for="email">Email:</label>
+                        <input type="text" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="number">Phone Number:</label>
+                        <input type="text" id="number" name="number" placeholder="Area code and number" maxlength="10"  required>
+                    </div>
+                </div>
+
+                <!-- Card Number, Expiry Date, and CVV -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cc">Credit Card Number:</label>
+                        <input type="text" id="cc" name="card_number" maxlength="16" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group small">
+                            <label for="expiry">Expiry Date (MM/YY):</label>
+                             <input type="text" id="expiry" name="expiry" maxlength="5" required>
+                        </div>
+                        <div class="form-group small">
+                            <label for="cvv">CVV:</label>
+                            <input type="text" id="cvv" name="cvv" maxlength="3" required>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Billing Address</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="street">Street:</label>
+                        <input type="text" id="street" name="street" placeholder="Street Address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City:</label>
+                        <input type="text" id="city" name="city" placeholder="City" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="state">State:</label>
+                        <input type="text" id="state" name="state" placeholder="State" maxlength="2" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="zip">Zip Code:</label>
+                        <input type="text" id="zip" name="zip" placeholder="Zip Code" maxlength="5" required>
+                    </div>
+                </div>
+
+                <div class="button-container">
+                    <button type="submit" class="btn">Make Payment</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+
+<!--========== FOOTER ==========-->
+<footer class="footer section bd-container">
     <div class="footer__container bd-grid">
         <div class="footer__content">
             <a href="#" class="footer__logo">Sam's Kitchen</a>
@@ -120,7 +134,7 @@
                 <a href="#" class="footer__social"><i class='bx bxl-twitter'></i></a>
             </div>
         </div>
-    
+
         <div class="footer__content">
             <h3 class="footer__title">Information</h3>
             <ul>
@@ -130,7 +144,7 @@
                 <li><a href="#" class="footer__link">Terms of services</a></li>
             </ul>
         </div>
-    
+
         <div class="footer__content">
             <h3 class="footer__title">Address</h3>
             <ul>
@@ -141,7 +155,7 @@
             </ul>
         </div>
     </div>
-    
+
     <p class="footer__copy">&#169; 2024 Team Sams. All rights reserved</p>
 </footer>
 <!--========== FOOTER ENDS ==========-->
@@ -155,7 +169,8 @@
 <!--========== SCROLL REVEAL ==========-->
 <script src="https://unpkg.com/scrollreveal"></script>
 
-<!--========== MAIN JS ==========-->
-<script src="static/styles/js/main.js"></script>
+<!--========== payment JS ==========-->
+<script src="{{ url_for('static',filename='styles/js/payment.js') }}"></script>
+
 </body>
 </html>
