@@ -1,0 +1,215 @@
+{
+    "type": "table",
+    "database": null,
+    "name": "item",
+    "withoutRowId": false,
+    "strict": false,
+    "ddl": "CREATE TABLE item (\n\titem_id INTEGER NOT NULL, \n\tname VARCHAR(30) NOT NULL, \n\tdescription VARCHAR(50) NOT NULL, \n\tprice INTEGER NOT NULL, \n\tsource VARCHAR(30) NOT NULL, \n\torderer INTEGER, category TEXT, \n\tPRIMARY KEY (item_id), \n\tFOREIGN KEY(orderer) REFERENCES user (id)\n);",
+    "columns": [
+        {
+            "name": "item_id",
+            "type": "INTEGER",
+            "constraints": [
+                {
+                    "type": "NOT NULL",
+                    "definition": "NOT NULL"
+                }
+            ]
+        },
+        {
+            "name": "name",
+            "type": "VARCHAR",
+            "constraints": [
+                {
+                    "type": "NOT NULL",
+                    "definition": "NOT NULL"
+                }
+            ]
+        },
+        {
+            "name": "description",
+            "type": "VARCHAR",
+            "constraints": [
+                {
+                    "type": "NOT NULL",
+                    "definition": "NOT NULL"
+                }
+            ]
+        },
+        {
+            "name": "price",
+            "type": "INTEGER",
+            "constraints": [
+                {
+                    "type": "NOT NULL",
+                    "definition": "NOT NULL"
+                }
+            ]
+        },
+        {
+            "name": "source",
+            "type": "VARCHAR",
+            "constraints": [
+                {
+                    "type": "NOT NULL",
+                    "definition": "NOT NULL"
+                }
+            ]
+        },
+        {
+            "name": "orderer",
+            "type": "INTEGER"
+        },
+        {
+            "name": "category",
+            "type": "TEXT"
+        }
+    ],
+    "constraints": [
+        {
+            "type": "PRIMARY KEY",
+            "definition": "PRIMARY KEY (item_id)"
+        },
+        {
+            "type": "FOREIGN KEY",
+            "definition": "FOREIGN KEY(orderer) REFERENCES user (id)\n"
+        }
+    ],
+    "rows": [
+        [
+            1,
+            "Samosas",
+            "Crispy, triangular pastries filled with spice potatoes and peas.",
+            12,
+            "samosa.png",
+            null,
+            "Appetizers"
+        ],
+        [
+            2,
+            "Tandoori Chicken",
+            "Roasted chicken marinated in yogurt and spice",
+            10,
+            "TandooriChicken.png",
+            null,
+            "Appetizers"
+        ],
+        [
+            3,
+            "Chicken Biryani",
+            "Basmati rice cooked with chicken, spices, and saffron.",
+            21,
+            "chickenBiryani.png",
+            null,
+            "Biryani"
+        ],
+        [
+            4,
+            "Lamb Biryani",
+            "Basmati rice cooked with lamb, spices, and saffron.",
+            22,
+            "lambBiryani.png",
+            null,
+            "Biryani"
+        ],
+        [
+            5,
+            "Chicken Tikka Masala  ",
+            "Marinated chicken cooked in a creamy tomato sauce.",
+            21,
+            "chickentikka.png",
+            null,
+            "Curry"
+        ],
+        [
+            6,
+            "Butter Chicken  ",
+            "Tender chicken cooked in a creamy tomato sauce with butter.",
+            19,
+            "ChilliPaneer.png",
+            1,
+            "Curry"
+        ],
+        [
+            7,
+            "Naan   ",
+            "Soft, leavened bread.",
+            3,
+            "naan.png",
+            null,
+            "Breads"
+        ],
+        [
+            8,
+            "Roti ",
+            "Unleavened bread.",
+            3,
+            "roti.png",
+            null,
+            "Breads"
+        ],
+        [
+            9,
+            "Gulab Jamun ",
+            "Sweet, deep-fried dough balls soaked in a rose-flavored syrup.",
+            5,
+            "gulabjamun.png",
+            null,
+            "Desserts"
+        ],
+        [
+            10,
+            "Paneer Skewer",
+            "Cubes of paneer, crunchy sweet peppers, and onions marinated in yogurt and warm spices.",
+            14,
+            "PaneerSkewer.png",
+            null,
+            "Appetizers"
+        ],
+        [
+            11,
+            "Vegetable Biryani",
+            "Basmati rice cooked with vegetables, spices, and saffron.",
+            17,
+            "VegetableBiryani.png",
+            null,
+            "Biryani"
+        ],
+        [
+            12,
+            "Prawn Curry",
+            "A dish made with prawns in a flavorful sauce",
+            9,
+            "PrawnCurry.png",
+            null,
+            "Curry"
+        ],
+        [
+            13,
+            "Butter Naan",
+            "Naan with butter",
+            4,
+            "ButterNaan.png",
+            null,
+            "Breads"
+        ],
+        [
+            14,
+            "Laddu",
+            "A wonderful concoction of milk, sugar, gram flour or chickpea flour, and dry fruits",
+            5,
+            "Laddu.png",
+            null,
+            "Desserts"
+        ],
+        [
+            15,
+            "Jalebi",
+            "Deep-fried batter made into intricate spiral shapes and soaked in a sugar syrup.",
+            4,
+            "Jalebi.png",
+            null,
+            "Desserts"
+        ]
+    ]
+}

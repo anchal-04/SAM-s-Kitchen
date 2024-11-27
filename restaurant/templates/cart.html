@@ -32,7 +32,7 @@
    	   	  </div>
 
    	   	  <div class="prices">
-   	   	  	<div class="amount">₹ {{ selected_item.price }}</div>
+   	   	  	<div class="amount">$ {{ selected_item.price }}</div>
    	   	  	<div class="remove"><i class='bx bxs-trash-alt'></i></div> 
    	   	  </div>
         
@@ -46,7 +46,7 @@
 					<div class="Subtotal">Sub-Total</div>
 					<div class="items"> X items</div>
 				</div>
-				<div class="total-amount">₹ {{ selected_items | sum(attribute='price') }}</div>
+				<div class="total-amount">$ {{ selected_items | sum(attribute='price') }}</div>
 			</div>
 			<form method = 'POST'>
 				<!-- Note: This part seems useless -->

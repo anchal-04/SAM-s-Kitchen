@@ -71,41 +71,44 @@ def menu_page():
 def order_page():
     add_form = AddForm()
     if request.method == 'POST':
-        selected_item = request.form.get('selected_item') #get the selected item from the menu page
-        s_item_object = Item.query.filter_by(name = selected_item).first()
+        selected_item = request.form.get('selected_item')
+        s_item_object = Item.query.filter_by(name=selected_item).first()
         if s_item_object:
-            s_item_object.assign_ownership(current_user) #assign ownership of the ordered item to the user
-        
-        return redirect(url_for('order_page'))
-    
-    if request.method == 'GET':
-        print(" inside get")
-        items = Item.query.all()
-        print(f"Items fetched: {items}")
-        print(" inside get 1", items)
-        return render_template('order.html', items = items, add_form = add_form)
+            # Use the new add_to_cart method
+            s_item_object.add_to_cart(current_user)
 
+        return redirect(url_for('order_page'))
+
+    if request.method == 'GET':
+        items = Item.query.all()
+        return render_template('order.html', items=items, add_form=add_form)
 #CART PAGE
 @app.route('/cart', methods = ['GET', 'POST'])
 def cart_page():
     order_form = OrderForm()
     if request.method == 'POST':
-        ordered_item = request.form.get('ordered_item') #get the ordered item(s) from the cart page
-        o_item_object = Item.query.filter_by(name = ordered_item).first()
-        order_info = Order(name = current_user.fullname,
-                           address = current_user.address,
-                           order_items = o_item_object.name ) 
+        ordered_item = request.form.get('ordered_item')
+        o_item_object = Item.query.filter_by(name=ordered_item).first()
+
+        order_info = Order(
+            name=current_user.username,
+            address=current_user.address,
+            order_items=o_item_object.name
+        )
 
         db.session.add(order_info)
         db.session.commit()
 
-        o_item_object.remove_ownership(current_user)    
-        #return congrats page on successfull order
-        return redirect(url_for('congrats_page'))
-    
+        # Remove cart and ownership
+        o_item_object.remove_from_cart()
+        o_item_object.remove_ownership(current_user)
+
+        return redirect(url_for('payment_page'))
+
     if request.method == 'GET':
-        selected_items = Item.query.filter_by(orderer = current_user.id)#get items which user has added to the cart
-        return render_template('cart.html', order_form = order_form, selected_items = selected_items)
+        # Get items in cart for current user
+        selected_items = Item.query.filter_by(orderer=current_user.id, in_cart=True)
+        return render_template('cart.html', order_form=order_form, selected_items=selected_items)
 @app.route('/payment', methods=['GET', 'POST'])
 def payment_page():
     if request.method == 'POST':

@@ -74,6 +74,7 @@ class Item(db.Model):
     #suggestion: you might want to change 'owner' to 'orderer'/ 'customer'
     orderer = db.Column(db.Integer(), db.ForeignKey('user.id'))  #used to store info regarding user's ordered item
     category = db.Column(db.String(length= 30), nullable = False)
+    in_cart = db.Column(db.Boolean, default=False)  # Add this line
     #function for assigning ownership to the user's selected item
     def assign_ownership(self, user):
         self.orderer = user.id 
@@ -81,6 +82,15 @@ class Item(db.Model):
 
     def remove_ownership(self, user):
         self.orderer = None
+        db.session.commit()
+
+    def add_to_cart(self, user):
+        self.orderer = user.id
+        self.in_cart = True
+        db.session.commit()
+
+    def remove_from_cart(self):
+        self.in_cart = False
         db.session.commit()
 
 #item1 = Item( name = "Barbecue Salad", description = "Delicious Dish", price = 200, source = "plate1.png" )
