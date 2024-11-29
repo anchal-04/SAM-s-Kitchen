@@ -1,11 +1,12 @@
 from restaurant import app, api
 from flask import jsonify, render_template, redirect, url_for, flash, request, session, Response
 from restaurant.models import Table, User, Item, Order
-from restaurant.forms import RegisterForm, LoginForm, OrderIDForm, ReserveForm, AddForm, OrderForm
+from restaurant.forms import RegisterForm, LoginForm, OrderIDForm, ReserveForm, AddForm, OrderForm, PaymentForm
 from restaurant import db
 from flask_login import login_user, logout_user, login_required, current_user
 from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_mail import Mail, Message
+import uuid
 mail = Mail(app)
 @app.route('/')
 #HOME PAGE
@@ -71,17 +72,21 @@ def menu_page():
 def order_page():
     add_form = AddForm()
     if request.method == 'POST':
-        selected_item = request.form.get('selected_item')
+        selected_item = request.form.get('selected_item')  # get the selected item from the menu page
         s_item_object = Item.query.filter_by(name=selected_item).first()
         if s_item_object:
-            # Use the new add_to_cart method
-            s_item_object.add_to_cart(current_user)
+            s_item_object.assign_ownership(current_user)  # assign ownership of the ordered item to the user
 
         return redirect(url_for('order_page'))
 
     if request.method == 'GET':
+        print(" inside get")
         items = Item.query.all()
+        print(f"Items fetched: {items}")
+        print(" inside get 1", items)
         return render_template('order.html', items=items, add_form=add_form)
+
+
 #CART PAGE
 @app.route('/cart', methods = ['GET', 'POST'])
 def cart_page():
@@ -107,10 +112,65 @@ def cart_page():
 
     if request.method == 'GET':
         # Get items in cart for current user
-        selected_items = Item.query.filter_by(orderer=current_user.id, in_cart=True)
+        selected_items = list(Item.query.filter_by(orderer=current_user.id, in_cart=True))
+
         return render_template('cart.html', order_form=order_form, selected_items=selected_items)
+
+
+@app.route('/cart/modify', methods=['POST'])
+@login_required
+def modify_cart():
+    # Print out all debugging information
+    print("Current User ID:", current_user.id)
+    print("Current User Username:", current_user.username)
+
+    item_id = request.form.get('item_id')
+    action = request.form.get('action')
+
+    print(f"Received Item ID: {item_id}")
+    print(f"Action: {action}")
+
+    # Detailed item query investigation
+    item = Item.query.get(item_id)
+
+    if not item:
+        print(f"No item found with ID: {item_id}")
+        return jsonify({'error': 'Item not found in database.'}), 400
+
+    print(f"Item found: {item.name}")
+    print(f"Item Orderer ID: {item.orderer}")
+    print(f"Item In Cart: {item.in_cart}")
+
+    # Detailed check of all user's cart items
+    user_cart_items = Item.query.filter_by(orderer=current_user.id, in_cart=True).all()
+    print("User's Cart Items:")
+    for cart_item in user_cart_items:
+        print(f"- {cart_item.name} (ID: {cart_item.item_id})")
+
+    if not item or item.orderer != current_user.id or not item.in_cart:
+        return jsonify({'error': 'Item not found in your cart.'}), 400
+
+    if action == 'increase':
+        item.increase_quantity()
+    elif action == 'decrease' and item.quantity > 1:
+        item.decrease_quantity()
+
+    db.session.commit()
+
+    # Calculate updated totals
+    cart_items = Item.query.filter_by(orderer=current_user.id, in_cart=True).all()
+    total_items = sum(item.quantity for item in cart_items)
+    total_price = sum(item.price * item.quantity for item in cart_items)
+
+    return jsonify({
+        'total_items': total_items,
+        'total_price': total_price,
+        'item_quantity': item.quantity
+    })
 @app.route('/payment', methods=['GET', 'POST'])
+@login_required
 def payment_page():
+    payment_form = PaymentForm()
     if request.method == 'POST':
         # Get form data
         name = request.form.get('name')
@@ -124,12 +184,65 @@ def payment_page():
         state = request.form.get('state')
         zip_code = request.form.get('zip')
 
-        # Add your payment processing logic here
+        # Generate a unique order ID
+        order_id = str(uuid.uuid4())[:8].upper()  # Generates a short unique ID
 
-        # For now, just flash a message
+        # Create an order record
+        order_info = Order(
+            order_id=order_id,
+            name=current_user.username,
+            address=f"{street}, {city}, {state} {zip_code}",
+            order_items=", ".join(
+                [item.name for item in Item.query.filter_by(orderer=current_user.id, in_cart=True).all()])
+        )
+        db.session.add(order_info)
+        db.session.commit()
+
+        # Send confirmation email
+        try:
+            msg = Message('Order Confirmation from Sam\'s Kitchen',
+                          sender='noreply@samskitchen.com',
+                          recipients=[email])
+            msg.body = f"""
+                Dear {name},
+
+                Thank you for your order from Sam's Kitchen!
+
+                Order Details:
+                Order ID: {order_id}
+                Total Items: {len(list(Item.query.filter_by(orderer=current_user.id, in_cart=True).all()))}
+
+                We will process your order shortly. Please provide your Order ID or Phone number for pick-up.
+
+                Thank you for choosing Sam's Kitchen!
+
+                Best regards,
+                Sam's Kitchen Team
+                """
+            mail.send(msg)
+        except Exception as e:
+            print(f"Error sending email: {e}")
+            flash('Order confirmed, but email confirmation failed.', 'warning')
+
+        # Clear the cart
+        cart_items = Item.query.filter_by(orderer=current_user.id, in_cart=True).all()
+        for item in cart_items:
+            item.remove_from_cart()
+            item.remove_ownership(current_user)
+
+        # Store order ID in session for congrats page
+        session['order_id'] = order_id
+
         flash('Payment processed successfully!', 'success')
         return redirect(url_for('congrats_page'))
 
+    if request.method == 'GET':
+        # Get items in cart for current user
+        selected_items = Item.query.filter_by(orderer=current_user.id, in_cart=True)
+        total_price = sum(item.price for item in selected_items)
+        return render_template('payment.html', payment_form=payment_form, selected_items=selected_items,
+                               total_price=total_price, fullname=current_user.fullname,
+                               phone_number=current_user.phone_number)
 
     return render_template('payment.html')
 
@@ -138,7 +251,8 @@ def payment_page():
 #CONGRATULATIONS PAGE
 @app.route('/congrats')
 def congrats_page():
-    return render_template('congrats.html')   
+    order_id = session.get('order_id', 'N/A')
+    return render_template('congrats.html', order_id=order_id)
 
 #TABLE RESERVATION PAGE
 @app.route('/table', methods = ['GET', 'POST'])
@@ -186,9 +300,15 @@ def return_login():
 #LOGOUT FUNCTIONALITY
 @app.route('/logout')
 def logout():
-    logout_user() #used to log out
-    flash('You have been logged out!', category = 'info')
-    return redirect(url_for("home_page")) 
+    # Clear user's cart items when logging out
+    cart_items = Item.query.filter_by(orderer=current_user.id, in_cart=True).all()
+    for item in cart_items:
+        item.remove_from_cart()
+        item.remove_ownership(current_user)
+
+    logout_user()  # Flask-Login logout
+    session.clear()  # Clear entire session
+    return redirect(url_for('home_page'))
 
 #REGISTER PAGE
 @app.route('/register', methods = ['GET', 'POST'])

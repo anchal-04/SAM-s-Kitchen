@@ -74,23 +74,13 @@ class Item(db.Model):
     #suggestion: you might want to change 'owner' to 'orderer'/ 'customer'
     orderer = db.Column(db.Integer(), db.ForeignKey('user.id'))  #used to store info regarding user's ordered item
     category = db.Column(db.String(length= 30), nullable = False)
-    in_cart = db.Column(db.Boolean, default=False)  # Add this line
     #function for assigning ownership to the user's selected item
     def assign_ownership(self, user):
-        self.orderer = user.id 
+        self.orderer = user.id
         db.session.commit()
 
     def remove_ownership(self, user):
         self.orderer = None
-        db.session.commit()
-
-    def add_to_cart(self, user):
-        self.orderer = user.id
-        self.in_cart = True
-        db.session.commit()
-
-    def remove_from_cart(self):
-        self.in_cart = False
         db.session.commit()
 
 #item1 = Item( name = "Barbecue Salad", description = "Delicious Dish", price = 200, source = "plate1.png" )
@@ -107,20 +97,160 @@ class Item(db.Model):
 
 #ORDERS TABLE
 class Order(db.Model):
-    order_id = db.Column(db.Integer(), primary_key = True)
-    name = db.Column(db.String(length = 30), db.ForeignKey('user.username'))
-    address = db.Column(db.String(length = 30), nullable = False)
-    order_items = db.Column(db.String(length = 300), nullable = False)
-    datetime = db.Column(db.DateTime(timezone = True), server_default = func.now())
+    order_id = db.Column(db.Integer(), primary_key=True)
+    orderer = db.Column(db.String(length=30), db.ForeignKey('user.username'))
+    datetime = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    order_placed = db.Column(db.Integer(), nullable=False, default=0)
 
-    #function for assigning ownership to the user's order
-    # def set_info(self, user):
-    #     self.name = user.username
-    #     self.addresss = user.address 
-    #     # self.order_items = item.name #where name has orderer
-    #     db.session.commit()
+    @classmethod
+    def create_order(cls, user):
+        """
+        Create a new order for a user
 
-#CART TABLE
+        :param user: User object
+        :return: Created order object or None if failed
+        """
+        try:
+            new_order = cls(
+                orderer=user.username,
+                order_placed=0  # Initial state is not placed
+            )
+            db.session.add(new_order)
+            db.session.commit()
+            return new_order
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error creating order: {e}")
+            return None
 
 
+class Cart(db.Model):
+    cart_id = db.Column(db.Integer(), primary_key=True)
+    orderer = db.Column(db.String(length=30), db.ForeignKey('user.username'))
+    item_id = db.Column(db.String(length=30), db.ForeignKey('item.item_id'))
+    order_id = db.Column(db.Integer(), db.ForeignKey('order.order_id'))
+    item_qty = db.Column(db.Integer(), nullable=False, default=1)
+    datetime = db.Column(db.DateTime(timezone=True), server_default=func.now())
 
+    @classmethod
+    def place_order(cls, user):
+        """
+        Place an order for all items in the user's cart
+
+        :param user: User object
+        :return: Boolean indicating success
+        """
+        try:
+            # Find the most recent unplaced order for the user
+            order = Order.query.filter_by(
+                orderer=user.username,
+                order_placed=0
+            ).order_by(Order.datetime.desc()).first()
+
+            if not order:
+                print("No active order found")
+                return False
+
+            # Check if cart has items
+            cart_items = cls.query.filter_by(orderer=user.username, order_id=order.order_id).all()
+
+            if not cart_items:
+                print("Cart is empty")
+                return False
+
+            # Mark the order as placed
+            order.order_placed = 1
+            db.session.commit()
+
+            return True
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error placing order: {e}")
+            return False
+
+    @classmethod
+    def cleanup_unplaced_orders(cls, user):
+        """
+        Delete unplaced orders and their associated cart items
+
+        :param user: User object
+        :return: Number of orders deleted
+        """
+        try:
+            # Find unplaced orders for the user
+            unplaced_orders = Order.query.filter_by(
+                orderer=user.username,
+                order_placed=0
+            ).all()
+
+            order_count = len(unplaced_orders)
+
+            # Delete cart items for these unplaced orders
+            for order in unplaced_orders:
+                cls.query.filter_by(
+                    orderer=user.username,
+                    order_id=order.order_id
+                ).delete()
+
+                # Delete the order itself
+                db.session.delete(order)
+
+            db.session.commit()
+            return order_count
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error cleaning up unplaced orders: {e}")
+            return 0
+
+    @classmethod
+    def get_user_orders(cls, user, placed_only=False):
+        """
+        Retrieve orders with their cart items for a specific user
+
+        :param user: User object
+        :param placed_only: If True, only return placed orders
+        :return: List of orders with their items
+        """
+        try:
+            # Base query for orders
+            order_query = Order.query.filter_by(orderer=user.username)
+
+            if placed_only:
+                order_query = order_query.filter_by(order_placed=1)
+
+            # Retrieve orders
+            orders = order_query.order_by(Order.datetime.desc()).all()
+
+            # Prepare orders with their items
+            order_details = []
+            for order in orders:
+                # Get cart items for this order
+                cart_items = cls.query.filter_by(
+                    orderer=user.username,
+                    order_id=order.order_id
+                ).all()
+
+                order_details.append({
+                    'order': order,
+                    'items': cart_items
+                })
+
+            return order_details
+        except Exception as e:
+            print(f"Error retrieving user orders: {e}")
+            return []
+
+    def delete_cart_item(self):
+        """
+        Delete the current cart item
+
+        :return: Boolean indicating success
+        """
+        try:
+            db.session.delete(self)
+            db.session.commit()
+            return True
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error deleting cart item: {e}")
+            return False

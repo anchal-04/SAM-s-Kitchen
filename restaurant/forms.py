@@ -28,3 +28,6 @@ class AddForm(FlaskForm):
     
 class OrderForm(FlaskForm):
     submit = SubmitField(label = 'Order Now')
+
+class PaymentForm(FlaskForm):
+    submit = SubmitField(label = 'Pay Now')
