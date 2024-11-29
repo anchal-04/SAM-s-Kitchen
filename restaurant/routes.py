@@ -1,6 +1,6 @@
 from restaurant import app, api
 from flask import jsonify, render_template, redirect, url_for, flash, request, session, Response
-from restaurant.models import Table, User, Item, Order
+from restaurant.models import Table, User, Item, Order, Cart
 from restaurant.forms import RegisterForm, LoginForm, OrderIDForm, ReserveForm, AddForm, OrderForm, PaymentForm
 from restaurant import db
 from flask_login import login_user, logout_user, login_required, current_user
@@ -88,84 +88,182 @@ def order_page():
 
 
 #CART PAGE
-@app.route('/cart', methods = ['GET', 'POST'])
+@app.route('/cart', methods=['GET', 'POST'])
+@login_required
 def cart_page():
-    order_form = OrderForm()
+    # Find or create an active (unplaced) order for the user
+    active_order = Order.query.filter_by(
+        orderer=current_user.username,
+        order_placed=0
+    ).first()
+
+    if not active_order:
+        active_order = Order.create_order(current_user)
+
+    error_message = None
+    total_price=0
     if request.method == 'POST':
-        ordered_item = request.form.get('ordered_item')
-        o_item_object = Item.query.filter_by(name=ordered_item).first()
+        # Check if cart is empty
+        cart_items = Cart.query.filter_by(
+            orderer=current_user.username,
+            order_id=active_order.order_id
+        ).all()
 
-        order_info = Order(
-            name=current_user.username,
-            address=current_user.address,
-            order_items=o_item_object.name
-        )
+        if not cart_items:
+            error_message = "Your cart is empty. Add items before placing an order."
+            # Render the template with the error
+            return render_template(
+                'cart.html',
+                cart_items=[],
+                total_price=0,
+                error_message=error_message
+            )
 
-        db.session.add(order_info)
-        db.session.commit()
+        # Place the order
+        success = Cart.place_order(current_user)
 
-        # Remove cart and ownership
-        o_item_object.remove_from_cart()
-        o_item_object.remove_ownership(current_user)
-
-        return redirect(url_for('payment_page'))
+        if success:
+            return redirect(url_for('payment_page'))
+        else:
+            error_message = "Unable to place order. Please check your cart."
+            return render_template(
+                'cart.html',
+                cart_items=cart_items,
+                total_price=sum(
+                    (item.item_qty or 0) * (Item.query.get(item.item_id).price or 0)
+                    for item in cart_items
+                ),
+                error_message=error_message
+            )
 
     if request.method == 'GET':
-        # Get items in cart for current user
-        selected_items = list(Item.query.filter_by(orderer=current_user.id, in_cart=True))
+        # Get cart items for the active order
+        cart_items = Cart.query.filter_by(
+            orderer=current_user.username,
+            order_id=active_order.order_id
+        ).all()
 
-        return render_template('cart.html', order_form=order_form, selected_items=selected_items)
+        # Attach item information to cart items
+        for cart_item in cart_items:
+            cart_item.item_info = Item.query.get(cart_item.item_id)
+
+        # Calculate total price
+        total_price = sum(
+            item.item_qty * Item.query.get(item.item_id).price
+            for item in cart_items
+        ) if cart_items else 0
+
+        return render_template(
+            'cart.html',
+            cart_items=cart_items,
+            total_price=total_price,
+            error_message = error_message
+        )
 
 
 @app.route('/cart/modify', methods=['POST'])
 @login_required
 def modify_cart():
-    # Print out all debugging information
-    print("Current User ID:", current_user.id)
-    print("Current User Username:", current_user.username)
-
     item_id = request.form.get('item_id')
     action = request.form.get('action')
 
-    print(f"Received Item ID: {item_id}")
-    print(f"Action: {action}")
+    # Find the active (unplaced) order for the user
+    active_order = Order.query.filter_by(
+        orderer=current_user.username,
+        order_placed=0
+    ).first()
 
-    # Detailed item query investigation
-    item = Item.query.get(item_id)
+    if not active_order:
+        return jsonify({'error': 'No active order found.'}), 400
 
-    if not item:
-        print(f"No item found with ID: {item_id}")
-        return jsonify({'error': 'Item not found in database.'}), 400
+    # Find the specific cart item
+    cart_item = Cart.query.filter_by(
+        orderer=current_user.username,
+        item_id=item_id,
+        order_id=active_order.order_id
+    ).first()
 
-    print(f"Item found: {item.name}")
-    print(f"Item Orderer ID: {item.orderer}")
-    print(f"Item In Cart: {item.in_cart}")
-
-    # Detailed check of all user's cart items
-    user_cart_items = Item.query.filter_by(orderer=current_user.id, in_cart=True).all()
-    print("User's Cart Items:")
-    for cart_item in user_cart_items:
-        print(f"- {cart_item.name} (ID: {cart_item.item_id})")
-
-    if not item or item.orderer != current_user.id or not item.in_cart:
+    if not cart_item:
         return jsonify({'error': 'Item not found in your cart.'}), 400
 
+    # Get the item details
+    item = Item.query.get(item_id)
+    if not item:
+        return jsonify({'error': 'Item not found in database.'}), 400
+
+    # Modify cart item quantity
     if action == 'increase':
-        item.increase_quantity()
-    elif action == 'decrease' and item.quantity > 1:
-        item.decrease_quantity()
+        cart_item.increase_quantity(max_quantity=item.stock)
+    elif action == 'decrease':
+        if cart_item.item_qty <= 1:
+            # If quantity is 1 or less, delete the cart item
+            cart_item.delete_cart_item()
+        else:
+            cart_item.decrease_quantity()
 
-    db.session.commit()
+    # Recalculate cart totals
+    cart_items = Cart.query.filter_by(
+        orderer=current_user.username,
+        order_id=active_order.order_id
+    ).all()
 
-    # Calculate updated totals
-    cart_items = Item.query.filter_by(orderer=current_user.id, in_cart=True).all()
-    total_items = sum(item.quantity for item in cart_items)
-    total_price = sum(item.price * item.quantity for item in cart_items)
+    total_items = sum(cart_item.item_qty for cart_item in cart_items)
+    total_price = sum(
+        cart_item.item_qty * Item.query.get(cart_item.item_id).price
+        for cart_item in cart_items
+    )
 
     return jsonify({
         'total_items': total_items,
         'total_price': total_price,
-        'item_quantity': item.quantity
+        'item_quantity': cart_item.item_qty if cart_item else 0
+    })
+
+
+@app.route('/cart/add_item', methods=['POST'])
+@login_required
+def add_to_cart():
+    item_id = request.form.get('item_id')
+
+    # Find or create an active order
+    active_order = Order.query.filter_by(
+        orderer=current_user.username,
+        order_placed=0
+    ).first()
+
+    if not active_order:
+        active_order = Order.create_order(current_user)
+
+    # Check if item exists
+    item = Item.query.get(item_id)
+    if not item:
+        return jsonify({'error': 'Item not found'}), 400
+
+    # Check if item is already in cart
+    existing_cart_item = Cart.query.filter_by(
+        orderer=current_user.username,
+        item_id=item_id,
+        order_id=active_order.order_id
+    ).first()
+
+    if existing_cart_item:
+        # If item exists, increase quantity
+        existing_cart_item.increase_quantity(max_quantity=item.stock)
+    else:
+        # Create new cart item
+        new_cart_item = Cart(
+            orderer=current_user.username,
+            item_id=item_id,
+            order_id=active_order.order_id,
+            item_qty=1
+        )
+        db.session.add(new_cart_item)
+
+    db.session.commit()
+
+    return jsonify({
+        'message': 'Item added to cart successfully',
+        'item_name': item.name
     })
 @app.route('/payment', methods=['GET', 'POST'])
 @login_required

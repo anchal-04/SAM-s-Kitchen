@@ -76,6 +76,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!isValid) {
         event.preventDefault();
         }
+    else
+    {
+
+    }
     };
 });
 // Function to display inline error message
@@ -87,7 +91,7 @@ function showError(inputId, message) {
 
     // Create an error message element
     const errorLabel = document.createElement("span");
-    errorLabel.style.color = "red";
+    errorLabel.style.color = "#f75050";
     errorLabel.style.fontSize = "12px";
     errorLabel.style.marginTop = "5px";
     errorLabel.innerText = message;

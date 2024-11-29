@@ -74,13 +74,6 @@ body{
 	font-weight: 800;
 	color: #202020;
 }
-.subtitle{
-	line-height: 10px;
-	font-size: 18px;
-	font-family: 'Open Sans';
-	font-weight: 600;
-	color: #909090;
-}
 
 .counter{
 	width: 15%;
@@ -204,3 +197,23 @@ hr{
 .menu__img{
     width: 130px;
   }
+
+.error-message {
+    margin-top: 10px;
+    color: #f75050; /* Red color */
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px; /* Adjust based on your layout */
+}
+
+.subtitle {
+    color: #666;
+    font-size: 0.9em;
+}

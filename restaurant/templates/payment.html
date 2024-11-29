@@ -48,8 +48,13 @@
 <!--========== HEADER ENDS ==========-->
 
 <main>
-    <section class="section bd-container">
-        <h1 class="section-title">Complete Your Order</h1>
+    <section class="section bd-container payment">
+      <div class="order-header">
+            <h1 class="section-title">Complete Your Order</h1>
+            <div id="order-total" class="total-display">
+                Total: $<span id="total-amount"> {{ total_price }}</span>
+            </div>
+      </div>
         <!-- Payment Form Section -->
         <div class="payment">
             <h2>Payment Information</h2>
@@ -57,37 +62,37 @@
                 <!-- Name and Phone Number Side by Side -->
                 <div class="form-row">
                     <div class="form-group small">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" placeholder="Your Name As On the Card" required>
+                        <label for="name"><sup>*</sup>Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Your Name As On the Card" value="{{ fullname }}">
                     </div>
                 </div>
 
                 <!-- Email and Card Type Side by Side -->
                 <div class="form-row">
                     <div class="form-group small">
-                        <label for="email">Email:</label>
+                        <label for="email"><sup>*</sup>Email:</label>
                         <input type="text" id="email" name="email" placeholder="Your Email" required>
                     </div>
                      <div class="form-group">
-                        <label for="number">Phone Number:</label>
-                        <input type="text" id="number" name="number" placeholder="Area code and number" maxlength="10"  required>
+                        <label for="number"><sup>*</sup>Phone Number:</label>
+                        <input type="text" id="number" name="number" placeholder="Area code and number" maxlength="10" value="{{ phone_number }}">
                     </div>
                 </div>
 
                 <!-- Card Number, Expiry Date, and CVV -->
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="cc">Credit Card Number:</label>
-                        <input type="text" id="cc" name="card_number" maxlength="16" required>
+                        <label for="cc"><sup>*</sup>Credit Card Number:</label>
+                        <input type="text" id="cc" name="card_number" maxlength="16" >
                     </div>
                     <div class="form-row">
                         <div class="form-group small">
-                            <label for="expiry">Expiry Date (MM/YY):</label>
-                             <input type="text" id="expiry" name="expiry" maxlength="5" required>
+                            <label for="expiry"><sup>*</sup>Expiry Date (MM/YY):</label>
+                             <input type="text" id="expiry" name="expiry" maxlength="5" >
                         </div>
                         <div class="form-group small">
-                            <label for="cvv">CVV:</label>
-                            <input type="text" id="cvv" name="cvv" maxlength="3" required>
+                            <label for="cvv"><sup>*</sup>CVV:</label>
+                            <input type="text" id="cvv" name="cvv" maxlength="3" >
                         </div>
                     </div>
                 </div>
@@ -96,24 +101,24 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="street">Street:</label>
-                        <input type="text" id="street" name="street" placeholder="Street Address" required>
+                        <input type="text" id="street" name="street" placeholder="Street Address" >
                     </div>
                     <div class="form-group">
                         <label for="city">City:</label>
-                        <input type="text" id="city" name="city" placeholder="City" required>
+                        <input type="text" id="city" name="city" placeholder="City" >
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="state">State:</label>
-                        <input type="text" id="state" name="state" placeholder="State" maxlength="2" required>
+                        <label for="state"><sup>*</sup>State:</label>
+                        <input type="text" id="state" name="state" placeholder="State" maxlength="2" >
                     </div>
                     <div class="form-group">
-                        <label for="zip">Zip Code:</label>
-                        <input type="text" id="zip" name="zip" placeholder="Zip Code" maxlength="5" required>
+                        <label for="zip"><sup>*</sup>Zip Code:</label>
+                        <input type="text" id="zip" name="zip" placeholder="Zip Code" maxlength="5" >
                     </div>
                 </div>
-
+                <div class="reqfield"><sup>*</sup> is a required field</div>
                 <div class="button-container">
                     <button type="submit" class="btn">Make Payment</button>
                 </div>
