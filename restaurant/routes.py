@@ -118,6 +118,8 @@ def cart_page():
                 total_price=0,
                 error_message=error_message
             )
+        else:
+            return redirect(url_for('payment_page'))
 
 
 
@@ -298,14 +300,13 @@ def remove_cart_item():
 @login_required
 def payment_page():
     payment_form = PaymentForm()
+
     # Find or create an active (unplaced) order for the user
     active_order = Order.query.filter_by(
         orderer=current_user.username,
         order_placed=0
     ).first()
 
-    if not active_order:
-        active_order = Order.create_order(current_user)
 
     error_message = None
     if request.method == 'POST':
@@ -321,87 +322,89 @@ def payment_page():
         state = request.form.get('state')
         zip_code = request.form.get('zip')
 
-        # Find or create an active (unplaced) order for the user
-        active_order = Order.query.filter_by(
-            orderer=current_user.username,
-            order_placed=0
-        ).first()
+        if active_order:
+            # Get cart items for the active order
+            cart_items = Cart.query.filter_by(
+                orderer=current_user.username,
+                order_id=active_order.order_id
+            ).all()
 
-        if not active_order:
-            active_order = Order.create_order(current_user)
+            # Attach item information to cart items
+            for cart_item in cart_items:
+                cart_item.item_info = Item.query.get(cart_item.item_id)
 
+            # Calculate total price
+            total_price = sum(
+                item.item_qty * Item.query.get(item.item_id).price
+                for item in cart_items
+            ) if cart_items else 0
 
-        # Get cart items for the active order
-        cart_items = Cart.query.filter_by(
-            orderer=current_user.username,
-            order_id=active_order.order_id
-        ).all()
+            # Generate a formatted list of ordered items
+            ordered_items = "\n".join(
+                f"{cart_item.item_info.name} (Quantity: {cart_item.item_qty}, "
+                f"Price: ${cart_item.item_info.price:.2f}, "
+                f"Total: ${cart_item.item_qty * cart_item.item_info.price:.2f})"
+                for cart_item in cart_items
+            )
 
-        # Calculate total price
-        total_price = sum(
-            item.item_qty * Item.query.get(item.item_id).price
-            for item in cart_items
-        ) if cart_items else 0
+            # Place the order
+            success = Cart.place_order(current_user)
 
-        # Generate a formatted list of ordered items
-        ordered_items = "\n".join(
-            f"{cart_item.item_info.name} (Quantity: {cart_item.item_qty}, "
-            f"Price: ${cart_item.item_info.price:.2f}, "
-            f"Total: ${cart_item.item_qty * cart_item.item_info.price:.2f})"
-            for cart_item in cart_items
-        )
+            if success:
+                try:
+                    msg = Message('Order Confirmation from Sam\'s Kitchen',
+                                  sender='noreply@samskitchen.com',
+                                  recipients=[email])
+                    msg.body = f"""
+                    Dear {name},
+    
+                    Thank you for your order from Sam's Kitchen!
+    
+                    Order Details:
+                    Order ID: {active_order.order_id}
+                    Total Price: ${total_price:.2f}
+                    Ordered Items:
+                    {ordered_items}
+    
+                    We will process your order shortly. Please provide your Order ID or Phone number for pick-up.
+    
+                    Thank you for choosing Sam's Kitchen!
+    
+                    Best regards,
+                    Sam's Kitchen Team
+                    """
+                    mail.send(msg)
+                except Exception as e:
+                    error_message = 'Order confirmed, but email confirmation failed.'
+                    # Clear the cart
 
-        # Place the order
-        success = Cart.place_order(current_user)
-
-        if success:
-            try:
-                msg = Message('Order Confirmation from Sam\'s Kitchen',
-                              sender='noreply@samskitchen.com',
-                              recipients=[email])
-                msg.body = f"""
-                Dear {name},
-
-                Thank you for your order from Sam's Kitchen!
-
-                Order Details:
-                Order ID: {active_order.order_id}
-                Total Price: ${total_price:.2f}
-                Ordered Items:
-                {ordered_items}
-
-                We will process your order shortly. Please provide your Order ID or Phone number for pick-up.
-
-                Thank you for choosing Sam's Kitchen!
-
-                Best regards,
-                Sam's Kitchen Team
-                """
-                mail.send(msg)
-            except Exception as e:
-                error_message = 'Order confirmed, but email confirmation failed.'
-                # Clear the cart
-
-            for item in cart_items:
-                item.delete_cart_item()
+                for item in cart_items:
+                    item.delete_cart_item()
 
 
-            # Store order ID in session for congrats page
-            session['order_id'] = active_order.order_id
+                # Store order ID in session for congrats page
+                session['order_id'] = active_order.order_id
 
-            return redirect(url_for('congrats_page'))
+                return redirect(url_for('congrats_page'))
+            else:
+                error_message = "Unable to place order. Please check your cart."
+                return render_template(
+                    'payment.html',
+                    error_message=error_message
+                )
         else:
-            error_message = "Unable to place order. Please check your cart."
+            error_message = "No active order was found!"
             return render_template(
                 'payment.html',
                 error_message=error_message
             )
 
 
-
     if request.method == 'GET':
         # Get items in cart for current user
         # Get cart items for the active order
+        if not active_order:
+            active_order = Order.create_order(current_user)
         cart_items = Cart.query.filter_by(
             orderer=current_user.username,
             order_id=active_order.order_id
