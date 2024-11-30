@@ -60,10 +60,7 @@ def menu_page():
         return redirect(url_for('menu_page'))
     
     if request.method == 'GET':
-        print(" inside get")
         items = Item.query.all()
-        print(f"Items fetched: {items}")
-        print(" inside get 1", items)
         return render_template('menu.html', items = items, add_form = add_form)
 
 #MENU PAGE
@@ -383,6 +380,7 @@ def login_page():
             # flash(f'Signed in successfully as: {attempted_user.username}', category = 'success')
             return redirect(url_for('home_page'))
         else:
+            print("inside else of login")
             flash('Username or password is incorrect! Please Try Again', category = 'danger') #displayed in case user is not registered
     return render_template('login.html', forml = forml, form = form)
 
@@ -417,6 +415,7 @@ def register_page():
     if form.validate_on_submit():
          user_to_create = User(username = form.username.data,
                                fullname = form.fullname.data,
+                               email = form.email.data,
                                address = form.address.data,
                                phone_number = form.phone_number.data,
                                password = form.password1.data,)
