@@ -63,6 +63,44 @@ def menu_page():
         items = Item.query.all()
         return render_template('menu.html', items = items, add_form = add_form)
 
+
+# SEARCH FUNCTIONALITY
+@app.route('/search', methods=['GET'])
+def search_items():
+    query = request.args.get('query', '').strip()
+    add_form = AddForm()
+    print("query ", query)
+    if query:
+        # Perform case-insensitive search on name, description, and category
+        items = Item.query.filter(
+            (Item.name.ilike(f"%{query}%"))
+            # (Item.description.ilike(f"%{query}%")) |
+            # (Item.category.ilike(f"%{query}%"))
+        ).all()
+        print("items ", items)
+    else:
+        items = Item.query.all()
+    return render_template('menu.html', items=items, add_form=add_form, query=query)
+
+
+# FILTER FUNCTIONALITY
+@app.route('/filter', methods=['GET'])
+def filter_items():
+    category = request.args.get('category', '').strip()
+    add_form = AddForm()
+    print("category ", category)
+    if category == 'Veg':
+        items = Item.query.filter(Item.isVeg == True).all()
+    elif category == 'Non-Veg':
+        items = Item.query.filter(Item.isVeg == False).all()
+    elif category:
+        items = Item.query.filter(Item.category == category).all()
+    else:
+        items = Item.query.all()  # Show all items if no category selected
+
+    return render_template('menu.html', items=items, add_form=add_form, query=None, category=category)
+
+
 #MENU PAGE
 @app.route('/order', methods = ['GET', 'POST'])
 @login_required

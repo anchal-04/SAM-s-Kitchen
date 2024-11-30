@@ -70,18 +70,77 @@
     <h2 class="section-title">Menu</h2>
 
     <!-- SEARCH BOX -->
-{#    <div class="search-box">#}
-{#        <button class="btn-search"><i class='bx bxs-search'></i></button>#}
-{#        <input type="text" class="input-search" placeholder="Search..">#}
-{#      </div>#}
-    <!-- SEARCH BOX ENDS -->
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <!-- SEARCH FORM -->
+    <form action="/search" method="get" class="search-box">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <input type="text" name="query" class="input-search" placeholder="Search..." value="{{ query or '' }}">
+            <button class="btn-search" type="submit"><i class='bx bxs-search'></i> Search</button>
+        </div>
+    </form>
+
+    <!-- FILTER BUTTON -->
+    <button
+        onclick="toggleFilter()"
+        style="background-color: #ff4500; color: white; padding: 0.5rem 1rem; border: none; cursor: pointer; font-size: 1rem; border-radius: 5px;">
+        Filter
+    </button>
+</div>
+
+<!-- FILTER OPTIONS (Initially Hidden) -->
+<div id="filter-options" style="display: none; position: relative; top: 60px; right: 10px;  padding: 1rem; ">
+    <form action="/filter" method="get">
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <!-- Filter by Category -->
+            <label style="font-size: 1rem; cursor: pointer;">
+                <input type="radio" name="category" value="Appetizers" {% if category == 'Appetizers' %}checked{% endif %}>
+                Appetizers
+            </label>
+            <label style="font-size: 1rem; cursor: pointer;">
+                <input type="radio" name="category" value="Biryani" {% if category == 'Biryani' %}checked{% endif %}>
+                Biryani
+            </label>
+            <label style="font-size: 1rem; cursor: pointer;">
+                <input type="radio" name="category" value="Curry" {% if category == 'Curry' %}checked{% endif %}>
+                Curry
+            </label>
+            <label style="font-size: 1rem; cursor: pointer;">
+                <input type="radio" name="category" value="Breads" {% if category == 'Breads' %}checked{% endif %}>
+                Breads
+            </label>
+            <label style="font-size: 1rem; cursor: pointer;">
+                <input type="radio" name="category" value="Desserts" {% if category == 'Desserts' %}checked{% endif %}>
+                Desserts
+            </label>
+            <label style="font-size: 1rem; cursor: pointer;">
+                <input type="radio" name="category" value="Veg" {% if category == 'Veg' %}checked{% endif %}>
+                Veg
+            </label>
+            <label style="font-size: 1rem; cursor: pointer;">
+                <input type="radio" name="category" value="Non-Veg" {% if category == 'Non-Veg' %}checked{% endif %}>
+                Non-Veg
+            </label>
+            <label style="font-size: 1rem; cursor: pointer;">
+                <input type="radio" name="category" value="" {% if not category %}checked{% endif %}>
+                All Categories
+            </label>
+            <button type="submit"
+                    style="background-color: #28a745; color: white; padding: 0.5rem 1rem; border: none; cursor: pointer; font-size: 1rem; border-radius: 5px; margin-top: 1rem;">
+                Apply Filter
+            </button>
+        </div>
+    </form>
+</div>
+
 
     <!-- ========== ITEMS ==========-->
+{% set has_appetizers = items | selectattr('category', 'equalto', 'Appetizers') | list %}
+         {% if has_appetizers %}
          <h3 style="padding-left: 44%; padding-right: 45%">Appetizers</h3>
 
         <div class="menu__container bd-grid">
-        {% for item in items %}
-            {% if item.category == 'Appetizers' %}
+        {% for item in has_appetizers %}
+{#            {% if item.category == 'Appetizers' %}#}
                 <div class="menu__content">
                     <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
                     <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
@@ -109,16 +168,19 @@
                     </form>-->
 
                 </div>
-            {% endif %}
+{#            {% endif %}#}
         {% endfor %}
 
     </div>
+{% endif %}
 
+{% set has_biryani = items | selectattr('category', 'equalto', 'Biryani') | list %}
+         {% if has_biryani %}
          <h3 style="padding-left: 44%; padding-right: 45%; padding-top: 5%">Biryani</h3>
 
           <div class="menu__container bd-grid">
-        {% for item in items %}
-            {% if item.category == 'Biryani' %}
+        {% for item in has_biryani %}
+{#            {% if item.category == 'Biryani' %}#}
                 <div class="menu__content">
                     <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
                     <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
@@ -145,15 +207,18 @@
                     </form>-->
 
                 </div>
-            {% endif %}
+{#            {% endif %}#}
         {% endfor %}
 
     </div>
+{% endif %}
 
+{% set has_curry = items | selectattr('category', 'equalto', 'Curry') | list %}
+         {% if has_curry %}
         <h3 style="padding-left: 44%; padding-right: 45%; padding-top: 5%">Curry</h3>
          <div class="menu__container bd-grid">
-        {% for item in items %}
-            {% if item.category == 'Curry' %}
+        {% for item in has_curry %}
+{#            {% if item.category == 'Curry' %}#}
                 <div class="menu__content">
                     <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
                     <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
@@ -180,15 +245,18 @@
                     </form>-->
 
                 </div>
-            {% endif %}
+{#            {% endif %}#}
         {% endfor %}
 
     </div>
+{% endif %}
 
-       <h3 style="padding-left: 44%; padding-right: 45%; padding-top: 5%">Breads</h3>
+        {% set has_breads = items | selectattr('category', 'equalto', 'Breads') | list %}
+         {% if has_breads %}
+             <h3 style="padding-left: 44%; padding-right: 45%; padding-top: 5%">Breads</h3>
  <div class="menu__container bd-grid">
-        {% for item in items %}
-            {% if item.category == 'Breads' %}
+        {% for item in has_breads %}
+{#            {% if item.category == 'Breads' %}#}
                 <div class="menu__content">
                     <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
                     <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
@@ -215,14 +283,18 @@
                     </form>-->
 
                 </div>
-            {% endif %}
+{#            {% endif %}#}
         {% endfor %}
 
     </div>
+{% endif %}
+
+ {% set has_desserts = items | selectattr('category', 'equalto', 'Desserts') | list %}
+         {% if has_desserts %}
        <h3 style="padding-left: 44%; padding-right: 45%; padding-top: 5%">Desserts</h3>
  <div class="menu__container bd-grid">
-        {% for item in items %}
-            {% if item.category == 'Desserts' %}
+        {% for item in has_desserts %}
+{#            {% if item.category == 'Desserts' %}#}
                 <div class="menu__content">
                     <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
                     <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
@@ -249,10 +321,11 @@
                     </form>-->
 
                 </div>
-            {% endif %}
+{#            {% endif %}#}
         {% endfor %}
 
     </div>
+{% endif %}
 </section>
 <!-- ========== MENU ENDS ==========-->
 
@@ -299,6 +372,18 @@
 
 <!--========== MAIN JS ==========-->
 <script src="static/styles/js/main.js"></script>
+
+    <script>
+            function toggleFilter() {
+                // Toggle the display style of the filter options
+                const filterOptions = document.getElementById('filter-options');
+                if (filterOptions.style.display === 'none') {
+                    filterOptions.style.display = 'block';
+                } else {
+                    filterOptions.style.display = 'none';
+                }
+            }
+        </script>
 
 
 </body>
