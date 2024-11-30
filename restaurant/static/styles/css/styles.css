@@ -8,7 +8,7 @@
 
   /*========== Colors ==========*/
   /*========== Colors ==========*/
-  --first-color: #dd4c49;
+  --first-color: #f75050;
   --first-color-alt: #63b663;
   --title-color: #FBFEFD;
   --text-color:  #FFFFFF;
@@ -860,57 +860,30 @@ button.btn:hover {
 .payment .form-group span {
     margin-top: 5px;
     font-size: 12px;
-    color: red;
+    color: #f75050;
 }
 
-/* Modal Styles */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+/* Parent container for heading and total */
+.payment .order-header {
+    display: flex; /* Enable flex layout */
+    justify-content: space-between; /* Space items across the container */
+    align-items: center; /* Vertically align items */
+    width: 100%; /* Ensure the header spans the full width */
 }
 
-.modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 300px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+/* Heading styling */
+.payment .section-title {
+   font-size: 36px; /* Adjust size as needed */
+    font-weight: bold; /* Make it stand out */
+    margin: 0; /* Optional: Remove extra margin */
 }
 
-.quantity-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin: 15px 0;
+/* Total display styling */
+.payment .total-display {
+   font-size: 24px; /* Slightly smaller than "Complete Your Order" */
+    font-weight: normal; /* Normal weight for less emphasis */
+    color: #d5d4d4; /* Optional: Add slight color variation */
 }
 
-button {
-    cursor: pointer;
-}
 
-.final-add-button {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-}
 
-.close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 1.5rem;
-}

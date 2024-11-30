@@ -33,6 +33,11 @@
         <p>Your Order ID is: <strong>{{ order_id }}</strong></p>
         <p>You can use this Order ID to track your delivery.</p>
     </div>
+           {% if error_message %}
+                     <div class="error-message">
+                         {{ error_message }}
+                     </div>
+                {% endif %}
     <a href="{{ url_for('home_page') }}" class="btn btn-primary">Return to Home</a>
     <a href="{{ url_for('track_page') }}" class="btn btn-secondary">Track Your Order</a>
 </div>

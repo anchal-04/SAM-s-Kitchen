@@ -53,8 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
         isValid = false;
     }
 
-       // Validate cc
-    if (!ccRegex.test(cvv)) {
+       // Validate cvv
+    if (!cvvRegex.test(cvv)) {
         showError("cvv", "CVV must be 3 digits.");
         isValid = false;
     }

@@ -175,23 +175,10 @@ def cart_page():
                 total_price=0,
                 error_message=error_message
             )
-
-        # Place the order
-        success = Cart.place_order(current_user)
-
-        if success:
-            return redirect(url_for('payment_page'))
         else:
-            error_message = "Unable to place order. Please check your cart."
-            return render_template(
-                'cart.html',
-                cart_items=cart_items,
-                total_price=sum(
-                    (item.item_qty or 0) * (Item.query.get(item.item_id).price or 0)
-                    for item in cart_items
-                ),
-                error_message=error_message
-            )
+            return redirect(url_for('payment_page'))
+
+
 
     if request.method == 'GET':
         # Get cart items for the active order
@@ -250,7 +237,7 @@ def modify_cart():
 
     # Modify cart item quantity
     if action == 'increase':
-        cart_item.increase_quantity(max_quantity=item.stock)
+        cart_item.increase_quantity()
     elif action == 'decrease':
         if cart_item.item_qty <= 1:
             # If quantity is 1 or less, delete the cart item
@@ -335,10 +322,63 @@ def add_to_cart():
         'message': 'Item added to cart successfully',
         # 'item_name': item.name
     })
+@app.route('/cart/remove_item', methods=['POST'])
+@login_required
+def remove_cart_item():
+    item_id = request.form.get('item_id')
+
+    # Find the active (unplaced) order for the user
+    active_order = Order.query.filter_by(
+        orderer=current_user.username,
+        order_placed=0
+    ).first()
+
+    if not active_order:
+        return jsonify({'error': 'No active order found.'}), 400
+
+    # Find the specific cart item
+    cart_item = Cart.query.filter_by(
+        orderer=current_user.username,
+        item_id=item_id,
+        order_id=active_order.order_id
+    ).first()
+
+    if not cart_item:
+        return jsonify({'error': 'Item not found in your cart.'}), 400
+
+    # Delete the cart item
+    cart_item.delete_cart_item()
+
+    # Recalculate cart totals
+    cart_items = Cart.query.filter_by(
+        orderer=current_user.username,
+        order_id=active_order.order_id
+    ).all()
+
+    total_items = sum(cart_item.item_qty for cart_item in cart_items)
+    total_price = sum(
+        cart_item.item_qty * Item.query.get(cart_item.item_id).price
+        for cart_item in cart_items
+    )
+
+    return jsonify({
+        'total_items': total_items,
+        'total_price': total_price,
+        'message': 'Item removed successfully'
+    })
 @app.route('/payment', methods=['GET', 'POST'])
 @login_required
 def payment_page():
     payment_form = PaymentForm()
+
+    # Find or create an active (unplaced) order for the user
+    active_order = Order.query.filter_by(
+        orderer=current_user.username,
+        order_placed=0
+    ).first()
+
+
+    error_message = None
     if request.method == 'POST':
         # Get form data
         name = request.form.get('name')
@@ -352,68 +392,107 @@ def payment_page():
         state = request.form.get('state')
         zip_code = request.form.get('zip')
 
-        # Generate a unique order ID
-        order_id = str(uuid.uuid4())[:8].upper()  # Generates a short unique ID
+        if active_order:
+            # Get cart items for the active order
+            cart_items = Cart.query.filter_by(
+                orderer=current_user.username,
+                order_id=active_order.order_id
+            ).all()
 
-        # Create an order record
-        order_info = Order(
-            order_id=order_id,
-            name=current_user.username,
-            address=f"{street}, {city}, {state} {zip_code}",
-            order_items=", ".join(
-                [item.name for item in Item.query.filter_by(orderer=current_user.id, in_cart=True).all()])
-        )
-        db.session.add(order_info)
-        db.session.commit()
+            # Attach item information to cart items
+            for cart_item in cart_items:
+                cart_item.item_info = Item.query.get(cart_item.item_id)
 
-        # Send confirmation email
-        try:
-            msg = Message('Order Confirmation from Sam\'s Kitchen',
-                          sender='noreply@samskitchen.com',
-                          recipients=[email])
-            msg.body = f"""
-                Dear {name},
+            # Calculate total price
+            total_price = sum(
+                item.item_qty * Item.query.get(item.item_id).price
+                for item in cart_items
+            ) if cart_items else 0
 
-                Thank you for your order from Sam's Kitchen!
+            # Generate a formatted list of ordered items
+            ordered_items = "\n".join(
+                f"{cart_item.item_info.name} (Quantity: {cart_item.item_qty}, "
+                f"Price: ${cart_item.item_info.price:.2f}, "
+                f"Total: ${cart_item.item_qty * cart_item.item_info.price:.2f})"
+                for cart_item in cart_items
+            )
 
-                Order Details:
-                Order ID: {order_id}
-                Total Items: {len(list(Item.query.filter_by(orderer=current_user.id, in_cart=True).all()))}
+            # Place the order
+            success = Cart.place_order(current_user)
 
-                We will process your order shortly. Please provide your Order ID or Phone number for pick-up.
+            if success:
+                try:
+                    msg = Message('Order Confirmation from Sam\'s Kitchen',
+                                  sender='noreply@samskitchen.com',
+                                  recipients=[email])
+                    msg.body = f"""
+                    Dear {name},
+    
+                    Thank you for your order from Sam's Kitchen!
+    
+                    Order Details:
+                    Order ID: {active_order.order_id}
+                    Total Price: ${total_price:.2f}
+                    Ordered Items:
+                    {ordered_items}
+    
+                    We will process your order shortly. Please provide your Order ID or Phone number for pick-up.
+    
+                    Thank you for choosing Sam's Kitchen!
+    
+                    Best regards,
+                    Sam's Kitchen Team
+                    """
+                    mail.send(msg)
+                except Exception as e:
+                    error_message = 'Order confirmed, but email confirmation failed.'
+                    # Clear the cart
 
-                Thank you for choosing Sam's Kitchen!
+                for item in cart_items:
+                    item.delete_cart_item()
 
-                Best regards,
-                Sam's Kitchen Team
-                """
-            mail.send(msg)
-        except Exception as e:
-            print(f"Error sending email: {e}")
-            flash('Order confirmed, but email confirmation failed.', 'warning')
 
-        # Clear the cart
-        cart_items = Item.query.filter_by(orderer=current_user.id, in_cart=True).all()
-        for item in cart_items:
-            item.remove_from_cart()
-            item.remove_ownership(current_user)
+                # Store order ID in session for congrats page
+                session['order_id'] = active_order.order_id
 
-        # Store order ID in session for congrats page
-        session['order_id'] = order_id
+                return redirect(url_for('congrats_page'))
+            else:
+                error_message = "Unable to place order. Please check your cart."
+                return render_template(
+                    'payment.html',
+                    error_message=error_message
+                )
+        else:
+            error_message = "No active order was found!"
+            return render_template(
+                'payment.html',
+                error_message=error_message
+            )
 
-        flash('Payment processed successfully!', 'success')
-        return redirect(url_for('congrats_page'))
 
     if request.method == 'GET':
         # Get items in cart for current user
-        selected_items = Item.query.filter_by(orderer=current_user.id, in_cart=True)
-        total_price = sum(item.price for item in selected_items)
-        return render_template('payment.html', payment_form=payment_form, selected_items=selected_items,
-                               total_price=total_price, fullname=current_user.fullname,
-                               phone_number=current_user.phone_number)
+        # Get cart items for the active order
+        if not active_order:
+            active_order = Order.create_order(current_user)
+        cart_items = Cart.query.filter_by(
+            orderer=current_user.username,
+            order_id=active_order.order_id
+        ).all()
 
-    return render_template('payment.html')
+        # Calculate total price
+        total_price = sum(
+            item.item_qty * Item.query.get(item.item_id).price
+            for item in cart_items
+        ) if cart_items else 0
 
+        return render_template(
+            'payment.html',
+            total_price=total_price,
+            fullname=current_user.fullname,
+            phone_number=current_user.phone_number,
+            error_message=error_message
+        )
 
 
 #CONGRATULATIONS PAGE
