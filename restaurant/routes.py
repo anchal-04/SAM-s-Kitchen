@@ -65,30 +65,37 @@ def menu_page():
 
 
 # SEARCH FUNCTIONALITY
-@app.route('/search', methods=['GET'])
-def search_items():
+@app.route('/search-menu', methods=['GET'])
+def search_menu_items():
     query = request.args.get('query', '').strip()
     add_form = AddForm()
-    print("query ", query)
     if query:
         # Perform case-insensitive search on name, description, and category
         items = Item.query.filter(
             (Item.name.ilike(f"%{query}%"))
-            # (Item.description.ilike(f"%{query}%")) |
-            # (Item.category.ilike(f"%{query}%"))
         ).all()
-        print("items ", items)
     else:
         items = Item.query.all()
     return render_template('menu.html', items=items, add_form=add_form, query=query)
 
+@app.route('/search-order', methods=['GET'])
+def search_order_items():
+    query = request.args.get('query', '').strip()
+    add_form = AddForm()
+    if query:
+        # Perform case-insensitive search on name, description, and category
+        items = Item.query.filter(
+            (Item.name.ilike(f"%{query}%"))
+        ).all()
+    else:
+        items = Item.query.all()
+    return render_template('order.html', items=items, add_form=add_form, query=query)
 
 # FILTER FUNCTIONALITY
-@app.route('/filter', methods=['GET'])
-def filter_items():
+@app.route('/filter-menu', methods=['GET'])
+def filter_menu_items():
     category = request.args.get('category', '').strip()
     add_form = AddForm()
-    print("category ", category)
     if category == 'Veg':
         items = Item.query.filter(Item.isVeg == True).all()
     elif category == 'Non-Veg':
@@ -99,6 +106,21 @@ def filter_items():
         items = Item.query.all()  # Show all items if no category selected
 
     return render_template('menu.html', items=items, add_form=add_form, query=None, category=category)
+
+@app.route('/filter-order', methods=['GET'])
+def filter_order_items():
+    category = request.args.get('category', '').strip()
+    add_form = AddForm()
+    if category == 'Veg':
+        items = Item.query.filter(Item.isVeg == True).all()
+    elif category == 'Non-Veg':
+        items = Item.query.filter(Item.isVeg == False).all()
+    elif category:
+        items = Item.query.filter(Item.category == category).all()
+    else:
+        items = Item.query.all()  # Show all items if no category selected
+
+    return render_template('order.html', items=items, add_form=add_form, query=None, category=category)
 
 
 #MENU PAGE
