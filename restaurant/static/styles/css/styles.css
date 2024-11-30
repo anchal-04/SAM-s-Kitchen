@@ -8,7 +8,7 @@
 
   /*========== Colors ==========*/
   /*========== Colors ==========*/
-  --first-color: #dd4c49;
+  --first-color: #f75050;
   --first-color-alt: #63b663;
   --title-color: #FBFEFD;
   --text-color:  #FFFFFF;
@@ -860,5 +860,31 @@ button.btn:hover {
 .payment .form-group span {
     margin-top: 5px;
     font-size: 12px;
-    color: red;
+    color: #f75050;
 }
+
+/* Parent container for heading and total */
+.payment .order-header {
+    display: flex; /* Enable flex layout */
+    justify-content: space-between; /* Space items across the container */
+    align-items: center; /* Vertically align items */
+    width: 100%; /* Ensure the header spans the full width */
+}
+
+/* Heading styling */
+.payment .section-title {
+   font-size: 36px; /* Adjust size as needed */
+    font-weight: bold; /* Make it stand out */
+    margin: 0; /* Optional: Remove extra margin */
+}
+
+/* Total display styling */
+.payment .total-display {
+   font-size: 24px; /* Slightly smaller than "Complete Your Order" */
+    font-weight: normal; /* Normal weight for less emphasis */
+    color: #d5d4d4; /* Optional: Add slight color variation */
+}
+
+
+
+

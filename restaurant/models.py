@@ -132,6 +132,46 @@ class Cart(db.Model):
     item_qty = db.Column(db.Integer(), nullable=False, default=1)
     datetime = db.Column(db.DateTime(timezone=True), server_default=func.now())
 
+    def increase_quantity(self, max_quantity=5):
+        """Increase quantity of the cart item"""
+        try:
+            if self.item_qty < max_quantity:
+                self.item_qty += 1
+                db.session.commit()
+            return self.item_qty
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error increasing quantity: {e}")
+            return None
+
+    def decrease_quantity(self):
+        """Decrease quantity of the cart item"""
+        try:
+            if self.item_qty <= 1:
+                db.session.delete(self)
+            else:
+                self.item_qty -= 1
+            db.session.commit()
+            return self.item_qty
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error decreasing quantity: {e}")
+            return None
+
+    def delete_cart_item(self):
+        """
+        Delete the current cart item
+
+        :return: Boolean indicating success
+        """
+        try:
+            db.session.delete(self)
+            db.session.commit()
+            return True
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error deleting cart item: {e}")
+            return False
     @classmethod
     def place_order(cls, user):
         """
@@ -240,17 +280,3 @@ class Cart(db.Model):
             print(f"Error retrieving user orders: {e}")
             return []
 
-    def delete_cart_item(self):
-        """
-        Delete the current cart item
-
-        :return: Boolean indicating success
-        """
-        try:
-            db.session.delete(self)
-            db.session.commit()
-            return True
-        except Exception as e:
-            db.session.rollback()
-            print(f"Error deleting cart item: {e}")
-            return False

@@ -36,13 +36,14 @@
             </div>
 
             <div class="prices">
-                <div class="amount">${{ item.price }}</div>
-                <div class="remove">Remove</div>
+                <div class="amount">${{ item.price }} each</div>
+                <button class="remove remove-item" data-item-id="{{ item.item_id }}">Remove</button>
             </div>
         </div>
     {% endfor %}
 
     <div class="checkout">
+        <div class="total">
         <div class="total">
             <div class="Subtotal">Sub-Total</div>
             <div class="items">{{ cart_items | sum(attribute='item_qty') }} items</div>
@@ -61,6 +62,7 @@
 
 <script>
     $(document).ready(function () {
+        // Increase or decrease quantity
         $('.increase-btn, .decrease-btn').on('click', function () {
             var itemId = $(this).data('item-id');
             var action = $(this).hasClass('increase-btn') ? 'increase' : 'decrease';
@@ -83,12 +85,51 @@
                     $(".count[data-item-id='" + itemId + "']").text(response.item_quantity);
                 },
                 error: function (xhr) {
-                    alert('Error modifying cart: ' + xhr.responseJSON.error);
+                    displayError('Error modifying cart: ' + xhr.responseJSON.error);
                 }
             });
         });
+
+        // Remove item from cart
+        $('.remove-item').on('click', function () {
+            const itemId = $(this).data('item-id');
+
+            fetch("{{ url_for('remove_cart_item') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `item_id=${itemId}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    displayError(data.error);
+                } else {
+                    // Remove the item from the DOM
+                    $(this).closest('.Cart-Items').remove();
+
+                    // Update total items and price
+                    $('.items').text(data.total_items + ' items');
+                    $('.total-amount').text('$' + data.total_price.toFixed(2));
+                }
+            })
+            .catch(error => {
+                displayError('An error occurred while removing the item.');
+            });
+        });
+
+        // Function to display error messages in the error-message div
+        function displayError(message) {
+            const errorMessageDiv = document.querySelector('.error-message');
+            if (errorMessageDiv) {
+                errorMessageDiv.textContent = message;
+                errorMessageDiv.style.display = 'block';
+            }
+        }
     });
 </script>
+
 
 </body>
 </html>
