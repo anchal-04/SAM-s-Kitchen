@@ -280,7 +280,15 @@ def modify_cart():
 @app.route('/cart/add_item', methods=['POST'])
 @login_required
 def add_to_cart():
-    item_id = request.form.get('item_id')
+    print("inside add to cart python")
+    data = request.get_json()
+    print("data", data)
+    item_name = data.get('name')
+    quantity = data.get('quantity')
+    special_instructions = data.get('specialInstructions')
+    print("item_name", item_name)
+    print("quantity", quantity)
+    print("special_instructions", special_instructions)
 
     # Find or create an active order
     active_order = Order.query.filter_by(
@@ -291,10 +299,12 @@ def add_to_cart():
     if not active_order:
         active_order = Order.create_order(current_user)
 
-    # Check if item exists
-    item = Item.query.get(item_id)
-    if not item:
-        return jsonify({'error': 'Item not found'}), 400
+    print("active_order", active_order)
+    items = Item.query.filter_by(name=item_name).first()
+    print("item", items)
+
+    print("item_id", items.item_id)
+    item_id = items.item_id
 
     # Check if item is already in cart
     existing_cart_item = Cart.query.filter_by(
@@ -305,14 +315,17 @@ def add_to_cart():
 
     if existing_cart_item:
         # If item exists, increase quantity
-        existing_cart_item.increase_quantity(max_quantity=item.stock)
+        existing_cart_item.quantity = existing_cart_item.quantity+quantity
+        existing_cart_item.special_instructions = special_instructions
+        # existing_cart_item.increase_quantity(max_quantity=item)
     else:
         # Create new cart item
         new_cart_item = Cart(
             orderer=current_user.username,
             item_id=item_id,
             order_id=active_order.order_id,
-            item_qty=1
+            item_qty=1,
+            special_instructions = special_instructions
         )
         db.session.add(new_cart_item)
 
@@ -320,7 +333,7 @@ def add_to_cart():
 
     return jsonify({
         'message': 'Item added to cart successfully',
-        'item_name': item.name
+        # 'item_name': item.name
     })
 @app.route('/payment', methods=['GET', 'POST'])
 @login_required
@@ -409,7 +422,7 @@ def congrats_page():
     order_id = session.get('order_id', 'N/A')
     return render_template('congrats.html', order_id=order_id)
 
-#TABLE RESERVATION PAGE
+# TABLE RESERVATION PAGE
 @app.route('/table', methods = ['GET', 'POST'])
 @login_required
 def table_page():
@@ -493,53 +506,53 @@ def register_page():
     return render_template('login.html', form = form, forml = forml)
 
 #ORDER ID PAGE
-@app.route('/order_id', methods = ['GET', 'POST'])
-def track_page():
-    orderid = OrderIDForm()
-    # if request.method == "POST":
-    if orderid.validate_on_submit:
-        #check to see if order id matches
-        valid_orderid = Order.query.filter_by( order_id = orderid.orderid.data ).first()
-        if valid_orderid:
-            return redirect(url_for('delivery'))
-        else:
-            flash('Your Order-ID is invalid! Please Try Again.', category = 'danger')
-
-    return render_template('order-id.html', orderid = orderid)
+# @app.route('/order_id', methods = ['GET', 'POST'])
+# def track_page():
+#     orderid = OrderIDForm()
+#     # if request.method == "POST":
+#     if orderid.validate_on_submit:
+#         #check to see if order id matches
+#         valid_orderid = Order.query.filter_by( order_id = orderid.orderid.data ).first()
+#         if valid_orderid:
+#             return redirect(url_for('delivery'))
+#         else:
+#             flash('Your Order-ID is invalid! Please Try Again.', category = 'danger')
+#
+#     return render_template('order-id.html', orderid = orderid)
 
 #DELIVERY TRACKING PAGE
-@app.route('/deliverytracking')
-def delivery():
-    return render_template('track.html')
-
-#OTP VERIFICATION
-@app.route("/verify", methods=["GET", "POST"])
-def verify():
-    country_code = "+91"
-    phone_number = current_user.phone_number
-    method = "sms"
-    session['country_code'] = "+91"
-    session['phone_number'] = current_user.phone_number
-
-    api.phones.verification_start(phone_number, country_code, via=method)
-
-    if request.method == "POST":
-            token = request.form.get("token") #OTP user entered
-
-            phone_number = session.get("phone_number")
-            country_code = session.get("country_code")
-
-            verification = api.phones.verification_check(phone_number,
-                                                         country_code,
-                                                         token)
-
-            if verification.ok():
-                # return Response("<h1>Your Phone has been Verified successfully!</h1>")
-                return render_template("index.html")
-            else:
-                # return Response("<center><h1>Wrong OTP!</h1><center>")
-                flash('Your OTP is incorrect! Please Try Again', category = 'danger')
-
-    return render_template("otp.html")
-
+# @app.route('/deliverytracking')
+# def delivery():
+#     return render_template('track.html')
+#
+# #OTP VERIFICATION
+# @app.route("/verify", methods=["GET", "POST"])
+# def verify():
+#     country_code = "+91"
+#     phone_number = current_user.phone_number
+#     method = "sms"
+#     session['country_code'] = "+91"
+#     session['phone_number'] = current_user.phone_number
+#
+#     api.phones.verification_start(phone_number, country_code, via=method)
+#
+#     if request.method == "POST":
+#             token = request.form.get("token") #OTP user entered
+#
+#             phone_number = session.get("phone_number")
+#             country_code = session.get("country_code")
+#
+#             verification = api.phones.verification_check(phone_number,
+#                                                          country_code,
+#                                                          token)
+#
+#             if verification.ok():
+#                 # return Response("<h1>Your Phone has been Verified successfully!</h1>")
+#                 return render_template("index.html")
+#             else:
+#                 # return Response("<center><h1>Wrong OTP!</h1><center>")
+#                 flash('Your OTP is incorrect! Please Try Again', category = 'danger')
+#
+#     return render_template("otp.html")
+#
 

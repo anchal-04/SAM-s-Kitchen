@@ -167,12 +167,29 @@
                     <br>
                     <span class="menu__price">$ {{ item.price }}</span>
                     <!-- <a href="#" class="button menu__button"><i class='bx bx-cart-alt'></i></a> -->
-                    <form method='POST'>
-                        {{ add_form.hidden_tag() }}
-                        <input id="selected_item" name="selected_item" type="hidden" value="{{ item.name }}">
-                        {{ add_form.submit(class = 'button menu__button') }}
-                    </form>
+                    <button class="button menu__button" onclick="openModal('{{ item.name }}', '{{ item.price }}')">Add
+                    </button>
+                    <div id="itemModal" class="modal" style="display: none;">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <h3 id="modalItemName">{{ item.name }}</h3>
+                            <p>Price: $<span id="modalItemPrice">{{ item.price }}</span></p>
+                            <div class="quantity-container">
+                                <label>Quantity:</label>
+                                <button onclick="changeQuantity(-1)">-</button>
+                                <span id="quantity">1</span>
+                                <button onclick="changeQuantity(1)">+</button>
+                            </div>
+                            <div>
+                                <label for="specialInstructions">Special Instructions:</label>
+                                <textarea id="specialInstructions" rows="3"></textarea>
+                            </div>
 
+                                <button class="final-add-button" onclick="addToCart('{{ item.name }}')">Add to Cart</button>
+
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 {#            {% endif %}#}
             {% endfor %}
@@ -303,7 +320,7 @@
 
     {% set has_desserts = items | selectattr('category', 'equalto', 'Desserts') | list %}
     {% if has_desserts %}
-        <h3 style="padding-left: 45%; padding-right: 45%; padding-top: 5%">Desserts</h3>
+        <h3 style="padding-left: 44%; padding-right: 45%; padding-top: 5%">Desserts</h3>
         <div class="menu__container bd-grid">
             {% for item in has_desserts %}
                 {#            {% if item.category == 'Desserts' %}#}
@@ -335,12 +352,16 @@
                     </form>
 
                 </div>
-
+                {#            {% endif %}#}
             {% endfor %}
 
         </div>
     {% endif %}
+
 </section>
+
+<!-- Modal -->
+
 <!-- ========== MENU ENDS ==========-->
 
 <!--========== FOOTER ==========-->
@@ -400,6 +421,50 @@
     }
 </script>
 
+<script>
+    let currentQuantity = 1;
+
+    function openModal(itemName, itemPrice) {
+        document.getElementById('modalItemName').innerText = itemName;
+        document.getElementById('modalItemPrice').innerText = itemPrice;
+        document.getElementById('quantity').innerText = 1;
+        currentQuantity = 1;
+        document.getElementById('specialInstructions').value = '';
+        document.getElementById('itemModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('itemModal').style.display = 'none';
+    }
+
+    function changeQuantity(change) {
+        currentQuantity = Math.max(1, currentQuantity + change);
+        document.getElementById('quantity').innerText = currentQuantity;
+    }
+
+    function addToCart(itemName) {
+        const quantity = document.getElementById(`quantity`).value;
+        const specialInstructions = document.getElementById(`specialInstructions`).value;
+
+        fetch('http://127.0.0.1:5000/cart/add_item', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: itemName,
+                quantity: 1,
+                specialInstructions: specialInstructions
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message); // Display success message
+                closeModal(); // Close the pop-up
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
 
 </body>
 </html>

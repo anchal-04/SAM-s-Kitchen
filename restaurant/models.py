@@ -133,6 +133,7 @@ class Cart(db.Model):
     order_id = db.Column(db.Integer(), db.ForeignKey('order.order_id'))
     item_qty = db.Column(db.Integer(), nullable=False, default=1)
     datetime = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    special_instructions = db.Column(db.String(length=50), nullable=False, default="")
 
     @classmethod
     def place_order(cls, user):
