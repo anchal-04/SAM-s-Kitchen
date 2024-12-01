@@ -892,7 +892,7 @@ button.btn:hover {
     left: 0;
     top: 0;
     width: 100%; /* Full width */
-    height: 100%; /* Full height */
+    height: 90%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
 }
@@ -905,6 +905,21 @@ button.btn:hover {
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
     max-width: 500px; /* Set a max width for better design */
+}
+
+.close {
+    position: absolute; /* Position absolute to the modal content */
+    top: 220px; /* Adjust as needed for spacing from the top */
+    right: 480px; /* Adjust as needed for spacing from the right */
+    font-size: 24px; /* Make it larger for better visibility */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    color: #aaa; /* Light gray color for the close button */
+}
+
+.final-add-button{
+  background: #f75050;
+  color: white;
+  border-radius: .5rem;
 }
 
 
