@@ -302,7 +302,7 @@ def add_to_cart():
 
     if existing_cart_item:
         # If item exists, increase quantity
-        existing_cart_item.quantity = existing_cart_item.quantity+quantity
+        existing_cart_item.item_qty = existing_cart_item.item_qty+quantity
         existing_cart_item.special_instructions = special_instructions
         # existing_cart_item.increase_quantity(max_quantity=item)
     else:
@@ -312,7 +312,7 @@ def add_to_cart():
             item_id=item_id,
             order_id=active_order.order_id,
             item_qty=1,
-            special_instructions = special_instructions
+            special_instructions=special_instructions
         )
         db.session.add(new_cart_item)
 
@@ -320,7 +320,6 @@ def add_to_cart():
 
     return jsonify({
         'message': 'Item added to cart successfully',
-        # 'item_name': item.name
     })
 @app.route('/cart/remove_item', methods=['POST'])
 @login_required
