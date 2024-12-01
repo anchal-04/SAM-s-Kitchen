@@ -1,57 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!--========== BOX ICONS ==========-->
-        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+    <!--========== BOX ICONS ==========-->
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
 
-        <!--========== CSS ==========-->
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/css/styles.css') }}">
+    <!--========== CSS ==========-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/css/styles.css') }}">
 
-        <title>Order</title>
-    </head>
-    <body>
-        <!-- {% for mesg in get_flashed_messages() %}
+    <title>Order</title>
+</head>
+<body>
+<!-- {% for mesg in get_flashed_messages() %}
         <h1>{{ mesg }}</h1>
         {% endfor %} -->
 
-    <!--========== SCROLL TOP ==========-->
-    <a href="#" class="scrolltop" id="scroll-top">
-        <i class='bx bx-chevron-up scrolltop__icon'></i>
-    </a>
+<!--========== SCROLL TOP ==========-->
+<a href="#" class="scrolltop" id="scroll-top">
+    <i class='bx bx-chevron-up scrolltop__icon'></i>
+</a>
 
-    <!--========== HEADER ==========-->
-    <header class="l-header" id="header">
-        <nav class="nav bd-container">
-            <a href="#" class="nav__logo"><h1>Sam's Kitchen</h1></a>
+<!--========== HEADER ==========-->
+<header class="l-header" id="header">
+    <nav class="nav bd-container">
+        <a href="#" class="nav__logo"><h1>Sam's Kitchen</h1></a>
 
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list">
-                    <li class="nav__item"><a href="{{ url_for('home_page') }}" class="nav__link">Home</a></li>
-                    <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
-                    <li class="nav__item"><a href="{{ url_for('menu_page') }}" class="nav__link">Menu</a></li>
-                    <li class="nav__item"><a href="{{ url_for('order_page') }}" class="nav__link active-link">Order</a></li>
-                    <li class="nav__item"><a href="{{ url_for('contact_page') }}" class="nav__link">Contact us</a></li>
-                    {% if current_user.is_authenticated %}
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+                <li class="nav__item"><a href="{{ url_for('home_page') }}" class="nav__link">Home</a></li>
+                <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+                <li class="nav__item"><a href="{{ url_for('menu_page') }}" class="nav__link">Menu</a></li>
+                <li class="nav__item"><a href="{{ url_for('order_page') }}" class="nav__link active-link">Order</a></li>
+                <li class="nav__item"><a href="{{ url_for('contact_page') }}" class="nav__link">Contact us</a></li>
+                {% if current_user.is_authenticated %}
                     <li class="nav__item"><a href="{{ url_for('logout') }}" class="nav__link">Log Out</a></li>
-                    {% else %}
+                {% else %}
                     <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Log in</a></li>
                     <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Register</a></li>
-                    {% endif %}
-                    <!-- <li class="nav__item"><a href="index.html#contact" class="nav__link">Contact us</a></li> -->
-                    <li class="nav__item"><a href="{{ url_for('cart_page') }}" class="cart__button"><i class='bx bx-cart-alt'></i></a></li>
+                {% endif %}
+                <!-- <li class="nav__item"><a href="index.html#contact" class="nav__link">Contact us</a></li> -->
+                <li class="nav__item"><a href="{{ url_for('cart_page') }}" class="cart__button"><i
+                        class='bx bx-cart-alt'></i></a></li>
 
-                    <!--<li><i class='bx bx-moon change-theme' id="theme-button"></i></li>-->
-                </ul>
-            </div>
+                <!--<li><i class='bx bx-moon change-theme' id="theme-button"></i></li>-->
+            </ul>
+        </div>
 
-            <div class="nav__toggle" id="nav-toggle">
-                <i class='bx bx-menu'></i>
-            </div>
-        </nav>
-        <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+        <div class="nav__toggle" id="nav-toggle">
+            <i class='bx bx-menu'></i>
+        </div>
+    </nav>
+    <!-- {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
             {% for category, message in messages %}
                 <div class="alert alert-{{ category }}">
@@ -63,151 +64,343 @@
             {% endfor %}
             {% endif %}
         {% endwith %} -->
-    </header>
-    <!--========== HEADER ENDS ==========-->
+</header>
+<!--========== HEADER ENDS ==========-->
 <!-- ========== MENU ==========-->
 <section class="menu section bd-container" id="menu">
     <h2 class="section-title">Order</h2>
 
-    <!-- SEARCH BOX -->
-{#    <div class="search-box">#}
-{#        <button class="btn-search"><i class='bx bxs-search'></i></button>#}
-{#        <input type="text" class="input-search" placeholder="Search..">#}
-{#      </div>#}
-    <!-- SEARCH BOX ENDS -->
+
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <!-- SEARCH FORM -->
+        <form action="/search-order" method="get" class="search-box">
+            <div class="search-box">
+                <button class="btn-search"><i class='bx bxs-search'></i></button>
+                <input type="text" name="query" class="input-search" placeholder="Search..." value="{{ query or '' }}">
+            </div>
+        </form>
+
+
+        <!-- FILTER BUTTON -->
+        <button
+                onclick="toggleFilter()"
+                style="background-color: #f75050; color: white; padding: 0.5rem 1rem; border: none; cursor: pointer; font-size: 1rem; border-radius: 5px;">
+            Filter
+        </button>
+    </div>
+
+    <!-- FILTER OPTIONS (Initially Hidden) -->
+    <div id="filter-options" style="display: none; position: relative; top: 60px; right: 10px;  padding: 1rem; ">
+        <form action="/filter-order" method="get">
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <!-- Filter by Category -->
+                <label style="font-size: 1rem; cursor: pointer;">
+                    <input type="radio" name="category" value="Appetizers"
+                           {% if category == 'Appetizers' %}checked{% endif %}>
+                    Appetizers
+                </label>
+                <label style="font-size: 1rem; cursor: pointer;">
+                    <input type="radio" name="category" value="Biryani"
+                           {% if category == 'Biryani' %}checked{% endif %}>
+                    Biryani
+                </label>
+                <label style="font-size: 1rem; cursor: pointer;">
+                    <input type="radio" name="category" value="Curry" {% if category == 'Curry' %}checked{% endif %}>
+                    Curry
+                </label>
+                <label style="font-size: 1rem; cursor: pointer;">
+                    <input type="radio" name="category" value="Breads" {% if category == 'Breads' %}checked{% endif %}>
+                    Breads
+                </label>
+                <label style="font-size: 1rem; cursor: pointer;">
+                    <input type="radio" name="category" value="Desserts"
+                           {% if category == 'Desserts' %}checked{% endif %}>
+                    Desserts
+                </label>
+                <label style="font-size: 1rem; cursor: pointer;">
+                    <input type="radio" name="category" value="Veg" {% if category == 'Veg' %}checked{% endif %}>
+                    Veg
+                </label>
+                <label style="font-size: 1rem; cursor: pointer;">
+                    <input type="radio" name="category" value="Non-Veg"
+                           {% if category == 'Non-Veg' %}checked{% endif %}>
+                    Non-Veg
+                </label>
+                <label style="font-size: 1rem; cursor: pointer;">
+                    <input type="radio" name="category" value="" {% if not category %}checked{% endif %}>
+                    All Categories
+                </label>
+                <button type="submit"
+                        style="background-color: #28a745; color: white; padding: 0.5rem 1rem; border: none; cursor: pointer; font-size: 1rem; border-radius: 5px; margin-top: 1rem;">
+                    Apply Filter
+                </button>
+            </div>
+        </form>
+    </div>
 
     <!-- ========== ITEMS ==========-->
-           <h3 style="padding-left: 45%; padding-right: 45%">Appetizers</h3>
+    {% set has_appetizers = items | selectattr('category', 'equalto', 'Appetizers') | list %}
+    {% if has_appetizers %}
+        <h3 style="padding-left: 45%; padding-right: 45%">Appetizers</h3>
 
         <div class="menu__container bd-grid">
-        {% for item in items %}
-            {% if item.category == 'Appetizers' %}
+            {% for item in has_appetizers %}
+                <div class="menu__content">
+                    <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                    {% if item.isVeg %}
+                        <!-- Vegetarian Icon -->
+                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
+                             class="menu__icon">
+                    {% else %}
+                        <!-- Non-Vegetarian Icon -->
+                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
+                             alt="Non-Veg" class="menu__icon">
+                    {% endif %}
+                    <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
+                    <h3 class="menu__name">{{ item.name }}</h3>
+                    <br>
+                    <span class="menu_detail"> {{ item.description }} </span>
+                    <br>
+                    <span class="menu__price">$ {{ item.price }}</span>
+                    <button class="button menu__button" onclick="openModal('{{ item.name }}', '{{ item.price }}')">Add
+                    </button>
+                    <div id="itemModal" class="modal" style="display: none;">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <h3 id="modalItemName">{{ item.name }}</h3>
+                            <p>Price: $<span id="modalItemPrice">{{ item.price }}</span></p>
+                            <div class="quantity-container">
+                                <label>Quantity:</label>
+                                <button onclick="changeQuantity(-1)">-</button>
+                                <span id="quantity">1</span>
+                                <button onclick="changeQuantity(1)">+</button>
+                            </div>
+
+                            <div>
+                                <label for="specialInstructions">Special Instructions:</label>
+                                <textarea id="specialInstructions" rows="3"></textarea>
+                            </div>
+                            <button class="final-add-button" onclick="addToCart('{{ item.name }}')">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% set has_biryani = items | selectattr('category', 'equalto', 'Biryani') | list %}
+    {% if has_biryani %}
+        <h3 style="padding-left: 45%; padding-right: 45%; padding-top: 5%">Biryani</h3>
+
+        <div class="menu__container bd-grid">
+            {% for item in has_biryani %}
+                {#            {% if item.category == 'Biryani' %}#}
                 <div class="menu__content">
                     <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
                     <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                    {% if item.isVeg %}
+                        <!-- Vegetarian Icon -->
+                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
+                             class="menu__icon">
+                    {% else %}
+                        <!-- Non-Vegetarian Icon -->
+                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
+                             alt="Non-Veg" class="menu__icon">
+                    {% endif %}
                     <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
                     <!-- <h3 class="menu__name">Barbecue salad</h3> -->
                     <h3 class="menu__name">{{ item.name }}</h3>
+                    <br>
                     <!-- <span class="menu__detail">Delicious dish</span> -->
-                    <span class = "menu_detail"> {{ item.description }} </span>
+                    <span class="menu_detail"> {{ item.description }} </span>
+                    <br>
                     <span class="menu__price">$ {{ item.price }}</span>
-                    <!-- <a href="#" class="button menu__button"><i class='bx bx-cart-alt'></i></a> -->
-                    <form method = 'POST'>
-                        {{ add_form.hidden_tag() }}
-                        <input id="selected_item" name="selected_item" type="hidden" value="{{ item.name }}">
-                        {{ add_form.submit(class = 'button menu__button') }}
-                    </form>
+                    <button class="button menu__button" onclick="openModal('{{ item.name }}', '{{ item.price }}')">Add
+                    </button>
+                    <div id="itemModal" class="modal" style="display: none;">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <h3 id="modalItemName">{{ item.name }}</h3>
+                            <p>Price: $<span id="modalItemPrice">{{ item.price }}</span></p>
+                            <div class="quantity-container">
+                                <label>Quantity:</label>
+                                <button onclick="changeQuantity(-1)">-</button>
+                                <span id="quantity">1</span>
+                                <button onclick="changeQuantity(1)">+</button>
+                            </div>
 
+                            <div>
+                                <label for="specialInstructions">Special Instructions:</label>
+                                <textarea id="specialInstructions" rows="3"></textarea>
+                            </div>
+                            <button class="final-add-button" onclick="addToCart('{{ item.name }}')">Add to Cart</button>
+                        </div>
+                    </div>
                 </div>
-            {% endif %}
-        {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
 
-    </div>
-
-         <h3 style="padding-left: 45%; padding-right: 45%; padding-top: 5%">Biryani</h3>
-
-          <div class="menu__container bd-grid">
-        {% for item in items %}
-            {% if item.category == 'Biryani' %}
-                <div class="menu__content">
-                    <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
-                    <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
-                    <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
-                    <!-- <h3 class="menu__name">Barbecue salad</h3> -->
-                    <h3 class="menu__name">{{ item.name }}</h3>
-                    <!-- <span class="menu__detail">Delicious dish</span> -->
-                    <span class = "menu_detail"> {{ item.description }} </span>
-                    <span class="menu__price">$ {{ item.price }}</span>
-                    <!-- <a href="#" class="button menu__button"><i class='bx bx-cart-alt'></i></a> -->
-                    <form method = 'POST'>
-                        {{ add_form.hidden_tag() }}
-                        <input id="selected_item" name="selected_item" type="hidden" value="{{ item.name }}">
-                        {{ add_form.submit(class = 'button menu__button') }}
-                    </form>
-
-                </div>
-            {% endif %}
-        {% endfor %}
-
-    </div>
-
+    {% set has_curry = items | selectattr('category', 'equalto', 'Curry') | list %}
+    {% if has_curry %}
         <h3 style="padding-left: 45%; padding-right: 45%; padding-top: 5%">Curry</h3>
-         <div class="menu__container bd-grid">
-        {% for item in items %}
-            {% if item.category == 'Curry' %}
+        <div class="menu__container bd-grid">
+            {% for item in has_curry %}
+                {#            {% if item.category == 'Curry' %}#}
                 <div class="menu__content">
                     <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
                     <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                    {% if item.isVeg %}
+                        <!-- Vegetarian Icon -->
+                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
+                             class="menu__icon">
+                    {% else %}
+                        <!-- Non-Vegetarian Icon -->
+                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
+                             alt="Non-Veg" class="menu__icon">
+                    {% endif %}
                     <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
                     <!-- <h3 class="menu__name">Barbecue salad</h3> -->
                     <h3 class="menu__name">{{ item.name }}</h3>
+                    <br>
                     <!-- <span class="menu__detail">Delicious dish</span> -->
-                    <span class = "menu_detail"> {{ item.description }} </span>
+                    <span class="menu_detail"> {{ item.description }} </span>
+                    <br>
                     <span class="menu__price">$ {{ item.price }}</span>
-                    <!-- <a href="#" class="button menu__button"><i class='bx bx-cart-alt'></i></a> -->
-                    <form method = 'POST'>
-                        {{ add_form.hidden_tag() }}
-                        <input id="selected_item" name="selected_item" type="hidden" value="{{ item.name }}">
-                        {{ add_form.submit(class = 'button menu__button') }}
-                    </form>
+                     <button class="button menu__button" onclick="openModal('{{ item.name }}', '{{ item.price }}')">Add
+                    </button>
+                    <div id="itemModal" class="modal" style="display: none;">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <h3 id="modalItemName">{{ item.name }}</h3>
+                            <p>Price: $<span id="modalItemPrice">{{ item.price }}</span></p>
+                            <div class="quantity-container">
+                                <label>Quantity:</label>
+                                <button onclick="changeQuantity(-1)">-</button>
+                                <span id="quantity">1</span>
+                                <button onclick="changeQuantity(1)">+</button>
+                            </div>
 
+                            <div>
+                                <label for="specialInstructions">Special Instructions:</label>
+                                <textarea id="specialInstructions" rows="3"></textarea>
+                            </div>
+                            <button class="final-add-button" onclick="addToCart('{{ item.name }}')">Add to Cart</button>
+                        </div>
+                    </div>
                 </div>
-            {% endif %}
-        {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
 
-    </div>
-
-       <h3 style="padding-left: 45%; padding-right: 45%; padding-top: 5%">Breads</h3>
- <div class="menu__container bd-grid">
-        {% for item in items %}
-            {% if item.category == 'Breads' %}
+    {% set has_breads = items | selectattr('category', 'equalto', 'Breads') | list %}
+    {% if has_breads %}
+        <h3 style="padding-left: 45%; padding-right: 45%; padding-top: 5%">Breads</h3>
+        <div class="menu__container bd-grid">
+            {% for item in has_breads %}
+                {#            {% if item.category == 'Breads' %}#}
                 <div class="menu__content">
                     <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
                     <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                    {% if item.isVeg %}
+                        <!-- Vegetarian Icon -->
+                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
+                             class="menu__icon">
+                    {% else %}
+                        <!-- Non-Vegetarian Icon -->
+                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
+                             alt="Non-Veg" class="menu__icon">
+                    {% endif %}
                     <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
                     <!-- <h3 class="menu__name">Barbecue salad</h3> -->
                     <h3 class="menu__name">{{ item.name }}</h3>
+                    <br>
                     <!-- <span class="menu__detail">Delicious dish</span> -->
-                    <span class = "menu_detail"> {{ item.description }} </span>
+                    <span class="menu_detail"> {{ item.description }} </span>
+                    <br>
                     <span class="menu__price">$ {{ item.price }}</span>
-                    <!-- <a href="#" class="button menu__button"><i class='bx bx-cart-alt'></i></a> -->
-                    <form method = 'POST'>
-                        {{ add_form.hidden_tag() }}
-                        <input id="selected_item" name="selected_item" type="hidden" value="{{ item.name }}">
-                        {{ add_form.submit(class = 'button menu__button') }}
-                    </form>
+                     <button class="button menu__button" onclick="openModal('{{ item.name }}', '{{ item.price }}')">Add
+                    </button>
+                    <div id="itemModal" class="modal" style="display: none;">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <h3 id="modalItemName">{{ item.name }}</h3>
+                            <p>Price: $<span id="modalItemPrice">{{ item.price }}</span></p>
+                            <div class="quantity-container">
+                                <label>Quantity:</label>
+                                <button onclick="changeQuantity(-1)">-</button>
+                                <span id="quantity">1</span>
+                                <button onclick="changeQuantity(1)">+</button>
+                            </div>
 
+                            <div>
+                                <label for="specialInstructions">Special Instructions:</label>
+                                <textarea id="specialInstructions" rows="3"></textarea>
+                            </div>
+                            <button class="final-add-button" onclick="addToCart('{{ item.name }}')">Add to Cart</button>
+                        </div>
+                    </div>
                 </div>
-            {% endif %}
-        {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
 
-    </div>
-       <h3 style="padding-left: 45%; padding-right: 45%; padding-top: 5%">Desserts</h3>
- <div class="menu__container bd-grid">
-        {% for item in items %}
-            {% if item.category == 'Desserts' %}
+    {% set has_desserts = items | selectattr('category', 'equalto', 'Desserts') | list %}
+    {% if has_desserts %}
+        <h3 style="padding-left: 44%; padding-right: 45%; padding-top: 5%">Desserts</h3>
+        <div class="menu__container bd-grid">
+            {% for item in has_desserts %}
+                {#            {% if item.category == 'Desserts' %}#}
                 <div class="menu__content">
                     <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
                     <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                    {% if item.isVeg %}
+                        <!-- Vegetarian Icon -->
+                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
+                             class="menu__icon">
+                    {% else %}
+                        <!-- Non-Vegetarian Icon -->
+                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
+                             alt="Non-Veg" class="menu__icon">
+                    {% endif %}
                     <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
                     <!-- <h3 class="menu__name">Barbecue salad</h3> -->
                     <h3 class="menu__name">{{ item.name }}</h3>
+                    <br>
                     <!-- <span class="menu__detail">Delicious dish</span> -->
-                    <span class = "menu_detail"> {{ item.description }} </span>
+                    <span class="menu_detail"> {{ item.description }} </span>
+                    <br>
                     <span class="menu__price">$ {{ item.price }}</span>
-                    <!-- <a href="#" class="button menu__button"><i class='bx bx-cart-alt'></i></a> -->
-                     <form method = 'POST'>
-                        {{ add_form.hidden_tag() }}
-                        <input id="selected_item" name="selected_item" type="hidden" value="{{ item.name }}">
-                        {{ add_form.submit(class = 'button menu__button') }}
-                    </form>
+                    <button class="button menu__button" onclick="openModal('{{ item.name }}', '{{ item.price }}')">Add
+                    </button>
+                    <div id="itemModal" class="modal" style="display: none;">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <h3 id="modalItemName">{{ item.name }}</h3>
+                            <p>Price: $<span id="modalItemPrice">{{ item.price }}</span></p>
+                            <div class="quantity-container">
+                                <label>Quantity:</label>
+                                <button onclick="changeQuantity(-1)">-</button>
+                                <span id="quantity">1</span>
+                                <button onclick="changeQuantity(1)">+</button>
+                            </div>
 
+                            <div>
+                                <label for="specialInstructions">Special Instructions:</label>
+                                <textarea id="specialInstructions" rows="3"></textarea>
+                            </div>
+                            <button class="final-add-button" onclick="addToCart('{{ item.name }}')">Add to Cart</button>
+                        </div>
+                    </div>
                 </div>
-            {% endif %}
-        {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
 
-    </div>
 </section>
+
+<!-- Modal -->
+
 <!-- ========== MENU ENDS ==========-->
 
 <!--========== FOOTER ==========-->
@@ -222,7 +415,7 @@
                 <a href="#" class="footer__social"><i class='bx bxl-twitter'></i></a>
             </div>
         </div>
-    
+
         <div class="footer__content">
             <h3 class="footer__title">Information</h3>
             <ul>
@@ -231,22 +424,22 @@
                 <li><a href="#" class="footer__link">Terms of services</a></li>
             </ul>
         </div>
-    
+
         <div class="footer__content">
             <h3 class="footer__title">Address</h3>
             <ul>
                 <li>1111, Somewhere Rd</li>
                 <li>United States, 23456</li>
                 <li>999 - 888 - 777</li>
-                <li>samskitchen@gmail.com</li>
+                <li>kitchensams123@gmail.com</li>
             </ul>
         </div>
     </div>
-    
+
     <p class="footer__copy">&#169; 2024 Team Sams. All rights reserved</p>
-    </footer>
-    <!--========== FOOTER ENDS HERE ==========-->
-    
+</footer>
+<!--========== FOOTER ENDS HERE ==========-->
+
 <!--========== FOOTER ENDS HERE ==========-->
 
 <!--========== SCROLL REVEAL ==========-->
@@ -255,6 +448,67 @@
 <!--========== MAIN JS ==========-->
 <script src="static/styles/js/main.js"></script>
 
+<script>
+    function toggleFilter() {
+        // Toggle the display style of the filter options
+        const filterOptions = document.getElementById('filter-options');
+        if (filterOptions.style.display === 'none') {
+            filterOptions.style.display = 'block';
+        } else {
+            filterOptions.style.display = 'none';
+        }
+    }
+</script>
+
+<script>
+    let currentQuantity = 1;
+
+    function openModal(itemName, itemPrice) {
+        document.getElementById('modalItemName').innerText = itemName;
+        document.getElementById('modalItemPrice').innerText = itemPrice;
+        document.getElementById('quantity').innerText = 1;
+        currentQuantity = 1;
+        document.getElementById('specialInstructions').value = '';
+        document.getElementById('itemModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('itemModal').style.display = 'none';
+    }
+
+    function changeQuantity(change) {
+        const quantitySpan = document.getElementById("quantity");
+        let currentQuantity = parseInt(quantitySpan.textContent);
+        currentQuantity += change;
+        quantitySpan.textContent = currentQuantity;
+        {#document.getElementById('quantity').innerText = currentQuantity;#}
+    }
+
+    function addToCart(itemName) {
+        const quantitySpan = document.getElementById("quantity");
+        const quantity = parseInt(quantitySpan.textContent);
+        console.log("quantity ", quantity)
+        const specialInstructions = document.getElementById(`specialInstructions`).value;
+
+        fetch('http://127.0.0.1:5000/cart/add_item', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: itemName,
+                quantity: quantity,
+                specialInstructions: specialInstructions
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message); // Display success message
+                closeModal(); // Close the pop-up
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
 
 </body>
 </html>

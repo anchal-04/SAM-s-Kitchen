@@ -14,7 +14,8 @@
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/css/style-login.css') }}">
 
     <title>Login & Registration</title>
-     <!-- FLASH
+     <!-- FLASH -->
+
      {% with messages = get_flashed_messages(with_categories=true) %}
      {% if messages %}
        <ul class=flashes>
@@ -23,7 +24,7 @@
        {% endfor %}
        </ul>
      {% endif %}
-    {% endwith %} -->
+    {% endwith %}
   </head>
   <body>
     <div class="container">
@@ -84,6 +85,10 @@
             <div class="input-field">
               <i class="fas fa-user"></i>
               {{ form.fullname(placeholder = "Full Name") }}
+            </div>
+              <div class="input-field">
+              <i class="fas fa-user"></i>
+              {{ form.email(placeholder = "Email") }}
             </div>
             <div class="input-field">
               <i class="fas fa-map-marker-alt"></i>
@@ -160,6 +165,7 @@
 
     <!-- JAVASCRIPT -->
     <script src="static/styles/js/login.js"></script>
+
 
   </body>
 </html>

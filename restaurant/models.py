@@ -15,6 +15,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key = True)
     username = db.Column(db.String(length = 30), nullable = False, unique = True)
     fullname = db.Column(db.String(length = 30), nullable = False)
+    email = db.Column(db.String(length = 50),nullable = False)
     address = db.Column(db.String(length = 50), nullable = False)
     phone_number = db.Column(db.Integer(), nullable = False)
     password_hash = db.Column(db.String(length = 60), nullable = False)
@@ -74,6 +75,7 @@ class Item(db.Model):
     #suggestion: you might want to change 'owner' to 'orderer'/ 'customer'
     orderer = db.Column(db.Integer(), db.ForeignKey('user.id'))  #used to store info regarding user's ordered item
     category = db.Column(db.String(length= 30), nullable = False)
+    isVeg = db.Column(db.Boolean())
     #function for assigning ownership to the user's selected item
     def assign_ownership(self, user):
         self.orderer = user.id
@@ -131,6 +133,7 @@ class Cart(db.Model):
     order_id = db.Column(db.Integer(), db.ForeignKey('order.order_id'))
     item_qty = db.Column(db.Integer(), nullable=False, default=1)
     datetime = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    special_instructions = db.Column(db.String(length=50), nullable=False, default="")
 
     def increase_quantity(self, max_quantity=5):
         """Increase quantity of the cart item"""
