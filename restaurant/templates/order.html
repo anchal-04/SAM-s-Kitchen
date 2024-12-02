@@ -117,6 +117,11 @@
                            {% if category == 'Desserts' %}checked{% endif %}>
                     Desserts
                 </label>
+                 <label style="font-size: 1rem; cursor: pointer;">
+                    <input type="radio" name="category" value="Drinks"
+                           {% if category == 'Drinks' %}checked{% endif %}>
+                    Drinks
+                </label>
                 <label style="font-size: 1rem; cursor: pointer;">
                     <input type="radio" name="category" value="Veg" {% if category == 'Veg' %}checked{% endif %}>
                     Veg
@@ -146,16 +151,19 @@
         <div class="menu__container bd-grid">
             {% for item in has_appetizers %}
                 <div class="menu__content">
-                    <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                  <div style="display: flex; align-items: center;">
                     {% if item.isVeg %}
                         <!-- Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
                              class="menu__icon">
+                        <span>Veg</span>
                     {% else %}
                         <!-- Non-Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
                              alt="Non-Veg" class="menu__icon">
+                        <span>Non-Veg</span>
                     {% endif %}
+                  </div>
                     <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
                     <h3 class="menu__name">{{ item.name }}</h3>
                     <br>
@@ -180,7 +188,7 @@
                                 <label for="specialInstructions">Special Instructions:</label>
                                 <textarea id="specialInstructions" rows="3"></textarea>
                             </div>
-                            <button class="final-add-button" onclick="addToCart('{{ item.name }}')">Add to Cart</button>
+                            <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -198,15 +206,19 @@
                 <div class="menu__content">
                     <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
                     <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                    <div style="display: flex; align-items: center;">
                     {% if item.isVeg %}
                         <!-- Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
                              class="menu__icon">
+                        <span>Veg</span>
                     {% else %}
                         <!-- Non-Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
                              alt="Non-Veg" class="menu__icon">
+                        <span>Non-Veg</span>
                     {% endif %}
+                  </div>
                     <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
                     <!-- <h3 class="menu__name">Barbecue salad</h3> -->
                     <h3 class="menu__name">{{ item.name }}</h3>
@@ -233,7 +245,7 @@
                                 <label for="specialInstructions">Special Instructions:</label>
                                 <textarea id="specialInstructions" rows="3"></textarea>
                             </div>
-                            <button class="final-add-button" onclick="addToCart('{{ item.name }}')">Add to Cart</button>
+                            <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -246,19 +258,20 @@
         <h3 style="padding-left: 45%; padding-right: 45%; padding-top: 5%">Curry</h3>
         <div class="menu__container bd-grid">
             {% for item in has_curry %}
-                {#            {% if item.category == 'Curry' %}#}
                 <div class="menu__content">
-                    <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
-                    <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                   <div style="display: flex; align-items: center;">
                     {% if item.isVeg %}
                         <!-- Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
                              class="menu__icon">
+                        <span>Veg</span>
                     {% else %}
                         <!-- Non-Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
                              alt="Non-Veg" class="menu__icon">
+                        <span>Non-Veg</span>
                     {% endif %}
+                  </div>
                     <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
                     <!-- <h3 class="menu__name">Barbecue salad</h3> -->
                     <h3 class="menu__name">{{ item.name }}</h3>
@@ -285,7 +298,7 @@
                                 <label for="specialInstructions">Special Instructions:</label>
                                 <textarea id="specialInstructions" rows="3"></textarea>
                             </div>
-                            <button class="final-add-button" onclick="addToCart('{{ item.name }}')">Add to Cart</button>
+                            <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -298,19 +311,20 @@
         <h3 style="padding-left: 45%; padding-right: 45%; padding-top: 5%">Breads</h3>
         <div class="menu__container bd-grid">
             {% for item in has_breads %}
-                {#            {% if item.category == 'Breads' %}#}
                 <div class="menu__content">
-                    <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
-                    <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                    <div style="display: flex; align-items: center;">
                     {% if item.isVeg %}
                         <!-- Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
                              class="menu__icon">
+                        <span>Veg</span>
                     {% else %}
                         <!-- Non-Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
                              alt="Non-Veg" class="menu__icon">
+                        <span>Non-Veg</span>
                     {% endif %}
+                  </div>
                     <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
                     <!-- <h3 class="menu__name">Barbecue salad</h3> -->
                     <h3 class="menu__name">{{ item.name }}</h3>
@@ -337,7 +351,7 @@
                                 <label for="specialInstructions">Special Instructions:</label>
                                 <textarea id="specialInstructions" rows="3"></textarea>
                             </div>
-                            <button class="final-add-button" onclick="addToCart('{{ item.name }}')">Add to Cart</button>
+                            <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -354,15 +368,19 @@
                 <div class="menu__content">
                     <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
                     <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                    <div style="display: flex; align-items: center;">
                     {% if item.isVeg %}
                         <!-- Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
                              class="menu__icon">
+                        <span>Veg</span>
                     {% else %}
                         <!-- Non-Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
                              alt="Non-Veg" class="menu__icon">
+                        <span>Non-Veg</span>
                     {% endif %}
+                  </div>
                     <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
                     <!-- <h3 class="menu__name">Barbecue salad</h3> -->
                     <h3 class="menu__name">{{ item.name }}</h3>
@@ -389,7 +407,63 @@
                                 <label for="specialInstructions">Special Instructions:</label>
                                 <textarea id="specialInstructions" rows="3"></textarea>
                             </div>
-                            <button class="final-add-button" onclick="addToCart('{{ item.name }}')">Add to Cart</button>
+                            <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% set has_drinks = items | selectattr('category', 'equalto', 'Drinks') | list %}
+    {% if has_drinks %}
+        <h3 style="padding-left: 44%; padding-right: 45%; padding-top: 5%">Drinks</h3>
+        <div class="menu__container bd-grid">
+            {% for item in has_drinks %}
+                {#            {% if item.category == 'Desserts' %}#}
+                <div class="menu__content">
+                    <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
+                    <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                   <div style="display: flex; align-items: center;">
+                    {% if item.isVeg %}
+                        <!-- Vegetarian Icon -->
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
+                             class="menu__icon">
+                        <span>Veg</span>
+                    {% else %}
+                        <!-- Non-Vegetarian Icon -->
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
+                             alt="Non-Veg" class="menu__icon">
+                        <span>Non-Veg</span>
+                    {% endif %}
+                  </div>
+                    <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
+                    <!-- <h3 class="menu__name">Barbecue salad</h3> -->
+                    <h3 class="menu__name">{{ item.name }}</h3>
+                    <br>
+                    <!-- <span class="menu__detail">Delicious dish</span> -->
+                    <span class="menu_detail"> {{ item.description }} </span>
+                    <br>
+                    <span class="menu__price">$ {{ item.price }}</span>
+                    <button class="button menu__button" onclick="openModal('{{ item.name }}', '{{ item.price }}')">Add
+                    </button>
+                    <div id="itemModal" class="modal" style="display: none;">
+                        <div class="modal-content">
+                            <span class="close" onclick="closeModal()">&times;</span>
+                            <h3 id="modalItemName">{{ item.name }}</h3>
+                            <p>Price: $<span id="modalItemPrice">{{ item.price }}</span></p>
+                            <div class="quantity-container">
+                                <label>Quantity:</label>
+                                <button onclick="changeQuantity(-1)">-</button>
+                                <span id="quantity">1</span>
+                                <button onclick="changeQuantity(1)">+</button>
+                            </div>
+
+                            <div>
+                                <label for="specialInstructions">Special Instructions:</label>
+                                <textarea id="specialInstructions" rows="3"></textarea>
+                            </div>
+                            <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -484,10 +558,13 @@
         {#document.getElementById('quantity').innerText = currentQuantity;#}
     }
 
-    function addToCart(itemName) {
+    function addToCart() {
+        const item_name = document.getElementById(`modalItemName`).textContent;
         const quantitySpan = document.getElementById("quantity");
         const quantity = parseInt(quantitySpan.textContent);
         console.log("quantity ", quantity)
+        console.log("item name ", item_name)
+
         const specialInstructions = document.getElementById(`specialInstructions`).value;
 
         fetch('http://127.0.0.1:5000/cart/add_item', {
@@ -496,7 +573,7 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: itemName,
+                name: item_name,
                 quantity: quantity,
                 specialInstructions: specialInstructions
             })
