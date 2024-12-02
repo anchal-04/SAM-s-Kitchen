@@ -267,15 +267,10 @@ def modify_cart():
 @app.route('/cart/add_item', methods=['POST'])
 @login_required
 def add_to_cart():
-    print("inside add to cart python")
     data = request.get_json()
-    print("data", data)
     item_name = data.get('name')
     quantity = data.get('quantity')
     special_instructions = data.get('specialInstructions')
-    print("item_name", item_name)
-    print("quantity", quantity)
-    print("special_instructions", special_instructions)
 
     # Find or create an active order
     active_order = Order.query.filter_by(
@@ -286,11 +281,7 @@ def add_to_cart():
     if not active_order:
         active_order = Order.create_order(current_user)
 
-    print("active_order", active_order)
     items = Item.query.filter_by(name=item_name).first()
-    print("item", items)
-
-    print("item_id", items.item_id)
     item_id = items.item_id
 
     # Check if item is already in cart
@@ -304,6 +295,7 @@ def add_to_cart():
         # If item exists, increase quantity
         existing_cart_item.item_qty = existing_cart_item.item_qty+quantity
         existing_cart_item.special_instructions = special_instructions
+        print("existing_cart_item", existing_cart_item.item_qty)
         # existing_cart_item.increase_quantity(max_quantity=item)
     else:
         # Create new cart item
@@ -311,9 +303,10 @@ def add_to_cart():
             orderer=current_user.username,
             item_id=item_id,
             order_id=active_order.order_id,
-            item_qty=1,
+            item_qty=quantity,
             special_instructions=special_instructions
         )
+        print("new cart item ", new_cart_item)
         db.session.add(new_cart_item)
 
     db.session.commit()
@@ -548,10 +541,21 @@ def return_login():
 @app.route('/logout')
 def logout():
     # Clear user's cart items when logging out
-    cart_items = Item.query.filter_by(orderer=current_user.id, in_cart=True).all()
-    for item in cart_items:
-        item.remove_from_cart()
-        item.remove_ownership(current_user)
+    active_order = Order.query.filter_by(
+        orderer=current_user.username,
+        order_placed=0
+    ).first()
+
+    if active_order:
+        # Get cart items for the active order
+        cart_items = Cart.query.filter_by(
+            orderer=current_user.username,
+            order_id=active_order.order_id
+        ).all()
+
+        for item in cart_items:
+             item.delete_cart_item()
+
 
     logout_user()  # Flask-Login logout
     session.clear()  # Clear entire session

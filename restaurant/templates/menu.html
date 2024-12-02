@@ -117,6 +117,11 @@
                            {% if category == 'Desserts' %}checked{% endif %}>
                     Desserts
                 </label>
+                 <label style="font-size: 1rem; cursor: pointer;">
+                    <input type="radio" name="category" value="Drinks"
+                           {% if category == 'Drinks' %}checked{% endif %}>
+                    Drinks
+                </label>
                 <label style="font-size: 1rem; cursor: pointer;">
                     <input type="radio" name="category" value="Veg" {% if category == 'Veg' %}checked{% endif %}>
                     Veg
@@ -150,15 +155,19 @@
                 <div class="menu__content">
                     <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
                     <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                  <div style="display: flex; align-items: center;">
                     {% if item.isVeg %}
                         <!-- Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
                              class="menu__icon">
+                        <span>Veg</span>
                     {% else %}
                         <!-- Non-Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
                              alt="Non-Veg" class="menu__icon">
+                        <span>Non-Veg</span>
                     {% endif %}
+                  </div>
                     <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
                     <!-- <h3 class="menu__name">Barbecue salad</h3> -->
                     <h3 class="menu__name">{{ item.name }}</h3>
@@ -192,15 +201,19 @@
                 <div class="menu__content">
                     <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
                     <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                <div style="display: flex; align-items: center;">
                     {% if item.isVeg %}
                         <!-- Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
                              class="menu__icon">
+                        <span>Veg</span>
                     {% else %}
                         <!-- Non-Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
                              alt="Non-Veg" class="menu__icon">
+                        <span>Non-Veg</span>
                     {% endif %}
+                  </div>
                     <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
                     <!-- <h3 class="menu__name">Barbecue salad</h3> -->
                     <h3 class="menu__name">{{ item.name }}</h3>
@@ -232,15 +245,19 @@
                 <div class="menu__content">
                     <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
                     <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                 <div style="display: flex; align-items: center;">
                     {% if item.isVeg %}
                         <!-- Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
                              class="menu__icon">
+                        <span>Veg</span>
                     {% else %}
                         <!-- Non-Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
                              alt="Non-Veg" class="menu__icon">
+                        <span>Non-Veg</span>
                     {% endif %}
+                  </div>
                     <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
                     <!-- <h3 class="menu__name">Barbecue salad</h3> -->
                     <h3 class="menu__name">{{ item.name }}</h3>
@@ -272,15 +289,19 @@
                 <div class="menu__content">
                     <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
                     <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                 <div style="display: flex; align-items: center;">
                     {% if item.isVeg %}
                         <!-- Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
                              class="menu__icon">
+                        <span>Veg</span>
                     {% else %}
                         <!-- Non-Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
                              alt="Non-Veg" class="menu__icon">
+                        <span>Non-Veg</span>
                     {% endif %}
+                  </div>
                     <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
                     <!-- <h3 class="menu__name">Barbecue salad</h3> -->
                     <h3 class="menu__name">{{ item.name }}</h3>
@@ -312,15 +333,19 @@
                 <div class="menu__content">
                     <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
                     <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                 <div style="display: flex; align-items: center;">
                     {% if item.isVeg %}
                         <!-- Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
                              class="menu__icon">
+                        <span>Veg</span>
                     {% else %}
                         <!-- Non-Vegetarian Icon -->
-                        <img style="width:20px" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
                              alt="Non-Veg" class="menu__icon">
+                        <span>Non-Veg</span>
                     {% endif %}
+                  </div>
                     <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
                     <!-- <h3 class="menu__name">Barbecue salad</h3> -->
                     <h3 class="menu__name">{{ item.name }}</h3>
@@ -338,6 +363,48 @@
 
                 </div>
                 {#            {% endif %}#}
+            {% endfor %}
+
+        </div>
+    {% endif %}
+
+    {% set has_drinks = items | selectattr('category', 'equalto', 'Drinks') | list %}
+    {% if has_drinks %}
+        <h3 style="padding-left: 44%; padding-right: 45%; padding-top: 5%">Drinks</h3>
+        <div class="menu__container bd-grid">
+            {% for item in has_drinks %}
+                <div class="menu__content">
+                    <!-- <img src="static/styles/img/plate1.png" alt="" class="menu__img"> -->
+                    <!-- <img src="static/styles/img/{{ item.source }}"  alt="" class="menu__img" /> -->
+                <div style="display: flex; align-items: center;">
+                    {% if item.isVeg %}
+                        <!-- Vegetarian Icon -->
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/veg.jpg') }}" alt="Veg"
+                             class="menu__icon">
+                        <span>Veg</span>
+                    {% else %}
+                        <!-- Non-Vegetarian Icon -->
+                        <img style="width:20px; margin-right: 10px;" src="{{ url_for('static', filename='styles/img/non-veg.png') }}"
+                             alt="Non-Veg" class="menu__icon">
+                        <span>Non-Veg</span>
+                    {% endif %}
+                  </div>
+                    <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
+                    <!-- <h3 class="menu__name">Barbecue salad</h3> -->
+                    <h3 class="menu__name">{{ item.name }}</h3>
+                    <br>
+                    <!-- <span class="menu__detail">Delicious dish</span> -->
+                    <span class="menu_detail"> {{ item.description }} </span>
+                    <br>
+                    <span class="menu__price">$ {{ item.price }}</span>
+                    <!-- <a href="#" class="button menu__button"><i class='bx bx-cart-alt'></i></a> -->
+                    <!-- <form method = 'POST'>
+                        {{ add_form.hidden_tag() }}
+                        <input id="selected_item" name="selected_item" type="hidden" value="{{ item.name }}">
+                        {{ add_form.submit(class = 'button menu__button') }}
+                    </form>-->
+
+                </div>
             {% endfor %}
 
         </div>
