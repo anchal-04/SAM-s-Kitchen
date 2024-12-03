@@ -890,7 +890,8 @@ button.btn:hover {
     position: fixed; /* Stay in place */
     z-index: 1000; /* Sit on top */
     left: 0;
-    top: 0;
+    top:1;
+    bottom: 0;
     width: 100%; /* Full width */
     height: 90%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
@@ -899,30 +900,56 @@ button.btn:hover {
 
 .modal-content {
     background-color: #707070;
+    padding:2%;
     color: #FBFEFD;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 30%; /* Could be more or less, depending on screen size */
     max-width: 500px; /* Set a max width for better design */
+    height:37%;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between; /* Push content to ends */
+    align-items: center; /* Center items vertically */
+    margin-bottom: 1rem; /* Add spacing below header */
+}
+
+.modal-header h3 {
+    color:#fff; /* Keep the color as specified */
+    margin: 0; /* Remove any default margins */
+    padding-inline: 0; /* Remove padding */
+    font-size: 1.5rem; /* Adjust size as needed */
 }
 
 .close {
-    position: absolute; /* Position absolute to the modal content */
-    top: 220px; /* Adjust as needed for spacing from the top */
-    right: 480px; /* Adjust as needed for spacing from the right */
-    font-size: 24px; /* Make it larger for better visibility */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    color: #aaa; /* Light gray color for the close button */
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff; /* Ensure contrast with background */
+    padding: 0.5rem;
+    border: none; /* Remove unnecessary borders */
+    background: transparent; /* Ensure background is transparent */
+    transition: transform 0.3s; /* Add hover effect */
+}
+
+.close:hover {
+    transform: scale(1.2); /* Enlarge slightly on hover */
+    color: var(--first-color); /* Match primary color on hover */
 }
 
 .final-add-button{
-  background: #f75050;
+  background: var(--first-color);
   color: white;
   border-radius: .5rem;
-  border:none
+  padding: 3%;
+  border:none;
 }
-
+.final-add-button:hover {
+  background: var(--first-color-alt)
+}
 /* About Us Page */
 .about-main {
   font-family: var(--body-font);

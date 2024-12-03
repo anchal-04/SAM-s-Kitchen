@@ -24,24 +24,39 @@ function linkAction(){
 navLink.forEach(n => n.addEventListener('click', linkAction))
 
 /*==================== SCROLL SECTIONS ACTIVE LINK ====================*/
-const sections = document.querySelectorAll('section[id]')
+/*const sections = document.querySelectorAll('section[id]');
 
-function scrollActive(){
-    const scrollY = window.pageYOffset
+function scrollActive() {
+    const scrollY = window.scrollY;
 
-    sections.forEach(current =>{
-        const sectionHeight = current.offsetHeight
+    sections.forEach(current => {
+        const sectionHeight = current.offsetHeight;
         const sectionTop = current.offsetTop - 50;
-        sectionId = current.getAttribute('id')
+        const sectionId = current.getAttribute('id');
 
-        if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight){
-            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.add('active-link')
-        }else{
-            document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.remove('active-link')
+        const targetLink = document.querySelector('.nav__menu a[href*=' + sectionId + ']');
+
+        if (targetLink) {
+            // Ensure only the correct link is highlighted
+            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                targetLink.classList.add('active-link');
+            } else {
+                targetLink.classList.remove('active-link');
+            }
         }
-    })
+    });
+
+    // Specific fix for the Order page
+    if (window.location.pathname.includes('/order')) {
+        const orderLink = document.querySelector('.nav__menu a[href="{{ url_for("order_page") }}"]');
+        const menuLink = document.querySelector('.nav__menu a[href="{{ url_for("menu_page") }}"]');
+
+        if (orderLink) orderLink.classList.add('active-link');
+        if (menuLink) menuLink.classList.remove('active-link');
+    }
 }
-window.addEventListener('scroll', scrollActive)
+
+window.addEventListener('scroll', scrollActive);*/
 
 /*==================== CHANGE BACKGROUND HEADER ====================*/
 function scrollHeader(){

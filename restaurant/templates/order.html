@@ -26,7 +26,7 @@
 <!--========== HEADER ==========-->
 <header class="l-header" id="header">
     <nav class="nav bd-container">
-        <a href="#" class="nav__logo"><h1>Sam's Kitchen</h1></a>
+        <a href="{{ url_for('home_page') }}" class="nav__logo"><h1>Sam's Kitchen</h1></a>
 
         <div class="nav__menu" id="nav-menu">
             <ul class="nav__list">
@@ -49,7 +49,7 @@
             </ul>
         </div>
 
-        <div class="nav__toggle" id="nav-toggle">
+       <div class="nav__toggle" id="nav-toggle">
             <i class='bx bx-menu'></i>
         </div>
     </nav>
@@ -175,8 +175,10 @@
                     </button>
                     <div id="itemModal" class="modal" style="display: none;">
                         <div class="modal-content">
-                            <span class="close" onclick="closeModal()">&times;</span>
-                            <h3 id="modalItemName">{{ item.name }}</h3>
+                            <div class="modal-header">
+                                <h3 id="modalItemName">{{ item.name }}</h3>
+                                <span class="close" onclick="closeModal()">&times;</span>
+                            </div>
                             <p>Price: $<span id="modalItemPrice">{{ item.price }}</span></p>
                             <div class="quantity-container">
                                 <label>Quantity:</label>
@@ -187,7 +189,7 @@
 
                             <div>
                                 <label for="specialInstructions">Special Instructions:</label>
-                                <textarea style="width:300px; height:30px;" id="specialInstructions" rows="3"></textarea>
+                                <textarea style="width:95%; height:50px;" id="specialInstructions" rows="3" placeholder="Type any customizations like spice level here"> Add any customizations like spice levels etc., if required...</textarea>
                             </div>
                             <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
                         </div>
@@ -232,8 +234,10 @@
                     </button>
                     <div id="itemModal" class="modal" style="display: none;">
                         <div class="modal-content">
-                            <span class="close" onclick="closeModal()">&times;</span>
-                            <h3 id="modalItemName">{{ item.name }}</h3>
+                            <div class="modal-header">
+                                <h3 id="modalItemName">{{ item.name }}</h3>
+                                <span class="close" onclick="closeModal()">&times;</span>
+                            </div>
                             <p>Price: $<span id="modalItemPrice">{{ item.price }}</span></p>
                             <div class="quantity-container">
                                 <label>Quantity:</label>
@@ -244,7 +248,7 @@
 
                             <div>
                                 <label for="specialInstructions">Special Instructions:</label>
-                                <textarea style="width:300px; height:30px;" id="specialInstructions" rows="3"></textarea>
+                                <textarea style="width:95%; height:50px;" id="specialInstructions" rows="3" placeholder="Type any customizations like spice level here"></textarea>
                             </div>
                             <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
                         </div>
@@ -285,8 +289,10 @@
                     </button>
                     <div id="itemModal" class="modal" style="display: none;">
                         <div class="modal-content">
-                            <span class="close" onclick="closeModal()">&times;</span>
-                            <h3 id="modalItemName">{{ item.name }}</h3>
+                            <div class="modal-header">
+                                <h3 id="modalItemName">{{ item.name }}</h3>
+                                <span class="close" onclick="closeModal()">&times;</span>
+                            </div>
                             <p>Price: $<span id="modalItemPrice">{{ item.price }}</span></p>
                             <div class="quantity-container">
                                 <label>Quantity:</label>
@@ -297,7 +303,7 @@
 
                             <div>
                                 <label for="specialInstructions">Special Instructions:</label>
-                                <textarea style="width:300px; height:30px;" id="specialInstructions" rows="3"></textarea>
+                                <textarea style="width:95%; height:50px;" id="specialInstructions" rows="3" placeholder="Type any customizations like spice level here"></textarea>
                             </div>
                             <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
                         </div>
@@ -338,8 +344,10 @@
                     </button>
                     <div id="itemModal" class="modal" style="display: none;">
                         <div class="modal-content">
-                            <span class="close" onclick="closeModal()">&times;</span>
-                            <h3 id="modalItemName">{{ item.name }}</h3>
+                            <div class="modal-header">
+                                <h3 id="modalItemName">{{ item.name }}</h3>
+                                <span class="close" onclick="closeModal()">&times;</span>
+                            </div>
                             <p>Price: $<span id="modalItemPrice">{{ item.price }}</span></p>
                             <div class="quantity-container">
                                 <label>Quantity:</label>
@@ -350,7 +358,7 @@
 
                             <div>
                                 <label for="specialInstructions">Special Instructions:</label>
-                                <textarea style="width:300px; height:30px;" id="specialInstructions" rows="3"></textarea>
+                                <textarea style="width:95%; height:50px;" id="specialInstructions" rows="3" placeholder="Type any customizations like spice level here"></textarea>
                             </div>
                             <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
                         </div>
@@ -394,8 +402,10 @@
                     </button>
                     <div id="itemModal" class="modal" style="display: none;">
                         <div class="modal-content">
-                            <span class="close" onclick="closeModal()">&times;</span>
-                            <h3 id="modalItemName">{{ item.name }}</h3>
+                            <div class="modal-header">
+                                <h3 id="modalItemName">{{ item.name }}</h3>
+                                <span class="close" onclick="closeModal()">&times;</span>
+                            </div>
                             <p>Price: $<span id="modalItemPrice">{{ item.price }}</span></p>
                             <div class="quantity-container">
                                 <label>Quantity:</label>
@@ -406,7 +416,7 @@
 
                             <div>
                                 <label for="specialInstructions">Special Instructions:</label>
-                                <textarea style="width:300px; height:30px;" id="specialInstructions" rows="3"></textarea>
+                                <textarea style="width:95%; height:50px;" id="specialInstructions" rows="3" placeholder="Type any customizations like spice level here"></textarea>
                             </div>
                             <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
                         </div>
@@ -450,8 +460,10 @@
                     </button>
                     <div id="itemModal" class="modal" style="display: none;">
                         <div class="modal-content">
-                            <span class="close" onclick="closeModal()">&times;</span>
-                            <h3 id="modalItemName">{{ item.name }}</h3>
+                            <div class="modal-header">
+                                <h3 id="modalItemName">{{ item.name }}</h3>
+                                <span class="close" onclick="closeModal()">&times;</span>
+                            </div>
                             <p>Price: $<span id="modalItemPrice">{{ item.price }}</span></p>
                             <div class="quantity-container">
                                 <label>Quantity:</label>
@@ -462,7 +474,7 @@
 
                             <div>
                                 <label for="specialInstructions">Special Instructions:</label>
-                                <textarea style="width:300px; height:30px;" id="specialInstructions" rows="3"></textarea>
+                                <textarea style="width:95%; height:50px;" id="specialInstructions" rows="3" placeholder="Type any customizations like spice level here"></textarea>
                             </div>
                             <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
                         </div>
@@ -494,6 +506,7 @@
         <div class="footer__content">
             <h3 class="footer__title">Information</h3>
             <ul>
+                <li><a href="#" class="footer__link">Event</a></li>
                 <li><a href="{{ url_for('contact_page') }}" class="footer__link">Contact us</a></li>
                 <li><a href="#" class="footer__link">Privacy policy</a></li>
                 <li><a href="#" class="footer__link">Terms of services</a></li>
