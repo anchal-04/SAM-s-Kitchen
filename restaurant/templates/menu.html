@@ -71,7 +71,7 @@
     <h2 class="section-title">Menu</h2>
 
     <!-- SEARCH BOX -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; margin-left: 100px; margin-right: 110px;">
         <!-- SEARCH FORM -->
         <form action="/search-menu" method="get" class="search-box">
             <div class="search-box">
@@ -90,13 +90,13 @@
     </div>
 
     <!-- FILTER OPTIONS (Initially Hidden) -->
-    <div id="filter-options" style="display: none; position: relative; top: 60px; right: 10px;  padding: 1rem; ">
+    <div id="filter-options" style="display: none; position: relative; top: 60px; right: 10px;  padding: 1rem; margin-left: 100px;">
         <form action="/filter-menu" method="get">
             <div style="display: flex; flex-direction: column; gap: 1rem;">
                 <!-- Filter by Category -->
                 <label style="font-size: 1rem; cursor: pointer;">
-                    <input type="radio" name="category" value="Appetizers"
-                           {% if category == 'Appetizers' %}checked{% endif %}>
+                    <input type="radio" name="category" value="Appetizers">
+{#                           {% if category|default('') == 'Appetizers' %}checked{% endif %}>#}
                     Appetizers
                 </label>
                 <label style="font-size: 1rem; cursor: pointer;">
