@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="static/styles/css/styles.css">
+
+  <title>About Us</title>
+</head>
+<body>
+  <!-- Header -->
+     <!--========== SCROLL TOP ==========-->
+     <a href="#" class="scrolltop" id="scroll-top">
+        <i class='bx bx-chevron-up scrolltop__icon'></i>
+    </a>
+
+    <!--========== HEADER ==========-->
+    <header class="l-header" id="header">
+        <nav class="nav bd-container">
+            <a href="{{ url_for('home_page') }}" class="nav__logo"><h1>Sam's Kitchen</h1></a>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="{{ url_for('home_page') }}" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="#about" class="nav__link active-link">About</a></li>
+                    <li class="nav__item"><a href="{{ url_for('menu_page') }}" class="nav__link">Menu</a></li>
+                    <li class="nav__item"><a href="{{ url_for('order_page') }}" class="nav__link">Order</a></li>
+                    <li class="nav__item"><a href="{{ url_for('contact_page')}}" class="nav__link">Contact us</a></li>
+                    {% if current_user.is_authenticated %}
+                    <li class="nav__item"><a href="{{ url_for('logout') }}" class="nav__link">Log Out</a></li>
+                    {% else %}
+                    <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Log in</a></li>
+                    <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Register</a></li>
+                    {% endif %}
+                    <!-- <li class="nav__item"><a href="index.html#contact" class="nav__link">Contact us</a></li> -->
+                    <li class="nav__item"><a href="{{ url_for('cart_page') }}" class="cart__button"><i class='bx bx-cart-alt'></i></a></li>
+
+                    <!--<li><i class='bx bx-moon change-theme' id="theme-button"></i></li>-->
+                </ul>
+            </div>
+
+            <div class="nav__toggle" id="nav-toggle">
+                <i class='bx bx-menu'></i>
+            </div>
+        </nav>
+        <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    <button type="button" class="m1-2 mb-1 close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% endif %}
+        {% endwith %} -->
+    </header>
+    <!--========== HEADER ENDS ==========-->
+
+
+    <main class="about-main">
+        <!-- Image and Story -->
+        <section class="about-story">
+          <img src="static/styles/img/about-center.png" alt="About Us" class="about-story__image">
+          <p class="about-story__content">
+            Sam's Kitchen was founded by three friends—one from South India, one from North India, and one from Pakistan—who met at university. 
+            They shared a love for food and culture, inspiring them to create a restaurant that celebrates their rich heritage. From Hyderabadi 
+            biryanis to roti cutter chicken to spicy Pakistani kebabs, Sam's Kitchen combines the best flavors from their homelands to bring 
+            you a unique dining experience.
+          </p>
+        </section>
+    
+        <!-- Founders Section -->
+        <section class="about-founders">
+          <!-- Founder 1 -->
+          <div class="founder-container">
+            <img src="static/styles/img/sasmi.jpg" alt="South Indian Founder" class="founder-image">
+            <div class="founder-content">
+              <h2>Sri Sasmi Polu</h2>
+              <p>
+                Bringing the warmth of South India to Sam's Kitchen, she specializes in creating aromatic Hyderabadi biryanis, flavorful sambars, 
+                and crispy dosas. Her dishes are infused with the spices and traditions of her homeland, offering a true taste of South India.
+              </p>
+            </div>
+          </div>
+    
+          <!-- Founder 2 -->
+          <div class="founder-container reverse">
+            <img src="static/styles/img/anchal.jpeg" alt="North Indian Founder" class="founder-image">
+            <div class="founder-content">
+              <h2>Anchal Singh</h2>
+              <p>
+                From buttery naans to the irresistible roti cutter chicken, our North Indian founder combines bold flavors with her family's 
+                cherished recipes. Her passion for creating rich and satisfying meals brings the heart of North Indian cuisine to every table.
+              </p>
+            </div>
+          </div>
+    
+          <!-- Founder 3 -->
+          <div class="founder-container">
+            <img src="static/styles/img/maliha.jpeg" alt="Pakistani Founder" class="founder-image">
+            <div class="founder-content">
+              <h2>Maliha Aziz</h2>
+              <p>
+                Specializing in the smoky, savory delights of Pakistani cuisine, our founder crafts succulent kebabs, spicy curries, 
+                and perfectly charred naans. Her dishes bring the vibrant flavors of Pakistan to life, making every bite unforgettable.
+              </p>
+            </div>
+          </div>
+        </section>
+    
+        <!-- Values Section -->
+        <section class="about-values">
+          <h2>Our Values</h2>
+          <p>
+            At Sam's Kitchen, we believe in celebrating diversity, fostering cultural unity, and sharing the joy of great food. 
+            We are committed to quality, authenticity, and innovation, ensuring every meal is a celebration of flavor and community.
+          </p>
+        </section>
+    
+        <!-- Reviews Carousel -->
+        <section class="reviews">
+            <h2>What Our Customers Say</h2>
+            <div class="carousel-container">
+              <button class="carousel-arrow left-arrow" id="left-arrow">&#9664;</button> <!-- Left Arrow -->
+              <div class="carousel" id="carousel">
+                <div class="carousel-item">
+                  <p>"Sam's Kitchen offers a unique dining experience! Would surely recommend it."</p>
+                  <div class="carousel-meta">
+                    <p>- Alex Johnson</p>
+                    <div class="stars">★★★★★</div>
+                  </div>
+                </div>
+                <div class="carousel-item">
+                  <p>"The flavors are authentic and absolutely delightful!"</p>
+                  <div class="carousel-meta">
+                    <p>- Priya Reddy</p>
+                    <div class="stars">★★★★☆</div>
+                  </div>
+                </div>
+                <div class="carousel-item">
+                  <p>"A perfect blend of cultures and cuisines. Highly recommend!"</p>
+                  <div class="carousel-meta">
+                    <p>- Michael Lee</p>
+                    <div class="stars">★★★★★</div>
+                  </div>
+                </div>
+                <div class="carousel-item">
+                  <p>"Loved the warmth and creativity in their dishes!"</p>
+                  <div class="carousel-meta">
+                    <p>- Sarah Khan</p>
+                    <div class="stars">★★★★★</div>
+                  </div>
+                </div>
+                <div class="carousel-item">
+                    <p>"Best biryani I’ve ever had!"</p>
+                    <div class="carousel-meta">
+                      <p>- Arjun Patel</p>
+                      <div class="stars">★★★★★</div>
+                    </div>
+                  </div>                  
+                  <div class="carousel-item">
+                    <p>"An unforgettable dining experience!"</p>
+                    <div class="carousel-meta">
+                      <p>- Ramesh Gupta</p>
+                      <div class="stars">★★★★★</div>
+                    </div>
+                  </div> 
+                  <div class="carousel-item">
+                    <p>"Best Kabobs! Love it!"</p>
+                    <div class="carousel-meta">
+                      <p>- Sarah Malik</p>
+                      <div class="stars">★★★★★</div>
+                    </div>
+                  </div>                                   
+                <div class="carousel-item">
+                  <p>"A must-try for food lovers seeking good indian food."</p>
+                  <div class="carousel-meta">
+                    <p>- Ayesha Ali</p>
+                    <div class="stars">★★★★☆</div>
+                  </div>
+                </div>
+              </div>
+              <button class="carousel-arrow right-arrow" id="right-arrow">&#9654;</button> <!-- Right Arrow -->
+            </div>
+          </section>          
+      </main>
+
+  <!--========== FOOTER ==========-->
+<footer class="footer section bd-container">
+    <div class="footer__container bd-grid">
+        <div class="footer__content">
+            <a href="#" class="footer__logo">Sam's Kitchen</a>
+            <span class="footer__description">Restaurant</span>
+            <div>
+                <a href="#" class="footer__social"><i class='bx bxl-facebook'></i></a>
+                <a href="#" class="footer__social"><i class='bx bxl-instagram'></i></a>
+                <a href="#" class="footer__social"><i class='bx bxl-twitter'></i></a>
+            </div>
+        </div>
+    
+        <div class="footer__content">
+            <h3 class="footer__title">Information</h3>
+            <ul>
+                <li><a href="#" class="footer__link">Event</a></li>
+                <li><a href="#" class="footer__link">Contact us</a></li>
+                <li><a href="#" class="footer__link">Privacy policy</a></li>
+                <li><a href="#" class="footer__link">Terms of services</a></li>
+            </ul>
+        </div>
+    
+        <div class="footer__content">
+            <h3 class="footer__title">Address</h3>
+            <ul>
+                <li>1111, Somewhere Rd</li>
+                <li>United States, 23456</li>
+                <li>999 - 888 - 777</li>
+                <li>kitchensams123@gmail.com</li>
+            </ul>
+        </div>
+    </div>
+    
+    <p class="footer__copy">&#169; 2024 Team Sams. All rights reserved</p>
+    </footer>
+    <!--========== FOOTER ENDS HERE ==========-->
+    
+    <!--========== SCROLL REVEAL ==========-->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    
+    <!--========== ABOUT JS ==========-->
+    <script src="static/styles/js/about.js"></script>
+
+    
+    </body>
+    </html>

@@ -27,7 +27,7 @@
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
                         <li class="nav__item"><a href="#home" class="nav__link active-link">Home</a></li>
-                        <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+                        <li class="nav__item"><a href="{{ url_for('about_page') }}" class="nav__link">About</a></li>
                         <li class="nav__item"><a href="{{ url_for('menu_page') }}" class="nav__link">Menu</a></li>
                         <li class="nav__item"><a href="{{ url_for('order_page') }}" class="nav__link">Order</a></li>
                         <!-- <li class="nav__item"><a href="#services" class="nav__link">Services</a></li> -->
@@ -79,7 +79,7 @@
                     <div class="about__data">
                         <h2 class="section-title about__initial">Sam's Kitchen is a culinary journey through India, where traditional flavors meet modern innovation.</h2>
                         <p class="about__description">Inspired by the diverse regional cuisines of India, we craft dishes that are both authentic and contemporary.</p>
-                        <a href="#" class="button">Learn more about our story</a>
+                        <a href="{{ url_for('about_page') }}" class="button">Learn more about our story</a>
                     </div>
 
                     <img src="static/styles/img/bread.png" alt="" class="about__img">

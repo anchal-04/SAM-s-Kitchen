@@ -18,7 +18,7 @@
         {% endfor %} -->
 
 <!--========== SCROLL TOP ==========-->
-<a href="#" class="scrolltop" id="scroll-top">
+<a href="{{ url_for('home_page') }}" class="scrolltop" id="scroll-top">
     <i class='bx bx-chevron-up scrolltop__icon'></i>
 </a>
 
@@ -30,7 +30,7 @@
         <div class="nav__menu" id="nav-menu">
             <ul class="nav__list">
                 <li class="nav__item"><a href="{{ url_for('home_page') }}" class="nav__link">Home</a></li>
-                <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+                <li class="nav__item"><a href="{{ url_for('about_page')}}" class="nav__link">About</a></li>
                 <li class="nav__item"><a href="{{ url_for('menu_page') }}" class="nav__link">Menu</a></li>
                 <li class="nav__item"><a href="{{ url_for('order_page') }}" class="nav__link active-link">Order</a></li>
                 <li class="nav__item"><a href="{{ url_for('contact_page') }}" class="nav__link">Contact us</a></li>
