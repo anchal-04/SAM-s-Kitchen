@@ -33,10 +33,36 @@ def contact_page():
 
 
         try:
-            # Send the email
-            msg = Message(reason,sender='noreply@gmai.com', recipients=[email])
-            msg.body=message
-            mail.send(msg)
+            # Send the email to customer
+            message_customer = Message('Your query regarding ' + reason + ' is being processed',
+                                       sender='noreply@kitchensams123.com', recipients=[email])
+            message_customer.body = f"""
+                                            Dear {name},
+
+                                            Thank you for contacting SAM's Kitchen!
+
+                                            Your request has been received and it will be processed shortly.
+
+                                            Thank you for choosing Sam's Kitchen!
+
+                                            Best regards,
+                                            Sam's Kitchen Team
+                                            """
+            mail.send(message_customer)
+            # Send the email to admin
+            message_admin = Message('Query regarding ' + reason + ' from ' + name,
+                                    sender='noreply@kitchensams123.com', recipients=['kitchensams123@gmail.com'])
+            message_admin.body = f"""
+                                                      Dear Admin,
+
+                                                      You have received the following query from {email} - 
+
+                                                     {message}
+
+                                                      Best regards,
+                                                      Sam's Kitchen Team
+                                                      """
+            mail.send(message_admin)
             flash('Your message has been sent successfully!', 'success')
         except Exception as e:
             flash(f'An error occurred while sending your message: {str(e)}', 'danger')
@@ -422,7 +448,7 @@ def payment_page():
             if success:
                 try:
                     msg = Message('Order Confirmation from Sam\'s Kitchen',
-                                  sender='noreply@samskitchen.com',
+                                  sender='noreply@kitchensams123.com',
                                   recipients=[email])
                     msg.body = f"""
                     Dear {name},
