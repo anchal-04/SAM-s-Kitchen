@@ -26,20 +26,18 @@
             </div>
 
        <div class="container text-center">
-    <h1 class="mt-5">Order Confirmed!</h1>
-    <div class="alert alert-success">
+    <div class="alert alert-success" style="color:white">
         <h2>Thank You for Your Order</h2>
-        <p>Your order has been successfully processed.</p>
-        <p>Your Order ID is: <strong>{{ order_id }}</strong></p>
-        <p>You can use this Order ID to track your delivery.</p>
+        <p>Your payment receipt will be mailed shortly.</p>
+        <p style="color:#0cdcc7">Here's your order id "<strong>{{ order_id }}</strong>"</p>
     </div>
            {% if error_message %}
                      <div class="error-message">
                          {{ error_message }}
                      </div>
                 {% endif %}
-    <a href="{{ url_for('home_page') }}" class="btn btn-primary">Return to Home</a>
-    <a href="{{ url_for('track_page') }}" class="btn btn-secondary">Track Your Order</a>
+    <a href="{{ url_for('home_page') }}" class = ""><button class ="button"><h5 class="link">Return Home</h5></button></a>
+    <!-- <a href="{{ url_for('track_page') }}" class="btn btn-secondary">Track Your Order</a> -->
 </div>
     </div>
 </div>
