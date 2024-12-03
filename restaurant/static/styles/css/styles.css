@@ -920,6 +920,7 @@ button.btn:hover {
   background: #f75050;
   color: white;
   border-radius: .5rem;
+  border:none
 }
 
 /* About Us Page */

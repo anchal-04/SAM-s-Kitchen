@@ -10,6 +10,7 @@
     <!--========== CSS ==========-->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/css/styles.css') }}">
 
+
     <title>Order</title>
 </head>
 <body>
@@ -71,7 +72,7 @@
     <h2 class="section-title">Order</h2>
 
 
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; margin-left: 100px; margin-right: 110px;">
         <!-- SEARCH FORM -->
         <form action="/search-order" method="get" class="search-box">
             <div class="search-box">
@@ -90,7 +91,7 @@
     </div>
 
     <!-- FILTER OPTIONS (Initially Hidden) -->
-    <div id="filter-options" style="display: none; position: relative; top: 60px; right: 10px;  padding: 1rem; ">
+    <div id="filter-options" style="display: none; position: relative; top: 60px; right: 10px;  padding: 1rem; margin-left: 100px;">
         <form action="/filter-order" method="get">
             <div style="display: flex; flex-direction: column; gap: 1rem;">
                 <!-- Filter by Category -->
@@ -186,7 +187,7 @@
 
                             <div>
                                 <label for="specialInstructions">Special Instructions:</label>
-                                <textarea id="specialInstructions" rows="3"></textarea>
+                                <textarea style="width:300px; height:30px;" id="specialInstructions" rows="3"></textarea>
                             </div>
                             <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
                         </div>
@@ -243,7 +244,7 @@
 
                             <div>
                                 <label for="specialInstructions">Special Instructions:</label>
-                                <textarea id="specialInstructions" rows="3"></textarea>
+                                <textarea style="width:300px; height:30px;" id="specialInstructions" rows="3"></textarea>
                             </div>
                             <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
                         </div>
@@ -296,7 +297,7 @@
 
                             <div>
                                 <label for="specialInstructions">Special Instructions:</label>
-                                <textarea id="specialInstructions" rows="3"></textarea>
+                                <textarea style="width:300px; height:30px;" id="specialInstructions" rows="3"></textarea>
                             </div>
                             <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
                         </div>
@@ -349,7 +350,7 @@
 
                             <div>
                                 <label for="specialInstructions">Special Instructions:</label>
-                                <textarea id="specialInstructions" rows="3"></textarea>
+                                <textarea style="width:300px; height:30px;" id="specialInstructions" rows="3"></textarea>
                             </div>
                             <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
                         </div>
@@ -405,7 +406,7 @@
 
                             <div>
                                 <label for="specialInstructions">Special Instructions:</label>
-                                <textarea id="specialInstructions" rows="3"></textarea>
+                                <textarea style="width:300px; height:30px;" id="specialInstructions" rows="3"></textarea>
                             </div>
                             <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
                         </div>
@@ -461,7 +462,7 @@
 
                             <div>
                                 <label for="specialInstructions">Special Instructions:</label>
-                                <textarea id="specialInstructions" rows="3"></textarea>
+                                <textarea style="width:300px; height:30px;" id="specialInstructions" rows="3"></textarea>
                             </div>
                             <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
                         </div>
@@ -493,7 +494,7 @@
         <div class="footer__content">
             <h3 class="footer__title">Information</h3>
             <ul>
-                <li><a href="#" class="footer__link">Contact us</a></li>
+                <li><a href="{{ url_for('contact_page') }}" class="footer__link">Contact us</a></li>
                 <li><a href="#" class="footer__link">Privacy policy</a></li>
                 <li><a href="#" class="footer__link">Terms of services</a></li>
             </ul>
@@ -521,6 +522,9 @@
 
 <!--========== MAIN JS ==========-->
 <script src="static/styles/js/main.js"></script>
+
+
+
 
 <script>
     function toggleFilter() {
