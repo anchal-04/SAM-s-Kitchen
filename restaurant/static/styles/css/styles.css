@@ -1125,6 +1125,6 @@ button.btn:hover {
 }
 
 .stars {
-  color: var(--first-color-alt);
+  color: gold;
   font-size: var(--small-font-size);
 }
