@@ -10,6 +10,7 @@
     <!--========== CSS ==========-->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/css/styles.css') }}">
 
+
     <title>Order</title>
 </head>
 <body>
@@ -493,7 +494,7 @@
         <div class="footer__content">
             <h3 class="footer__title">Information</h3>
             <ul>
-                <li><a href="#" class="footer__link">Contact us</a></li>
+                <li><a href="{{ url_for('contact_page') }}" class="footer__link">Contact us</a></li>
                 <li><a href="#" class="footer__link">Privacy policy</a></li>
                 <li><a href="#" class="footer__link">Terms of services</a></li>
             </ul>
@@ -521,6 +522,9 @@
 
 <!--========== MAIN JS ==========-->
 <script src="static/styles/js/main.js"></script>
+
+
+
 
 <script>
     function toggleFilter() {
