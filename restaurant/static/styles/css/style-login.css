@@ -152,7 +152,7 @@ form.sign-in-form {
   background-color: #63b663;
 }
 .panels-container {
-  background-color: #5d6163 ;
+  background-color: #161616;
   position: absolute;
   height: 100%;
   width: 100%;
@@ -168,9 +168,9 @@ form.sign-in-form {
   height: 2000px;
   width: 2000px;
   top: -10%;
-  right: 48%;
+  right: 50%;
   transform: translateY(-50%);
-  background: linear-gradient(-45deg, black 10%, #c35555 -20%);
+  background: linear-gradient(-45deg, black 10%, #e14444 -20%);
   transition: 1.8s ease-in-out;
   border-radius: 50%;
   z-index: 6;
@@ -220,12 +220,13 @@ form.sign-in-form {
 
 .btn.transparent {
   margin: 0;
-  background:#3f3e3e ;
+  background:#161616 ;
   width: 130px;
   height: 41px;
   font-weight: 600;
   font-size: 0.8rem;
   color: #fbfbfb;
+  border-radius: 49px;
 }
 .btn.transparent:hover{
   background-color: #069C54;
@@ -301,7 +302,7 @@ form.sign-in-form {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    padding: 2.5rem 8%;
+    padding: 2.5rem 15%;
     grid-column: 1 / 2;
   }
 
