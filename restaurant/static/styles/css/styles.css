@@ -893,7 +893,7 @@ button.btn:hover {
     top:1;
     bottom: 0;
     width: 100%; /* Full width */
-    height: 100%; /* Full height */
+    height: 110%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
 }

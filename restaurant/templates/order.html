@@ -38,8 +38,8 @@
                 {% if current_user.is_authenticated %}
                     <li class="nav__item"><a href="{{ url_for('logout') }}" class="nav__link">Log Out</a></li>
                 {% else %}
-                    <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Log in</a></li>
-                    <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Register</a></li>
+                    <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Log in/ Register</a></li>
+                    <!-- <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Register</a></li>-->
                 {% endif %}
                 <!-- <li class="nav__item"><a href="index.html#contact" class="nav__link">Contact us</a></li> -->
                 <li class="nav__item"><a href="{{ url_for('cart_page') }}" class="cart__button"><i
