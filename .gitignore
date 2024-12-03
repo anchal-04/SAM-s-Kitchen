@@ -1,2 +1,4 @@
 /venv
 /.idea
+__pyache__/
+*.pyc

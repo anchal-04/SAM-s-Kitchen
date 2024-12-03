@@ -81,7 +81,7 @@ def contact_page():
 
 #MENU PAGE
 @app.route('/menu', methods = ['GET', 'POST'])
-@login_required
+# @login_required
 def menu_page():
     add_form = AddForm()
     if request.method == 'POST':
