@@ -45,8 +45,8 @@
     <div class="checkout">
         <div class="total">
         <div class="total">
-            <div class="Subtotal">Sub-Total</div>
-            <div class="items">{{ cart_items | sum(attribute='item_qty') }} items</div>
+            <div class="Subtotal">Sub-Total of </div>
+            <div class="Subtotal"> {{ cart_items | sum(attribute='item_qty') }} items:  </div>
             <div class="total-amount">${{ total_price | round(2) }}</div>
         </div>
         {% if error_message %}
