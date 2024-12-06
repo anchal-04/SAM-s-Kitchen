@@ -8,7 +8,7 @@
 
   /*========== Colors ==========*/
   /*========== Colors ==========*/
-  --first-color: #f75050;
+  --first-color: #d80d32;
   --first-color-alt: #63b663;
   --title-color: #FBFEFD;
   --text-color:  #FFFFFF;
@@ -417,6 +417,10 @@ img{
 }
 
 /*========== CONTACT ==========*/
+.contact__body{
+  padding-right: 18%; 
+  padding-left: 15% ;
+}
 .contact__container{
   text-align: center;
 }
@@ -941,11 +945,12 @@ button.btn:hover {
 }
 
 .final-add-button{
-  background: var(--first-color);
-  color: white;
-  border-radius: 1.5rem;
-  padding: 3%;
-  border:none;
+  background-color: var(--first-color);
+  color: #FFF;
+  padding: .75rem 1rem;
+  border: none;
+  border-radius: .5rem;
+  transition: .3s;
 }
 .final-add-button:hover {
   background: var(--first-color-alt)
@@ -1128,3 +1133,65 @@ button.btn:hover {
   color: gold;
   font-size: var(--small-font-size);
 }
+/* Basic Styling for Dropdown */
+.dropdown {
+  position: absolute;
+  width:200px;
+  right:15%;
+}
+
+.dropdown-label {
+  background-color:var(--first-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 5px;
+}
+
+.dropdown-list {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 100%;
+  right: 70%;
+  background-color: white;
+  color:#000000;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(111, 101, 101, 0.1);
+  padding: 1rem;
+  width: 100%;
+  z-index: 1;
+}
+
+.dropdown-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 0.5rem 0;
+}
+
+.dropdown-option input[type="checkbox"] {
+  accent-color: #E63946; /* Custom checkbox color */
+  transform: scale(1.2);
+}
+
+.dropdown:hover .dropdown-list {
+  display: block;
+}
+
+/* Check All Button */
+a[data-toggle="check-all"] {
+  font-size: 1rem;
+  color: #E63946;
+  text-decoration: none;
+  margin-bottom: 1rem;
+  display: block;
+  cursor: pointer;
+}
+
+a[data-toggle="check-all"]:hover {
+  color: #C62828;
+} 

@@ -63,15 +63,15 @@
                 <div class="home__container bd-container bd-grid">
                     <div class="home__data">
                         <h1 class="home__title"> Welcome!<br> Try our food. </h1>
-                        <h3 class="home__subtitle">SAM’s serves Authentic Indian Food in a modern industrial space.</h3>
-                        <div style="gap: 25%;">
+                        <h2 class="home__subtitle">SAM’s serves Authentic Indian Food in a modern industrial space.</h2>
+                        <div style="display: flex; gap: 5%;">
                             <a href="{{ url_for('menu_page') }}" class="button">View Menu</a>
                         <!-- <a href="{{ url_for('table_page') }}" class="button">Reserve Table</a>-->
                             <a href="{{ url_for('order_page') }}" class="button">Order Now</a>
                         </div>
                     </div>
                     
-                    <img src="{{url_for('static', filename='styles/img/home.jpg')}}" alt = "" class="home__img">
+                    <img src="{{url_for('static', filename='styles/img/home.jpg')}}" alt = "Biryani Image" class="home__img">
                 </div>
             </section>
 
@@ -84,7 +84,7 @@
                         <a href="{{ url_for('about_page') }}" class="button">Learn more about our story</a>
                     </div>
 
-                    <img src="static/styles/img/bread.png" alt="" class="about__img">
+                    <img src="static/styles/img/bread.png" alt="image of naans" class="about__img">
                 </div>
             </section>
            
@@ -97,7 +97,7 @@
                         <p class="about__description">Our carefully curated beverage menu complements the diverse regional cuisines we offer, providing a complete culinary experience.</p>
                         <!-- <a href="#" class="button">Explore history</a> -->
                     </div>
-                    <img src="static/styles/img/drink.jpg" alt="" class="home__img">
+                    <img src="static/styles/img/drink.jpg" alt="image of a mango juice" class="home__img">
                 </div>
             </section>
             <!--========== CONTACT US ==========-->
@@ -122,9 +122,9 @@
                     <a href="#" class="footer__logo">Sam's Kitchen</a>
                     <span class="footer__description">Restaurant</span>
                     <div>
-                        <a href="#" class="footer__social"><i class='bx bxl-facebook'></i></a>
-                        <a href="#" class="footer__social"><i class='bx bxl-instagram'></i></a>
-                        <a href="#" class="footer__social"><i class='bx bxl-twitter'></i></a>
+                        <a href="#" class="footer__social" aria-label="facebook icon"><i class='bx bxl-facebook'></i></a>
+                        <a href="#" class="footer__social" aria-label="instagram icon"><i class='bx bxl-instagram'></i></a>
+                        <a href="#" class="footer__social" aria-label="twitter icon"><i class='bx bxl-twitter'></i></a>
                     </div>
                 </div>
             
