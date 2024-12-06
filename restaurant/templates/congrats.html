@@ -13,7 +13,7 @@
 
 <div class="contain">
     <div class="congrats">
-        <h1>Your Order has been placed <span class="hide">successfully!</span></h1>
+        <h2>Order placed <span class="hide">successfully!</span></h1>
         <div class="done">
             <svg version="1.1" id="tick" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
      viewBox="0 0 37 37" style="enable-background:new 0 0 37 37;" xml:space="preserve">
@@ -27,16 +27,16 @@
 
        <div class="container text-center">
     <div class="alert alert-success" style="color:white">
-        <h2>Thank You for Your Order</h2>
+        <p>Thank You for Your Order.</h2>
         <p>Your payment receipt will be mailed shortly.</p>
-        <p style="color:#0cdcc7">Here's your order id "<strong>{{ order_id }}</strong>"</p>
+        <h3 style="color:#0cdcc7">Here's your order id "<strong>{{ order_id }}</strong>"</p>
     </div>
            {% if error_message %}
                      <div class="error-message">
                          {{ error_message }}
                      </div>
                 {% endif %}
-    <a href="{{ url_for('home_page') }}" class = ""><button class ="button"><h5 class="link">Return Home</h5></button></a>
+    <a href="{{ url_for('home_page') }}" class = ""><button class ="button"><h4 class="link">Return Home</h4></button></a>
     <!-- <a href="{{ url_for('track_page') }}" class="btn btn-secondary">Track Your Order</a> -->
 </div>
     </div>

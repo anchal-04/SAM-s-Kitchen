@@ -8,7 +8,7 @@
 
   /*========== Colors ==========*/
   /*========== Colors ==========*/
-  --first-color: #d80d32;
+  --first-color: #f75050;
   --first-color-alt: #63b663;
   --title-color: #FBFEFD;
   --text-color:  #FFFFFF;
@@ -301,7 +301,7 @@ img{
 .button{
   display: inline-block;
   background-color: var(--first-color);
-  color: #FFF;
+  color: var(--body-color);
   padding: .75rem 1rem;
   border: none;
   border-radius: .5rem;
@@ -802,7 +802,7 @@ tr:hover {
 button.btn {
   padding: 10px 15px;
   background-color: var(--first-color);
-  color: white;
+  color: var(--body-color);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -946,7 +946,7 @@ button.btn:hover {
 
 .final-add-button{
   background-color: var(--first-color);
-  color: #FFF;
+  color: var(--body-color);
   padding: .75rem 1rem;
   border: none;
   border-radius: .5rem;
@@ -1142,7 +1142,7 @@ button.btn:hover {
 
 .dropdown-label {
   background-color:var(--first-color);
-  color: white;
+  color: var(--body-color);
   padding: 0.5rem 1rem;
   border: none;
   cursor: pointer;
@@ -1174,7 +1174,7 @@ button.btn:hover {
 }
 
 .dropdown-option input[type="checkbox"] {
-  accent-color: #E63946; /* Custom checkbox color */
+  accent-color: var(--first-color); /* Custom checkbox color */
   transform: scale(1.2);
 }
 
@@ -1185,7 +1185,7 @@ button.btn:hover {
 /* Check All Button */
 a[data-toggle="check-all"] {
   font-size: 1rem;
-  color: #E63946;
+  color: var(--first-color);
   text-decoration: none;
   margin-bottom: 1rem;
   display: block;
@@ -1193,5 +1193,5 @@ a[data-toggle="check-all"] {
 }
 
 a[data-toggle="check-all"]:hover {
-  color: #C62828;
+  color: var(--first-color);
 } 

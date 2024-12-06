@@ -39,7 +39,7 @@
                 <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Register</a></li>
 
                 {% endif %}
-                <li class="nav__item"><a href="{{ url_for('cart_page') }}" class="cart__button">
+                <li class="nav__item"><a href="{{ url_for('cart_page') }}" class="cart__button" aria-label="cart button">
                     <i class='bx bx-cart'></i></a></li>
                 <!-- <li><i class='bx bx-moon change-theme' id="theme-button"></i></li> -->
                 
@@ -145,9 +145,9 @@
             <a href="#" class="footer__logo">Sam's Kitchen</a>
             <span class="footer__description">Restaurant</span>
             <div>
-                <a href="#" class="footer__social"><i class='bx bxl-facebook'></i></a>
-                <a href="#" class="footer__social"><i class='bx bxl-instagram'></i></a>
-                <a href="#" class="footer__social"><i class='bx bxl-twitter'></i></a>
+                <a href="#" class="footer__social" aria-label="facebook link"><i class='bx bxl-facebook'></i></a>
+                <a href="#" class="footer__social" aria-label="instagram link"><i class='bx bxl-instagram'></i></a>
+                <a href="#" class="footer__social" aria-label="twitter link"><i class='bx bxl-twitter'></i></a>
             </div>
         </div>
 

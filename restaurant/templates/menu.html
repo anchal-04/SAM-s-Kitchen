@@ -36,7 +36,7 @@
                 <li class="nav__item"><a href="{{ url_for('contact_page') }}" class="nav__link">Contact Us</a></li>
                 {% if current_user.is_authenticated %}
                     <li class="nav__item"><a href="{{ url_for('logout') }}" class="nav__link">Log Out</a></li>
-                    <li class="nav__item"><a href="{{ url_for('cart_page') }}" class="cart__button"><i
+                    <li class="nav__item"><a href="{{ url_for('cart_page') }}" class="cart__button" aria-label="cart button"><i
                         class='bx bx-cart-alt'></i></a></li>
                 {% else %}
                     <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Log In/ Register</a></li>
@@ -76,7 +76,7 @@
         <!-- SEARCH FORM -->
         <form action="/search-menu" method="get" class="search-box">
             <div class="search-box">
-                <button class="btn-search"><i class='bx bxs-search'></i></button>
+                <button class="btn-search" aria-label="button to search the menu"><i class='bx bxs-search'></i></button>
                 <input type="text" name="query" class="input-search" placeholder="Search..." value="{{ query or '' }}">
             </div>
         </form>
