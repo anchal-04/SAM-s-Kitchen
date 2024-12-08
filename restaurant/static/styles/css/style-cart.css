@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background: #161616;
+    background: var(--body-color);
     height: 100vh;
     justify-content: center;
     align-items: center;
@@ -16,7 +16,7 @@ body {
     width: 70%;
     max-width: 1200px;
     height: auto;
-    background-color: #fff;
+    background-color: var(--text-color);
     border-radius: 20px;
     box-shadow: 0px 10px 20px rgba(22, 135, 217, 0.2);
     padding: 20px;
@@ -36,7 +36,7 @@ body {
 .Heading {
     font-size: 28px;
     font-weight: 700;
-    color: #2F3841;
+    color: var(--body-color);
 }
 
 .back {
@@ -70,7 +70,7 @@ body {
 .title {
     font-size: 20px;
     font-weight: 800;
-    color: #202020;
+    color: var(--body-color);
     white-space: normal;
     overflow: visible;
     text-overflow: unset;
@@ -79,7 +79,7 @@ body {
 .subtitle {
     font-size: 14px;
     font-weight: 400;
-    color: #666;
+    color: var(--container-color);
     margin-top: 5px;
     white-space: normal;
     overflow: visible;
@@ -194,8 +194,9 @@ hr {
     transition: background-color 0.3s;
 }
 
-.button:hover {
-    background-color: var(--first-color-alt);;
+.p-button:hover {
+    background-color: var(--body-color);
+    color:var(--title-color);
 }
 
 .error-message {
