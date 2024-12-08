@@ -3,14 +3,17 @@ body {
     padding: 0;
     background: #161616;
     height: 100vh;
-    display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Open Sans', sans-serif;
 }
 
 .CartContainer {
-    width: 80%;
+    margin-right: 15%;
+    margin-left: 15%;
+    margin-top: 10%;
+    margin-bottom: 5%;
+    width: 70%;
     max-width: 1200px;
     height: auto;
     background-color: #fff;
@@ -37,13 +40,13 @@ body {
 }
 
 .back {
-    text-decoration: none;
-    color: #1687d9;
+    text-decoration:underline;
+    color: var(--first-color);
     font-weight: 600;
 }
 
 .back:hover {
-    color: #03da43;
+    color: var(--first-color-alt);
 }
 
 .Cart-Items {
@@ -89,7 +92,7 @@ body {
     gap: 10px;
 }
 
-.btn {
+.c-btn {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -104,7 +107,7 @@ body {
     border: none;
 }
 
-.btn:hover {
+.c-btn:hover {
     background-color: #ccc;
 }
 
@@ -141,8 +144,7 @@ body {
 }
 
 .remove:hover {
-    background-color: #03da43;
-    color: #fff;
+    color: var(--first-color);;
 }
 
 hr {
@@ -178,26 +180,27 @@ hr {
     margin-bottom: 5px;
 }
 
-.button {
-    width: auto;
-    padding: 10px 20px;
+.p-button {
+    margin-top: 10px;
+    width: 110%;
+    height: 40px;
     border: none;
-    background-color: #069C54;
-    border-radius: 20px;
+    background-color: var(--first-color-alt);;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
-    color: #FFF;
+    color:var(--body-color);
     transition: background-color 0.3s;
 }
 
 .button:hover {
-    background-color: #048654;
+    background-color: var(--first-color-alt);;
 }
 
 .error-message {
     margin-top: 10px;
-    color: #f75050;
+    color: var(--first-color); /* Red color */
     font-size: 14px;
     font-weight: bold;
     text-align: center;

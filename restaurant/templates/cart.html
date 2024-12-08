@@ -4,15 +4,49 @@
     <title>CART</title>
     <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/css/style-cart.css') }}">
+    <link rel="stylesheet" type="text/css" href="static/styles/css/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,900" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+            <!--========== HEADER ==========-->
+            <header class="l-header" id="header">
+                <nav class="nav bd-container">
+                    <a href="#" class="nav__logo"><h1>Sam's Kitchen</h1></a>
+    
+                    <div class="nav__menu" id="nav-menu">
+                        <ul class="nav__list">
+                            <li class="nav__item"><a href="#home" class="nav__link">Home</a></li>
+                            <li class="nav__item"><a href="{{ url_for('about_page') }}" class="nav__link">About</a></li>
+                            <li class="nav__item"><a href="{{ url_for('menu_page') }}" class="nav__link">Menu</a></li>
+                            <li class="nav__item"><a href="{{ url_for('order_page') }}" class="nav__link">Order</a></li>
+                            <li class="nav__item"><a href="{{ url_for('contact_page') }}" class="nav__link">Contact Us</a></li>
+                            <!-- <li class="nav__item"><a href="#services" class="nav__link">Services</a></li> -->
+                            <!-- <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Log in</a></li>
+                            <li class="nav__item"><a href="{{ url_for('register_page') }}" class="nav__link">Register</a></li> -->
+                            {% if current_user.is_authenticated %}
+                            <li class="nav__item"><a href="{{ url_for('logout') }}" class="nav__link">Log Out</a></li>
+                            <li class="nav__item"><a href="{{ url_for('cart_page') }}" class="cart__button" style="color:red" aria-label="cart button"><i
+                                class='bx bx-cart-alt'></i></a></li>
+                            {% else %}
+                            <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Log In/ Register</a></li>
+                            <!--<li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Register</a></li>-->
+                            {% endif %}
+                           
+                            <!-- <li><i class='bx bx-moon change-theme' id="theme-button"></i></li> -->
+                        </ul>
+                    </div>
+    
+                    <div class="nav__toggle" id="nav-toggle">
+                        <i class='bx bx-menu'></i>
+                    </div>
+                </nav>
+            </header>
 <div class="CartContainer">
     <div class="Header">
         <h3 class="Heading">Cart</h3>
         <a href="{{ url_for('order_page') }}" class="back">
-            <span>Back to Order</span>
+            <span>Add items</span>
         </a>
     </div>
 
@@ -30,9 +64,9 @@
             </div>
 
             <div class="counter">
-                <button class="btn decrease-btn" data-item-id="{{ item.item_id }}">-</button>
+                <button class="c-btn decrease-btn" data-item-id="{{ item.item_id }}">-</button>
                 <div class="count" data-item-id="{{ item.item_id }}">{{ cart_item.item_qty }}</div>
-                <button class="btn increase-btn" data-item-id="{{ item.item_id }}">+</button>
+                <button class="c-btn increase-btn" data-item-id="{{ item.item_id }}">+</button>
             </div>
 
             <div class="prices">
@@ -54,8 +88,8 @@
             </div>
         {% endif %}
         <form method="POST">
-        <button type="submit" class="button">Place Order</button>
-    </form>
+            <button type="submit" class="p-button">Place Order</button>
+        </form>
     </div>
 </div>
 
@@ -133,7 +167,38 @@
         }
     });
 </script>
-
-
+</div>
+<footer class="footer section bd-container" style="padding-top:2rem;">
+    <div class="footer__container bd-grid">
+        <div class="footer__content">
+            <a href="#" class="footer__logo">Sam's Kitchen</a>
+            <span class="footer__description">Restaurant</span>
+            <div>
+              <a href="#" class="footer__social" aria-label="facebook icon"><i class='bx bxl-facebook'></i></a>
+              <a href="#" class="footer__social" aria-label="instagram icon"><i class='bx bxl-instagram'></i></a>
+              <a href="#" class="footer__social" aria-label="twitter icon"><i class='bx bxl-twitter'></i></a>
+            </div>
+        </div>
+        <div class="footer__content">
+            <h3 class="footer__title">Information</h3>
+            <ul>
+                <li><a href="#" class="footer__link">Event</a></li>
+                <li><a href="{{ url_for('contact_page') }}" class="footer__link">Contact us</a></li>
+                <li><a href="#" class="footer__link">Privacy policy</a></li>
+                <li><a href="#" class="footer__link">Terms of services</a></li>
+            </ul>
+        </div>
+        <div class="footer__content">
+            <h3 class="footer__title">Address</h3>
+            <ul>
+                <li>1111, Somewhere Rd</li>
+                <li>United States, 23456</li>
+                <li>999 - 888 - 777</li>
+                <li>kitchensams123@gmail.com</li>
+            </ul>
+        </div>
+    </div>
+    <p class="footer__copy">&#169; 2024 Team Sams. All rights reserved</p>
+</footer>
 </body>
 </html>
