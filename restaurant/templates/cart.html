@@ -12,11 +12,11 @@
             <!--========== HEADER ==========-->
             <header class="l-header" id="header">
                 <nav class="nav bd-container">
-                    <a href="#" class="nav__logo"><h1>Sam's Kitchen</h1></a>
+                    <a href="{{ url_for('home_page') }}" class="nav__logo"><h1>Sam's Kitchen</h1></a>
     
                     <div class="nav__menu" id="nav-menu">
                         <ul class="nav__list">
-                            <li class="nav__item"><a href="#home" class="nav__link">Home</a></li>
+                            <li class="nav__item"><a href="{{ url_for('home_page') }}"class="nav__link">Home</a></li>
                             <li class="nav__item"><a href="{{ url_for('about_page') }}" class="nav__link">About</a></li>
                             <li class="nav__item"><a href="{{ url_for('menu_page') }}" class="nav__link">Menu</a></li>
                             <li class="nav__item"><a href="{{ url_for('order_page') }}" class="nav__link">Order</a></li>
