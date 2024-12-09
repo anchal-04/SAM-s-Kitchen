@@ -87,7 +87,9 @@
     <!-- FILTER OPTIONS (Initially Hidden) -->
 
     <div class="dropdown" data-control="checkbox-dropdown">
-      <button class="dropdown-label" onclick="toggleFilter()">Filter</button>
+      <button class="dropdown-label" onclick="toggleFilter()">
+          <img src="{{ url_for('static', filename='styles/img/filter.png') }}" alt="Filter">
+          </button>
       <div id="filter-options" class="dropdown-list">
         <form action="/filter-menu" method="get">
         <!-- Filter Categories -->
