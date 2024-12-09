@@ -68,8 +68,7 @@ def contact_page():
             flash(f'An error occurred while sending your message: {str(e)}', 'danger')
 
         # Optional: You can save the data to the database or handle it as needed
-        print(f"Contact Form Submitted: Name: {name}, Number: {number}, Email: {email}, Reason: {reason}, Message: {message}")
-        
+
         # Provide feedback to the user (e.g., flash a message)
         flash('Thank you for reaching out! We will get back to you soon.', category='success')
         
@@ -127,33 +126,37 @@ def search_order_items():
 # FILTER FUNCTIONALITY
 @app.route('/filter-menu', methods=['GET'])
 def filter_menu_items():
-    category = request.args.get('category', '').strip()
-    add_form = AddForm()
-    if category == 'Veg':
-        items = Item.query.filter(Item.isVeg == True).all()
-    elif category == 'Non-Veg':
-        items = Item.query.filter(Item.isVeg == False).all()
-    elif category:
-        items = Item.query.filter(Item.category == category).all()
-    else:
-        items = Item.query.all()  # Show all items if no category selected
+    selected_categories = request.args.getlist('category[]')
 
-    return render_template('menu.html', items=items, add_form=add_form, query=None, category=category)
+    add_form = AddForm()
+    if selected_categories:
+        items = Item.query.filter(
+            (Item.category.in_(selected_categories)) |
+            ((Item.isVeg == True) if 'Veg' in selected_categories else False) |
+            ((Item.isVeg == False) if 'Non-Veg' in selected_categories else False)
+        ).all()
+
+    else:
+        items = Item.query.all()
+
+    return render_template('menu.html', items=items, add_form=add_form, query=None, selected_categories=selected_categories)
 
 @app.route('/filter-order', methods=['GET'])
 def filter_order_items():
-    category = request.args.get('category', '').strip()
-    add_form = AddForm()
-    if category == 'Veg':
-        items = Item.query.filter(Item.isVeg == True).all()
-    elif category == 'Non-Veg':
-        items = Item.query.filter(Item.isVeg == False).all()
-    elif category:
-        items = Item.query.filter(Item.category == category).all()
-    else:
-        items = Item.query.all()  # Show all items if no category selected
+    selected_categories = request.args.getlist('category[]')
 
-    return render_template('order.html', items=items, add_form=add_form, query=None, category=category)
+    add_form = AddForm()
+    if selected_categories:
+        items = Item.query.filter(
+            (Item.category.in_(selected_categories)) |
+            ((Item.isVeg == True) if 'Veg' in selected_categories else False) |
+            ((Item.isVeg == False) if 'Non-Veg' in selected_categories else False)
+        ).all()
+
+    else:
+        items = Item.query.all()
+
+    return render_template('order.html', items=items, add_form=add_form, query=None, selected_categories=selected_categories)
 
 
 #MENU PAGE
@@ -170,10 +173,7 @@ def order_page():
         return redirect(url_for('order_page'))
 
     if request.method == 'GET':
-        print(" inside get")
         items = Item.query.all()
-        print(f"Items fetched: {items}")
-        print(" inside get 1", items)
         return render_template('order.html', items=items, add_form=add_form)
 
 
@@ -557,17 +557,42 @@ def login_page():
             # flash(f'Signed in successfully as: {attempted_user.username}', category = 'success')
             return redirect(url_for('home_page'))
         else:
-            print("inside else of login")
             flash('Username or password is incorrect! Please Try Again', category = 'danger') #displayed in case user is not registered
     return render_template('login.html', forml = forml, form = form)
 
 #FORGOT PASSWORD
-@app.route('/forgot', methods = ['GET', 'POST'])
-def forgot():
-    return render_template("forgot.html")
 
+@app.route('/forgot', methods=['GET', 'POST'])
 def return_login():
-    return render_template("login.html")
+    if request.method == 'POST':
+        username = request.form.get('username').strip()
+        new_password = request.form.get('new_password').strip()
+        confirm_password = request.form.get('confirm_password').strip()
+
+        # Check if username exists in the database
+        user = User.query.filter_by(username=username).first()
+        if not user:
+            flash("Username not found.", "error")
+            return render_template("forgot.html")
+
+        # Check if passwords match
+        if new_password != confirm_password:
+            flash("Passwords do not match.", "error")
+            return render_template("forgot.html")
+
+        # Update password (hash it for security)
+        user.password = new_password
+        db.session.commit()
+
+        flash("Password updated successfully.", "success")
+        return redirect(url_for('login_page'))
+
+    return render_template('forgot.html')
+
+
+# @app.route('/forgot', methods = ['GET', 'POST'])
+# def forgot():
+#     return render_template("forgot.html")
 
 
 #LOGOUT FUNCTIONALITY

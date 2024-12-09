@@ -69,7 +69,7 @@
 
             <!-- FORGOT PASSWORD -->
             <div class='f-password'>
-                <h3 class="forgot-password"><a href="{{ url_for('forgot') }}" class="fp-link">Forgot Password?</a></h3>
+                <h3 class="forgot-password"><a href="{{ url_for('return_login') }}" class="fp-link">Forgot Password?</a></h3>
             </div>
             <!-- FORGOT PASSWORD ENDS -->
 
@@ -217,6 +217,11 @@
   
     <!-- JAVASCRIPT -->
     <script src="static/styles/js/login.js"></script>
+  <script>
+  function confirmLogout() {
+    return confirm("Are you sure you want to log out?");
+  }
+</script>
 
 
   </body>

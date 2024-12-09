@@ -25,7 +25,7 @@
                             <!-- <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link">Log in</a></li>
                             <li class="nav__item"><a href="{{ url_for('register_page') }}" class="nav__link">Register</a></li> -->
                             {% if current_user.is_authenticated %}
-                            <li class="nav__item"><a href="{{ url_for('logout') }}" class="nav__link">Log Out</a></li>
+                    <li class="nav__item"><a href="{{ url_for('logout') }}" class="nav__link" onclick="return confirmLogout()">Log Out</a></li>
                             <li class="nav__item"><a href="{{ url_for('cart_page') }}" class="cart__button" style="color:red" aria-label="cart button"><i
                                 class='bx bx-cart-alt'></i></a></li>
                             {% else %}
@@ -166,6 +166,11 @@
             }
         }
     });
+</script>
+            <script>
+  function confirmLogout() {
+    return confirm("Are you sure you want to log out?");
+  }
 </script>
 </div>
 <footer class="footer section bd-container" style="padding-top:2rem;">

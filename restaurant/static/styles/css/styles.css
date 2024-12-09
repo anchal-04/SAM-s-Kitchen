@@ -716,7 +716,7 @@ tr:hover {
   border-radius: 50%;
   position: absolute;
   right: 0px;
-  color:#ffffff ;
+  color: var(--body-color) ;
   background-color:transparent;
   pointer-events: painted;
 }

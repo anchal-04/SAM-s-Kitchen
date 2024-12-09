@@ -35,7 +35,7 @@
                 <li class="nav__item"><a href="{{ url_for('order_page') }}" class="nav__link">Order</a></li>
                 <li class="nav__item"><a href="{{ url_for('contact_page') }}" class="nav__link">Contact Us</a></li>
                 {% if current_user.is_authenticated %}
-                    <li class="nav__item"><a href="{{ url_for('logout') }}" class="nav__link">Log Out</a></li>
+                    <li class="nav__item"><a href="{{ url_for('logout') }}" class="nav__link" onclick="return confirmLogout()">Log Out</a></li>
                     <li class="nav__item"><a href="{{ url_for('cart_page') }}" class="cart__button" aria-label="cart button"><i
                         class='bx bx-cart-alt'></i></a></li>
                 {% else %}
@@ -89,46 +89,46 @@
     <div class="dropdown" data-control="checkbox-dropdown">
       <button class="dropdown-label" onclick="toggleFilter()">Filter</button>
       <div id="filter-options" class="dropdown-list">
-        <form action="/filter-order" method="get">
+        <form action="/filter-menu" method="get">
         <!-- Filter Categories -->
         <label class="dropdown-option">
           <input type="checkbox" name="category[]" value="Appetizers" 
-          {% if category == 'Appetizers' %}checked{% endif %} /> Appetizers
+            {% if 'Appetizers' in selected_categories %}checked{% endif %} /> Appetizers
         </label>
         
         <label class="dropdown-option">
           <input type="checkbox" name="category[]" value="Biryani" 
-          {% if category == 'Biryani' %}checked{% endif %} /> Biryani
+            {% if 'Biryani' in selected_categories %}checked{% endif %} /> Biryani
         </label>
         
         <label class="dropdown-option">
-          <input type="checkbox" name="category[]" value="Curry" 
-          {% if category == 'Curry' %}checked{% endif %} /> Curry
+          <input type="checkbox" name="category[]" value="Curry"
+                 {% if 'Curry' in selected_categories %}checked{% endif %} /> Curry
         </label>
         
         <label class="dropdown-option">
           <input type="checkbox" name="category[]" value="Breads" 
-          {% if category == 'Breads' %}checked{% endif %} /> Breads
+                 {% if 'Breads' in selected_categories %}checked{% endif %} /> Breads
         </label>
         
         <label class="dropdown-option">
           <input type="checkbox" name="category[]" value="Desserts" 
-          {% if category == 'Desserts' %}checked{% endif %} /> Desserts
+                 {% if 'Desserts' in selected_categories %}checked{% endif %} /> Desserts
         </label>
         
         <label class="dropdown-option">
           <input type="checkbox" name="category[]" value="Drinks" 
-          {% if category == 'Drinks' %}checked{% endif %}/> Drinks
+                 {% if 'Drinks' in selected_categories %}checked{% endif %} /> Drinks
         </label>
         
         <label class="dropdown-option">
           <input type="checkbox" name="category[]" value="Veg" 
-          {% if category == 'Veg' %}checked{% endif %} /> Veg
+                 {% if 'Veg' in selected_categories %}checked{% endif %} /> Veg
         </label>
         
         <label class="dropdown-option">
           <input type="checkbox" name="category[]" value="Non-Veg" 
-          {% if category == 'Non-Veg' %}checked{% endif %} /> Non-Veg
+                 {% if 'Non-Veg' in selected_categories %}checked{% endif %} /> Non-Veg
         </label>
         <button type="submit" class="button" style="padding: .75rem 3rem;">
                     Apply Filter
@@ -459,6 +459,11 @@
             filterOptions.style.display = 'none';
         }
     }
+</script>
+<script>
+  function confirmLogout() {
+    return confirm("Are you sure you want to log out?");
+  }
 </script>
 
 
