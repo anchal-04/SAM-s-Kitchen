@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     form.onsubmit = function (event) {
      clearErrors();
     // Get input values
+
     const expiry = document.getElementById("expiry").value;
     const state = document.getElementById("state").value;
     const zip = document.getElementById("zip").value;
@@ -18,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const phone = document.getElementById("number").value;
     const email = document.getElementById("email").value;
     const cvv = document.getElementById("cvv").value;
+    const name = document.getElementById("name").value;
 
     // Define regex patterns
     const expiryRegex = /^\d{2}\/\d{2}$/; // MM/YY format
@@ -29,12 +31,43 @@ document.addEventListener("DOMContentLoaded", () => {
     const cvvRegex = /^\d{3}$/;          // Five digits
 
     let isValid = true;
-     // Validate expiry
+    let expiryErrorMessages = "";
+    // Validate expiry
     if (!expiryRegex.test(expiry)) {
         showError("expiry", "Expiry format: MM/YY format.");
         isValid = false;
+    } else {
+        // Additional validation for month and year
+        const [month, year] = expiry.split('/');
+        const monthNum = parseInt(month, 10);
+        const yearNum = parseInt('20' + year, 10);
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth() + 1; // getMonth() is zero-indexed
+        const currentYear = currentDate.getFullYear();
+
+        // Check if month is valid (1-12)
+        if (monthNum < 1 || monthNum > 12) {
+            expiryErrorMessages += "Invalid month. Must be 01-12.\n";
+
+        }
+        // Check if year is valid and not expired
+        if (yearNum < currentYear ||
+                 (yearNum === currentYear && monthNum < currentMonth)) {
+            expiryErrorMessages +="Card is expired or invalid.\n";
+
+        }
     }
 
+    // If there are any error messages, show them
+    if (expiryErrorMessages) {
+        showError("expiry", expiryErrorMessages);
+        isValid = false;
+    }
+
+    if (!name || name.trim().length === 0) {
+        showError("name", "Name is a required field");
+        isValid = false;
+    }
     // Validate state
     if (!stateRegex.test(state)) {
         showError("state", "State must be 2 letters.");

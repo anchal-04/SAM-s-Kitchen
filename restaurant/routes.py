@@ -23,6 +23,7 @@ def about_page():
 #CONTACT PAGE
 @app.route('/contact', methods=['GET', 'POST'])
 def contact_page():
+    error_message = None
     if request.method == 'POST':
         # Get the form data
         name = request.form.get('name')
@@ -76,7 +77,15 @@ def contact_page():
         return redirect(url_for('contact_page'))
 
     # Render the contact page for GET requests
-    return render_template('contact.html')
+    if request.method == 'GET':
+        return render_template(
+            'contact.html',
+            fullname=current_user.fullname,
+            phone_number=current_user.phone_number,
+            email=current_user.email,
+            error_message=error_message
+        )
+
 
 #MENU PAGE
 @app.route('/menu', methods = ['GET', 'POST'])
@@ -516,6 +525,7 @@ def payment_page():
             total_price=total_price,
             fullname=current_user.fullname,
             phone_number=current_user.phone_number,
+            email=current_user.email,
             error_message=error_message
         )
 

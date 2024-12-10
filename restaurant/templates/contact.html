@@ -81,16 +81,16 @@
         <h2>Get in Touch</h2>
         <form id="contact-form" method="POST" action="{{ url_for('contact_page') }}">
           <div class="form-group">
-            <label style="color: black; font-size: 15px;" for="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="Enter your name" >
+            <label style="color: black; font-size: 15px;" for="name"><sup>*</sup>Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" value="{{ fullname }}" >
           </div>
           <div class="form-group">
             <label style="color: black; font-size: 15px;" for="number">Phone Number:</label>
-            <input type="tel" id="number" name="number" placeholder="Enter your phone number" >
+            <input type="tel" id="number" name="number" placeholder="Enter your phone number" value="{{ phone_number }}">
           </div>
           <div class="form-group">
             <label style="color: black; font-size: 15px;" for="email"><sup>*</sup>Email:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <input type="email" id="email" name="email" placeholder="Enter your email" value="{{ email }}" >
           </div>
           <div class="form-group">
             <label style="color: black; font-size: 15px;" for="reason"><sup>*</sup>Reason:</label>
@@ -104,7 +104,7 @@
           </div>
           <div class="form-group">
             <label style="color: black; font-size: 15px;" for="message"><sup>*</sup>Message:</label>
-            <textarea id="message" name="message" rows="4" placeholder="Type your message here" required></textarea>
+            <textarea id="message" name="message" rows="4" placeholder="Type your message here" ></textarea>
           </div>
             <div style="color: black; font-size: 10px;"><sup >*</sup> is a required field</div>
             <br>
@@ -156,7 +156,7 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     
     <!--========== MAIN JS ==========-->
-    <script src="static/styles/js/main.js"></script>
+   <script src="{{ url_for('static',filename='styles/js/contact.js') }}"></script>
 <script>
   function confirmLogout() {
     return confirm("Are you sure you want to log out?");
