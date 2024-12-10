@@ -410,6 +410,7 @@ img{
 
 .cart__button{
   color: var(--text-color);
+  font-size: larger;
 }
 
 .cart__button:hover{
