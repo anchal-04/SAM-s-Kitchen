@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.items').textContent = `${data.total_items} items`;
             document.querySelector('.total-amount').textContent = `$${data.total_price.toFixed(2)}`;
             const itemPrice = parseFloat(counter.querySelector('.amount').textContent.substring(1));
+            console.log("item price ", itemPrice)
             counter.querySelector('.amount').textContent = `$${(itemPrice * count).toFixed(2)}`;
         })
         .catch(err => alert(err.message));

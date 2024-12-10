@@ -281,10 +281,10 @@ def modify_cart():
     if action == 'increase':
         cart_item.increase_quantity()
     elif action == 'decrease':
-        if cart_item.item_qty <= 1:
+        if cart_item.item_qty > 1:
             # If quantity is 1 or less, delete the cart item
-            cart_item.delete_cart_item()
-        else:
+            # cart_item.delete_cart_item()
+        # else:
             cart_item.decrease_quantity()
 
     # Recalculate cart totals
