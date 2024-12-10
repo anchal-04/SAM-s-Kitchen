@@ -101,34 +101,35 @@
 
             <div class="input-field">
               <i class="fas fa-user"></i>
-              {{ form.username(placeholder = "Username") }}
+              {{ form.username(placeholder = "*Username") }}
             </div>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              {{ form.fullname(placeholder = "Full Name") }}
+              {{ form.fullname(placeholder = "*Full Name") }}
             </div>
               <div class="input-field">
               <i class="fas fa-user"></i>
-              {{ form.email(placeholder = "Email") }}
+              {{ form.email(placeholder = "*Email") }}
             </div>
             <div class="input-field">
               <i class="fas fa-map-marker-alt"></i>
-              {{ form.address(placeholder = "Address") }}
+              {{ form.address(placeholder = "*Address") }}
             </div>
             <div class="input-field">
               <i class="fas fa-mobile-alt"></i>
-              {{ form.phone_number(placeholder = 'Phone Number') }}
+              {{ form.phone_number(placeholder = '*Phone Number') }}
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
               <!-- <input type="password" placeholder="Password" /> -->
-              {{ form.password1(placeholder = 'Password') }}
+              {{ form.password1(placeholder = '*Password') }}
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
               <!-- <input type="password" placeholder="Confirm Password" /> -->
-              {{ form.password2(placeholder = 'Confirm Password') }}
+              {{ form.password2(placeholder = '*Confirm Password') }}
             </div>
+              <div style="color: white; font-size: 10px;"><sup >*</sup> is a required field</div>
             <!-- <input type="submit" class="btn" value="Sign up" /> -->
             {{ form.submit(class = 'btn') }}
 
