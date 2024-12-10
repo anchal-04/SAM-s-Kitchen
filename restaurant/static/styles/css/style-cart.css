@@ -41,7 +41,7 @@ body {
 
 .back {
     text-decoration:underline;
-    color: var(--first-color);
+    color: darkgreen;
     font-weight: 600;
 }
 
@@ -133,7 +133,7 @@ body {
 .remove {
     font-size: 16px;
     font-weight: 600;
-    color: #707070;
+    color: #424141;
     cursor: pointer;
     background-color: #d9d9d9;
     border: 1px solid #ccc;
@@ -170,6 +170,7 @@ hr {
 .items,
 .total-amount {
     font-size: 16px;
+    font-weight: bold;
     color: #202020;
 }
 
