@@ -566,7 +566,10 @@
     function changeQuantity(change) {
         const quantitySpan = document.getElementById("quantity");
         let currentQuantity = parseInt(quantitySpan.textContent);
-        currentQuantity += change;
+         if (currentQuantity + change >= 1) {
+            currentQuantity += change;
+        }
+        {#currentQuantity += change;#}
         quantitySpan.textContent = currentQuantity;
         {#document.getElementById('quantity').innerText = currentQuantity;#}
     }
