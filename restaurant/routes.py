@@ -611,7 +611,7 @@ def logout():
     # Clear user's cart items when logging out
     active_order = Order.query.filter_by(
         orderer=current_user.username,
-        order_placed=0
+        order_placed=1
     ).first()
 
     if active_order:

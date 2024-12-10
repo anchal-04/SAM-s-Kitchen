@@ -36,6 +36,17 @@
   <div class="container-fp">
     <div class="form-container-fp">
       <form action="/forgot" accept-charset="UTF-8" method="post" class="otp-form">
+           {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
         <h2 class="title">Change Password</h2>
         <div class="input-field">
             <i class="fas fa-user"></i>
