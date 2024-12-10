@@ -171,8 +171,12 @@
                                 <h3 id="modalItemName">{{ item.name }}</h3>
                                 <span class="close" onclick="closeModal()">&times;</span>
                             </div>
-                            <p>Price: $<span id="modalItemPrice">{{ item.price }}</span></p>
-                            <div class="quantity-container">
+                            <div style="padding:1%;">
+                                <p>Price: $
+                                    <span id="modalItemPrice" style="font-weight: bold;">{{ item.price }}</span>
+                                </p>
+                            </div>
+                            <div class="quantity-container" style="padding:1%;">
                                 <label>Quantity:</label>
                                 <button onclick="changeQuantity(-1)">-</button>
                                 <span id="quantity">1</span>
@@ -180,10 +184,12 @@
                             </div>
 
                             <div>
-                                <label for="specialInstructions">Special Instructions:</label>
-                                <textarea style="width:95%; height:50px;" id="specialInstructions" rows="3" placeholder="Type any customizations like spice level here"> Add any customizations like spice levels etc., if required...</textarea>
+                                <label for="specialInstructions" style="padding:1%;">Special Instructions:</label>
+                                <textarea style="width:95%; height:60px; margin-bottom:2%; margin-top: 1%; margin-left: 1%;" id="specialInstructions" rows="3" placeholder="Type any customizations like spice level here"> Add any customizations like spice levels etc., if required...</textarea>
                             </div>
-                            <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
+                            <div style="padding:1%; margin-left:70%;">
+                                <button class="final-add-button" onclick="addToCart()">Add to Cart</button>
+                            </div>
                         </div>
                     </div>
                 </div>
