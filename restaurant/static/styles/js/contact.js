@@ -21,10 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const eRegex  = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     let isValid = true;
-    if (!name || name.trim().length === 0) {
-        showError("name", "Name is a required field");
-            isValid = false;
-    }
+    // if (!name || name.trim().length === 0) {
+    //     showError("name", "Name is a required field");
+    //         isValid = false;
+    // }
     if (!msg || msg.trim().length === 0) {
         showError("message", "Message is a required field");
             isValid = false;
