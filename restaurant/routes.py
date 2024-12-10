@@ -80,10 +80,10 @@ def contact_page():
     if request.method == 'GET':
         return render_template(
             'contact.html',
-            fullname=current_user.fullname,
-            phone_number=current_user.phone_number,
-            email=current_user.email,
-            error_message=error_message
+            # fullname=current_user.fullname,
+            # phone_number=current_user.phone_number,
+            # email=current_user.email,
+            # error_message=error_message
         )
 
 

@@ -81,16 +81,16 @@
         <h2>Get in Touch</h2>
         <form id="contact-form" method="POST" action="{{ url_for('contact_page') }}">
           <div class="form-group">
-            <label style="color: black; font-size: 15px;" for="name"><sup>*</sup>Name:</label>
-            <input type="text" id="name" name="name" placeholder="Enter your name" value="{{ fullname }}" >
+            <label style="color: black; font-size: 15px;" for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" >
           </div>
           <div class="form-group">
             <label style="color: black; font-size: 15px;" for="number">Phone Number:</label>
-            <input type="tel" id="number" name="number" placeholder="Enter your phone number" value="{{ phone_number }}">
+            <input type="tel" id="number" name="number" placeholder="Enter your phone number" >
           </div>
           <div class="form-group">
             <label style="color: black; font-size: 15px;" for="email"><sup>*</sup>Email:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" value="{{ email }}" >
+            <input type="email" id="email" name="email" placeholder="Enter your email"  >
           </div>
           <div class="form-group">
             <label style="color: black; font-size: 15px;" for="reason"><sup>*</sup>Reason:</label>
