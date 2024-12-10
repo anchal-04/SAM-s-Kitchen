@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,9 +8,31 @@
       crossorigin="anonymous"
     ></script>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/css/style-otp.css') }}">
+    <link rel="stylesheet" type="text/css" href="static/styles/css/styles.css">
   <title>CHANGE PASSWORD</title>
 </head>
 <body>
+  <div>
+  <header class="l-header" id="header">
+    <nav class="nav bd-container">
+        <a href="{{ url_for('home_page') }}" class="nav__logo"><h1>Sam's Kitchen</h1></a>
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+                <li class="nav__item"><a href="{{ url_for('home_page') }}" class="nav__link">Home</a></li>
+                <li class="nav__item"><a href="{{ url_for('about_page') }}" class="nav__link">About</a></li>
+                <li class="nav__item"><a href="{{ url_for('menu_page') }}" class="nav__link">Menu</a></li>
+                <li class="nav__item"><a href="{{ url_for('order_page') }}" class="nav__link">Order</a></li>
+                <li class="nav__item"><a href="{{ url_for('contact_page') }}" class="nav__link">Contact Us</a></li>
+                <li class="nav__item"><a href="{{ url_for('login_page') }}" class="nav__link active-link">Log In/ Register</a></li>
+               
+            </ul>
+        </div>
+        <div class="nav__toggle" id="nav-toggle">
+            <i class='bx bx-menu'></i>
+        </div>
+    </nav>
+</header>
+</div>
   <div class="container-fp">
     <div class="form-container-fp">
       <form action="/forgot" accept-charset="UTF-8" method="post" class="otp-form">
@@ -27,10 +49,44 @@
             <i class="fas fa-lock"></i>
             <input type="password" name="confirm_password" placeholder="Confirm New Password" required/>
         </div>
-        <input type="submit" value="Submit" class="btn solid" />
+        <input type="submit" value="Submit" class="submit-btn" />
       </form>
     </div>
   </div>
+<div>
+  <footer class="footer section bd-container">
+    <div class="footer__container bd-grid">
+        <div class="footer__content">
+            <a href="#" class="footer__logo">Sam's Kitchen</a>
+            <span class="footer__description">Restaurant</span>
+            <div>
+              <a href="#" class="footer__social" aria-label="facebook icon"><i class='bx bxl-facebook'></i></a>
+              <a href="#" class="footer__social" aria-label="instagram icon"><i class='bx bxl-instagram'></i></a>
+              <a href="#" class="footer__social" aria-label="twitter icon"><i class='bx bxl-twitter'></i></a>
+            </div>
+        </div>
+        <div class="footer__content">
+            <h3 class="footer__title">Information</h3>
+            <ul>
+                <li><a href="#" class="footer__link">Event</a></li>
+                <li><a href="{{ url_for('contact_page') }}" class="footer__link">Contact us</a></li>
+                <li><a href="#" class="footer__link">Privacy policy</a></li>
+                <li><a href="#" class="footer__link">Terms of services</a></li>
+            </ul>
+        </div>
+        <div class="footer__content">
+            <h3 class="footer__title">Address</h3>
+            <ul>
+                <li>1111, Somewhere Rd</li>
+                <li>United States, 23456</li>
+                <li>999 - 888 - 777</li>
+                <li>kitchensams123@gmail.com</li>
+            </ul>
+        </div>
+    </div>
+    <p class="footer__copy">&#169; 2024 Team Sams. All rights reserved</p>
+  </footer>
+</div>
 <script>
   // Client-side password matching validation
   document.querySelector('.otp-form').addEventListener('submit', function (e) {
