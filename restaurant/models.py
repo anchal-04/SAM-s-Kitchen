@@ -155,6 +155,7 @@ class Cart(db.Model):
             else:
                 self.item_qty -= 1
             db.session.commit()
+            print(f"Decreasing quantity: {self.item_qty}")
             return self.item_qty
         except Exception as e:
             db.session.rollback()

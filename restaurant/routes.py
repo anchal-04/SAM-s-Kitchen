@@ -283,7 +283,7 @@ def modify_cart():
     elif action == 'decrease':
         if cart_item.item_qty > 1:
             # If quantity is 1 or less, delete the cart item
-            # cart_item.delete_cart_item()
+          # cart_item.delete_cart_item()
         # else:
             cart_item.decrease_quantity()
 
@@ -294,10 +294,13 @@ def modify_cart():
     ).all()
 
     total_items = sum(cart_item.item_qty for cart_item in cart_items)
+    print("total_items ", total_items)
+
     total_price = sum(
         cart_item.item_qty * Item.query.get(cart_item.item_id).price
         for cart_item in cart_items
     )
+    print("item qty ", cart_item.item_qty)
 
     return jsonify({
         'total_items': total_items,
