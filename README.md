@@ -22,7 +22,9 @@ Password recovery via "Forgot Password" functionality.
 **About Page:** Story of Sam’s Kitchen, core values, and customer reviews through a responsive carousel.
 
 **Menu and Order Page:** Search and filter dishes (Veg/Non-Veg), add items to the cart with customization.
+
 **Contact Us Page: **A form to reach out to the restaurant with email notifications for successful submissions.
+
 **Cart & Payment:** Real-time cart updates with cost calculation and order confirmation email after payment.
 
 ### ♿ Accessibility
@@ -30,7 +32,11 @@ Password recovery via "Forgot Password" functionality.
 Color contrasts and designs tested for readability and usability.
 
 ## Tech Stack
-**Frontend:** HTML, CSS, JavaScript
+
+**Frontend:** HTML, CSS, JavaScript 
+
 **Backend:** Python (Flask)
+
 **Database:** SQLite
+
 **Tools:** Flask-Mail for email notifications
