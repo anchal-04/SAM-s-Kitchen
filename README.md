@@ -23,7 +23,7 @@ Password recovery via "Forgot Password" functionality.
 
 **Menu and Order Page:** Search and filter dishes (Veg/Non-Veg), add items to the cart with customization.
 
-**Contact Us Page: **A form to reach out to the restaurant with email notifications for successful submissions.
+**Contact Us Page: ** A form to reach out to the restaurant with email notifications for successful submissions.
 
 **Cart & Payment:** Real-time cart updates with cost calculation and order confirmation email after payment.
 
