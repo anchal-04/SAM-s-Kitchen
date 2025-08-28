@@ -1,4 +1,6 @@
 # Sam's Kitchen 🍽️
+
+
 ## A User-Friendly Website for an Indian Cuisine Restaurant
 
 ### Sam’s Kitchen is a dynamic website designed for a restaurant specializing in Indian cuisine. The platform enables users to browse the menu, place orders, and explore the story behind the restaurant, all while ensuring accessibility and ease of navigation.
